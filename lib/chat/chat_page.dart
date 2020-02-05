@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/ui/commom_bar.dart';
+import 'package:flutter_qyyim/ui/main_input.dart';
 
 // 聊天page
 class ChatPage extends StatefulWidget{
@@ -25,10 +27,17 @@ class ChatePageState extends State<ChatPage>{
       )
     ];
 
+
+
+
     return Scaffold(
       appBar: new ComMomBar(title: "标题", rightDMActions: rWidget),
-      body: Text(
-        "chat detail"
+      body: new MainInputBody(
+        //onTap: () => setState(() => _isMore = false),
+        decoration: BoxDecoration(color: chatBg),
+        child: Center(
+          child: Text("detail"),
+        ),
       ),
     );
   }

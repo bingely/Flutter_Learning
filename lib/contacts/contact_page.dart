@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-
-class CommonBar extends StatelessWidget {
+// 联系人页面
+class ContactPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return null;
+    return Text('contact');
   }
 
 }
