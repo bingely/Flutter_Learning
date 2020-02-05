@@ -3,6 +3,7 @@ import 'package:flutter_qyyim/app_page.dart';
 import 'package:flutter_qyyim/chat/chat_page.dart';
 import 'package:flutter_qyyim/load_page.dart';
 import 'package:flutter_qyyim/message/message_page.dart';
+import 'package:flutter_qyyim/search/search.dart';
 
 void main() => runApp(MaterialApp(
   // Flutter去除右上角Debug标签
@@ -14,7 +15,9 @@ void main() => runApp(MaterialApp(
   routes: <String, WidgetBuilder>{
     'app': (BuildContext context) => AppPage(),
     'chat': (BuildContext context) => ChatPage(),
-    'msglist': (BuildContext context) => MessagePage()
+    'msglist': (BuildContext context) => MessagePage(),
+    'search': (BuildContext context) => SearchWidget()
+
   },
   home: LoadPage(),
 ));

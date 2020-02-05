@@ -13,7 +13,7 @@ class LoadPageState extends State<LoadPage> {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 1), () {
-      Navigator.pushNamed(context, 'msglist');
+      Navigator.pushReplacementNamed(context, 'app');
     });
   }
 

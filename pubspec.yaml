@@ -22,20 +22,20 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
-  shared_preferences: ^0.5.2+2
-  toast: any
+  #cupertino_icons: ^0.1.2
+  #shared_preferences: ^0.5.2+2
+  #toast: any
 
-  // webview
-  flutter_webview_plugin: "^0.3.0+2"
-  // 时间格式
+  # webview
+  #flutter_webview_plugin: "^0.3.0+2"
+  # 时间格式
   date_format: "^1.0.4"
-  // 预览图片
-  photo_view: ^0.4.2
-  // 图片选择
-  image_picker: 0.6.1+2
-  // 权限管理
-  permission_handler: ^3.1.0
+  # 预览图片
+  #photo_view: ^0.4.2
+  # 图片选择
+  #image_picker: 0.6.1+2
+  # 权限管理
+  #permission_handler: ^3.1.0
 
 
 dev_dependencies:
@@ -59,7 +59,35 @@ flutter:
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
   assets:
+    #加载页面图片资源
     - images/loading.jpeg
+
+    #底部tab切换图片资源
+    - images/contact_list_normal.png
+    - images/contact_list_pressed.png
+    - images/profile_normal.png
+    - images/profile_pressed.png
+    - images/message_normal.png
+    - images/message_pressed.png
+
+    #菜单按钮
+    - images/icon_menu_addfriend.png
+    - images/icon_menu_group.png
+
+    #好友模块图标
+    - images/icon_addfriend.png
+    - images/icon_groupchat.png
+    - images/icon_public.png
+
+    #我的模块图标
+    - images/icon_me_friends.png
+    - images/icon_me_photo.png
+    - images/icon_me_file.png
+    - images/icon_me_service.png
+    - images/icon_me_message.png
+    - images/icon_me_clear.png
+    - images/code.png
+    - images/yixiu.jpeg
 
     - assets/images/bsc.webp
     - assets/images/bar_close.png
