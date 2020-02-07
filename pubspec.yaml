@@ -36,7 +36,8 @@ dependencies:
   #image_picker: 0.6.1+2
   # 权限管理
   #permission_handler: ^3.1.0
-
+  # 录音插件
+  #flutter_plugin_record: ^0.0.9
 
 dev_dependencies:
   flutter_test:

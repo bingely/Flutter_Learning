@@ -50,7 +50,7 @@ class AppPageState extends State<AppPage> {
                   context: context,
                   position: RelativeRect.fromLTRB(500.0, 76.0, 10.0, 0.0),
                   items: <PopupMenuEntry>[
-                    
+
                   ]
                 );
               },
@@ -76,11 +76,11 @@ class AppPageState extends State<AppPage> {
                 '消息',
                 style: TextStyle(
                     color: _currenIndex == 0 ? Color(0xFF46c01b) : Color(
-                        0xff99999)
+                        0xff999999)
                 ),
               ),
               icon: _currenIndex == 0 ? Image.asset(
-                'image/message_pressed.png', width: 32.0,height: 28.0,):Image.asset('image/message_normal.png', width: 32.0,height: 28.0)
+                'images/message_pressed.png', width: 32.0,height: 28.0,):Image.asset('images/message_normal.png', width: 32.0,height: 28.0)
               //icon: _currenIndex == 0 ? Image.asset('images/message_press.png'): I,
           ),
           BottomNavigationBarItem(
@@ -88,11 +88,11 @@ class AppPageState extends State<AppPage> {
                 '联系人',
                 style: TextStyle(
                     color: _currenIndex == 1 ? Color(0xFF46c01b) : Color(
-                        0xff99999)
+                        0xff999999)
                 ),
               ),
               icon: _currenIndex == 1 ? Image.asset(
-                'image/message_pressed.png', width: 32.0,height: 28.0,):Image.asset('image/message_normal.png', width: 32.0,height: 28.0)
+                'images/contact_list_pressed.png', width: 32.0,height: 28.0,):Image.asset('images/contact_list_normal.png', width: 32.0,height: 28.0)
             //icon: _currenIndex == 0 ? Image.asset('images/message_press.png'): I,
           ),
           BottomNavigationBarItem(
@@ -100,11 +100,11 @@ class AppPageState extends State<AppPage> {
                 '我',
                 style: TextStyle(
                     color: _currenIndex == 2 ? Color(0xFF46c01b) : Color(
-                        0xff99999)
+                        0xff999999)
                 ),
               ),
               icon: _currenIndex == 2 ? Image.asset(
-                'image/message_pressed.png', width: 32.0,height: 28.0,):Image.asset('image/message_normal.png', width: 32.0,height: 28.0)
+                'images/profile_pressed.png', width: 32.0,height: 28.0,):Image.asset('images/profile_normal.png', width: 32.0,height: 28.0)
             //icon: _currenIndex == 0 ? Image.asset('images/message_press.png'): I,
           ),
         ],

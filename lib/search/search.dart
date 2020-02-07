@@ -71,7 +71,7 @@ class SearchState extends State<SearchWidget> {
                           ),
                           onChanged: (String text){},
                           decoration: InputDecoration(
-                            helperText: 'hint search',
+                            hintText: 'hint search',
                             border: InputBorder.none
                           ),
                         ),
