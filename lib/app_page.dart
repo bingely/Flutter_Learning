@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/contacts/contact_page.dart';
 import 'package:flutter_qyyim/contacts/contacts.dart';
 import 'package:flutter_qyyim/me/me_page.dart';
 import 'package:flutter_qyyim/message/message_page.dart';
@@ -16,6 +15,8 @@ class AppPageState extends State<AppPage> {
   // 当前选中的页面索引
   var _currenIndex = 0;
 
+  var _titleTab = "消息";
+
   // 消息列表页面
   MessagePage messagePage;
 
@@ -29,7 +30,7 @@ class AppPageState extends State<AppPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("qqyim"),
+        title: Text(_titleTab),
         actions: <Widget>[
           GestureDetector(
             onTap: () {
@@ -119,18 +120,23 @@ class AppPageState extends State<AppPage> {
         if (messagePage == null) {
           messagePage = new MessagePage();
         }
+        _titleTab = "消息";
         return messagePage;
       case 1:
         if (contactPage == null) {
           contactPage = new Contacts();
         }
+        _titleTab = "联系人";
         return contactPage;
       case 2:
         if (mePage == null) {
           mePage = new MePage();
         }
+        _titleTab = "我";
         return mePage;
     }
+    setState(() {
+    });
   }
 }
 
