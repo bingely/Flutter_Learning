@@ -10,7 +10,9 @@ class FuturePageState extends State<FuturePage> {
   Widget build(BuildContext context) {
     return Center(
       child: FutureBuilder(
-        builder: Future.delayed(Duration(seconds: 3),()=>{}),
+        builder: (build, asy){
+
+        },
       ),
     );
   }

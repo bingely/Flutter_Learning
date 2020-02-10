@@ -46,7 +46,7 @@ class ChatePageState extends State<ChatPage>{
     ];
 
     var body = [
-
+      new Spacer(),
       new ChatDetailsRow(
         voiceOnTap: () => {},
         isVoice: _isVoice,
