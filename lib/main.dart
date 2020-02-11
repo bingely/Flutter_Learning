@@ -9,7 +9,8 @@ import 'config/storage_manager.dart';
 
 Future<void> main() async {
 
-
+  /// 确保初始化
+  WidgetsFlutterBinding.ensureInitialized();
   /// 配置初始化
   await StorageManager.init();
 
