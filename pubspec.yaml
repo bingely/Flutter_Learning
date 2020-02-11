@@ -26,7 +26,6 @@ dependencies:
   shared_preferences: any
   toast: any
   cached_network_image: any
-  dio: ^2.2.2
 
   provider: ^4.0.3
 

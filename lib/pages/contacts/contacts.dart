@@ -1,56 +1,111 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'contact_sider_list.dart';
-import 'contact_item.dart';
-import 'contact_header.dart';
-import 'contact_vo.dart';
+import 'package:flutter_qyyim/common/check.dart';
+import 'package:flutter_qyyim/common/pinyin/pinyin_helper.dart';
+import 'package:flutter_qyyim/config/const.dart';
+import 'package:flutter_qyyim/config/keys.dart';
+import 'package:flutter_qyyim/config/t.dart';
+import 'package:flutter_qyyim/pages/contacts/person_info_entity.dart';
+import 'dart:convert';
 
-//好友列表主页面
-class Contacts extends StatefulWidget {
-  @override
-  ContactState createState() => ContactState();
+import 'package:flutter_qyyim/tool/shared_util.dart';
 
+import 'i_contact_info_entity.dart';
+
+class Contact {
+  Contact({
+    @required this.avatar,
+    @required this.name,
+    @required this.nameIndex,
+    @required this.identifier,
+  });
+
+  final String avatar;
+  final String name;
+  final String nameIndex;
+  final String identifier;
 }
 
-class ContactState extends State<Contacts>{
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      //主体实现
-      body: ContactSiderList(
-        //好友列表数据
-          items: contactData,
-          //好友列表头构造器
-          headerBuilder: (BuildContext context, int index){
-            return Container(
-              //好友列表头
-              child: ContactHeader(),
-            );
-          },
-        //好友列表项构造器
-          itemBuilder:  (BuildContext context, int index){
-            return Container(
-              color: Colors.white,
-              alignment: Alignment.centerLeft,
-              //好友列表项
-              child: ContactItem(item:contactData[index]),
-            );
-          },
-        //字母构造器
-          sectionBuilder: (BuildContext context, int index){
-            return Container(
-              height: 32.0,
-              padding: const EdgeInsets.only(left:14.0),
-              color: Colors.grey[300],
-              alignment: Alignment.centerLeft,
-              //显示字母
-              child: Text(
-                contactData[index].seationKey,
-                style: TextStyle(fontSize: 14.0,color: Color(0xff909090)),
-              ),
-            );
-          },
-      ),
-    );
+class ContactsPageData {
+  Future<bool> contactIsNull() async {
+    final user = await SharedUtil.instance.getString(Keys.account);
+    final result = await getContactsFriends(user);
+    List<dynamic> data = json.decode(result);
+    return !listNoEmpty(data);
   }
+
+  listFriend() async {
+    List<Contact> contacts = new List<Contact>();
+    String avatar;
+    String nickName;
+    String identifier;
+    String remark;
+
+    final contactsData = await SharedUtil.instance.getString(Keys.contacts);
+    final user = await SharedUtil.instance.getString(Keys.account);
+    final result = await getContactsFriends(user);
+
+    getMethod(result) async {
+      List<dynamic> dataMap = json.decode(result);
+      int dLength = dataMap.length;
+      for (int i = 0; i < dLength; i++) {
+        if (Platform.isIOS) {
+          IContactInfoEntity model = IContactInfoEntity.fromJson(dataMap[i]);
+          avatar = model.profile.faceURL;
+          identifier = model.identifier;
+          remark = await getRemarkMethod(model.identifier, callback: (_) {});
+          nickName = model.profile.nickname;
+          nickName = !strNoEmpty(nickName) ? model.identifier : nickName;
+          contacts.insert(
+            0,
+            new Contact(
+              avatar: !strNoEmpty(avatar) ? defIcon : avatar,
+              name: !strNoEmpty(remark) ? nickName : remark,
+              nameIndex:
+                  PinyinHelper.getFirstWordPinyin(nickName)[0].toUpperCase(),
+              identifier: identifier,
+            ),
+          );
+        } else {
+          PersonInfoEntity model = PersonInfoEntity.fromJson(dataMap[i]);
+          avatar = model.faceUrl;
+          identifier = model.identifier;
+          remark = await getRemarkMethod(model.identifier, callback: (_) {});
+          nickName = model.nickName;
+          nickName = !strNoEmpty(nickName) ? model.identifier : nickName;
+          contacts.insert(
+            0,
+            new Contact(
+              avatar: !strNoEmpty(avatar) ? defIcon : avatar,
+              name: !strNoEmpty(remark) ? nickName : remark,
+              nameIndex:
+                  PinyinHelper.getFirstWordPinyin(nickName)[0].toUpperCase(),
+              identifier: identifier,
+            ),
+          );
+        }
+      }
+      return contacts;
+    }
+
+
+    if (strNoEmpty(contactsData) || contactsData != '[]') {
+      if (result != contactsData) {
+        await SharedUtil.instance.saveString(Keys.contacts, result);
+        return await getMethod(result);
+      } else {
+        return await getMethod(contactsData);
+      }
+    } else {
+      await SharedUtil.instance.saveString(Keys.contacts, result);
+      return await getMethod(result);
+    }
+  }
+}
+
+getContactsFriends(String user) {}
+
+Future<dynamic> getRemarkMethod(String id, {Callback callback}) async {
+
 }

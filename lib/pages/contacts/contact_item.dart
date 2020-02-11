@@ -1,61 +1,187 @@
 import 'package:flutter/material.dart';
-import 'contact_vo.dart';
+import 'package:flutter_qyyim/common/ui.dart';
+import 'package:flutter_qyyim/config/const.dart';
+import 'package:flutter_qyyim/config/contacts.dart';
+import 'package:flutter_qyyim/ui/image_view.dart';
 
-//好友列表项
-class ContactItem extends StatelessWidget {
-  //好友数据VO
-  final ContactVO item;
-  //标题名
-  final String titleName;
-  //图片路径
-  final String imageName;
-  //构建方法
-  ContactItem({this.item, this.titleName, this.imageName});
+import 'contact_view.dart';
 
-  //渲染好友列表项
+
+typedef OnAdd = void Function(String v);
+typedef OnCancel = void Function(String v);
+
+class ContactItem extends StatefulWidget {
+  final String avatar;
+  final String title;
+  final String identifier;
+  final String groupTitle;
+  final bool isLine;
+  final ClickType type;
+  final OnAdd add;
+  final OnCancel cancel;
+
+  ContactItem({
+    @required this.avatar,
+    @required this.title,
+    this.identifier,
+    this.isLine = true,
+    this.groupTitle,
+    this.type = ClickType.open,
+    this.add,
+    this.cancel,
+  });
+
+  ContactItemState createState() => ContactItemState();
+}
+
+class ContactItemState extends State<ContactItem> {
+  // ‘添加好友’ 横纵间距
+  static const double MARGIN_VERTICAL = 6.0;
+  static const double MARGIN_HORIZONTAL = 16.0;
+
+  // ‘ABC...’ 高度
+  static const double GROUP_TITLE_HEIGHT = 34.0;
+
+  // items的高度 纵向高度*2+头像高度+分割线高度
+  static double heightItem(bool hasGroupTitle) {
+    final _buttonHeight = MARGIN_VERTICAL * 2 +
+        Constants.ContactAvatarSize +
+        Constants.DividerWidth;
+    if (hasGroupTitle) return _buttonHeight + GROUP_TITLE_HEIGHT;
+
+    return _buttonHeight;
+  }
+
+  bool isSelect = false;
+
+  Map<String, dynamic> mapData;
+
+  bool isLine() {
+    if (widget.isLine) {
+      if (widget.title != '公众号') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    //列表项容器
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        //每条列表项底部加一个边框
-        border:
-            Border(bottom: BorderSide(width: 0.5, color: Color(0xFFd9d9d9))),
-      ),
-      height: 52.0,
-      child: FlatButton(
-        onPressed: () {},
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            //展示头像或图片
-            imageName == null
-                ? Image.network(
-                    item.avatarUrl != ''
-                        ? item.avatarUrl
-                        : 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544070910437&di=86ffd13f433c252d4c49afe822e87462&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fforum%2Fw%3D580%2Fsign%3Debf3e26b1a4c510faec4e21250582528%2F0cf431adcbef76092781a53c2edda3cc7dd99e8e.jpg',
-                    width: 36.0,
-                    height: 36.0,
-                    scale: 0.9,
-                  )
-                : Image.asset(
-                    imageName,
-                    width: 36.0,
-                    height: 36.0,
+    /// 定义左边图标Widget
+    Widget _avatarIcon = new ImageView(
+      img: widget.avatar,
+      width: Constants.ContactAvatarSize,
+      height: Constants.ContactAvatarSize,
+      fit: BoxFit.cover,
+    );
+
+    /// 头像圆角
+    _avatarIcon = _avatarIcon;
+
+    var content = [
+      _avatarIcon,
+
+      ///  头像离名字的距离
+      new Space(width: 15.0),
+      new Expanded(
+        child: new Container(
+          padding: const EdgeInsets.only(right: MARGIN_HORIZONTAL),
+          height: heightItem(false),
+
+          /// 名字的显示位置
+          alignment: Alignment.centerLeft,
+          decoration: BoxDecoration(
+            border: !isLine()
+                ? null
+                : Border(
+                    bottom: BorderSide(
+
+                        /// 下划线粗细及颜色
+                        width: Constants.DividerWidth,
+                        color: lineColor),
                   ),
-            //展示名称或标题
-            Container(
-              margin: const EdgeInsets.only(left: 12.0),
-              child: Text(
-                titleName == null ? item.name ?? '暂时':titleName,
-                style: TextStyle(fontSize: 18.0,color: Color(0xFF353535)),
-                maxLines: 1,
-              ),
-            ),
-          ],
+          ),
+
+          /// 姓名
+          child: new Text(widget.title,
+              style: TextStyle(fontWeight: FontWeight.w400), maxLines: 1),
         ),
       ),
+      widget.type == ClickType.select
+          ? new InkWell(
+              child: new Image.asset(
+                'assets/images/login/${isSelect ? 'ic_select_have.webp' : 'ic_select_no.png'}',
+                width: 25.0,
+                height: 25.0,
+                fit: BoxFit.cover,
+              ),
+              onTap: () {
+                setState(() => isSelect = !isSelect);
+                if (isSelect) widget.add(widget.identifier);
+                if (!isSelect) widget.cancel(widget.identifier);
+              },
+            )
+          : new Container()
+    ];
+
+    /// 列表项主体部分
+    Widget button = new FlatButton(
+      color: Colors.white,
+      onPressed: () {
+        if (widget.type == ClickType.select) {
+          setState(() => isSelect = !isSelect);
+          if (isSelect) widget.add(widget.identifier);
+          if (!isSelect) widget.cancel(widget.identifier);
+          return;
+        }
+        if (widget.title == '新的朋友') {
+          //routePush(new NewFriendPage());
+        } else if (widget.title == '群聊') {
+          //routePush(new GroupListPage());
+        } else if (widget.title == '标签') {
+          //routePush(new AllLabelPage());
+        } else if (widget.title == '公众号') {
+          //routePush(new PublicPage());
+        } else {
+          // TODO
+          /*routePush(new ContactsDetailsPage(
+              id: widget.identifier,
+              avatar: widget.avatar,
+              title: widget.title));*/
+        }
+      },
+      child: new Row(children: content),
     );
+
+    /// 定义分组标签（左边的ABC...）
+    Widget itemBody;
+    if (widget.groupTitle != null) {
+      itemBody = new Column(
+        children: <Widget>[
+          new Container(
+            height: GROUP_TITLE_HEIGHT,
+            padding: EdgeInsets.only(left: 16.0, right: 16.0),
+            decoration: BoxDecoration(
+              color: const Color(AppColors.ContactGroupTitleBg),
+              border: Border(
+                top: BorderSide(color: lineColor, width: 0.2),
+                bottom: BorderSide(color: lineColor, width: 0.2),
+              ),
+            ),
+            alignment: Alignment.centerLeft,
+            child: new Text(widget.groupTitle,
+                style: AppStyles.GroupTitleItemTextStyle),
+          ),
+          button,
+        ],
+      );
+    } else {
+      itemBody = button;
+    }
+
+    return itemBody;
   }
 }

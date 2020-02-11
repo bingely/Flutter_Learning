@@ -7,9 +7,9 @@ import 'package:flutter_qyyim/common/win_media.dart';
 import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/config/contacts.dart';
 import 'package:flutter_qyyim/config/dictionary.dart';
-import 'package:flutter_qyyim/contacts/contact_item.dart';
 import 'package:flutter_qyyim/ui/null_view.dart';
 
+import 'contact_item.dart';
 import 'contact_view.dart';
 import 'contacts.dart';
 
