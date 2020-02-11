@@ -2,7 +2,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-
+/// 几个Flutter开发中的常用函数 http://www.mamicode.com/info-detail-2332504.html
+/// 获取屏幕宽度
 double winWidth(BuildContext context) {
   return MediaQuery.of(context).size.width;
 }

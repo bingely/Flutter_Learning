@@ -1,12 +1,10 @@
-import 'package:dim_example/im/model/chat_data.dart';
-import 'package:dim_example/ui/message_view/msg_avatar.dart';
 import 'package:flutter/material.dart';
-import 'package:dim_example/ui/message_view/text_item_container.dart';
-import 'package:flutter_qyyim/chat/model/chat_data.dart';
+import 'package:flutter_qyyim/pages/chat/model/chat_data.dart';
+import 'package:flutter_qyyim/provider/global_model.dart';
 import 'package:provider/provider.dart';
 
-import '../../provider/global_model.dart';
-import '../view/image_view.dart';
+import 'msg_avatar.dart';
+
 
 class TextMsg extends StatelessWidget {
   final String text;
@@ -19,11 +17,11 @@ class TextMsg extends StatelessWidget {
     final globalModel = Provider.of<GlobalModel>(context);
     var body = [
       new MsgAvatar(model: model, globalModel: globalModel),
-      new TextItemContainer(
+     /* new TextItemContainer(
         text: text ?? '文字为空',
         action: '',
         isMyself: model.id == globalModel.account,
-      ),
+      ),*/
       new Spacer(),
     ];
     if (model.id == globalModel.account) {

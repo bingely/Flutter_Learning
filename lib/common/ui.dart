@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-
+/// 水平线
 class HorizontalLine extends StatelessWidget {
   final double height;
   final Color color;
@@ -22,6 +22,7 @@ class HorizontalLine extends StatelessWidget {
   }
 }
 
+/// 垂直线
 class VerticalLine extends StatelessWidget {
   final double width;
   final double height;
@@ -46,6 +47,7 @@ class VerticalLine extends StatelessWidget {
   }
 }
 
+///
 class Space extends StatelessWidget {
   final double width;
   final double height;

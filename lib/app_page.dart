@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/pages/contacts/contact_page.dart';
 import 'package:flutter_qyyim/pages/contacts/contacts.dart';
 import 'package:flutter_qyyim/pages/me/me_page.dart';
 import 'package:flutter_qyyim/pages/message/message_page.dart';
+
+import 'contacts/contacts_page.dart';
 
 class AppPage extends StatefulWidget {
   @override
@@ -21,7 +24,7 @@ class AppPageState extends State<AppPage> {
   MessagePage messagePage;
 
   // 联系人页面
-  Contacts contactPage;
+  ContactsPage contactPage;
 
   // 我的页面
   MePage mePage;
@@ -124,7 +127,7 @@ class AppPageState extends State<AppPage> {
         return messagePage;
       case 1:
         if (contactPage == null) {
-          contactPage = new Contacts();
+          contactPage = new ContactsPage();
         }
         _titleTab = "联系人";
         return contactPage;

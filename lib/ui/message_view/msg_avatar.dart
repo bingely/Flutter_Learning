@@ -1,10 +1,10 @@
-import 'package:dim_example/im/model/chat_data.dart';
-import 'package:dim_example/pages/contacts/contacts_details_page.dart';
-import 'package:dim_example/provider/global_model.dart';
 import 'package:flutter/material.dart';
-x
-import 'package:dim_example/tools/wechat_flutter.dart';
+import 'package:flutter_qyyim/common/route.dart';
+import 'package:flutter_qyyim/config/const.dart';
+import 'package:flutter_qyyim/pages/chat/model/chat_data.dart';
+import 'package:flutter_qyyim/provider/global_model.dart';
 
+import '../image_view.dart';
 class MsgAvatar extends StatelessWidget {
   final GlobalModel globalModel;
   final ChatData model;
@@ -30,11 +30,11 @@ class MsgAvatar extends StatelessWidget {
         ),
       ),
       onTap: () {
-        routePush(new ContactsDetailsPage(
+        /*routePush(new ContactsDetailsPage(
           title: model.nickName,
           avatar: model.avatar,
           id: model.id,
-        ));
+        ));*/
       },
     );
   }
