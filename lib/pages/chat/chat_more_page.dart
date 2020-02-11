@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/chat/more_item_card.dart';
+
+import 'more_item_card.dart';
 
 class ChatMorePage extends StatefulWidget {
   final int index;

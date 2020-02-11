@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './contact_vo.dart';
+import 'contact_vo.dart';
 
 //好友列表项
 class ContactItem extends StatelessWidget {

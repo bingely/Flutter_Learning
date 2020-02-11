@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import './contact_sider_list.dart';
-import './contact_item.dart';
-import './contact_header.dart';
-import './contact_vo.dart';
+import 'contact_sider_list.dart';
+import 'contact_item.dart';
+import 'contact_header.dart';
+import 'contact_vo.dart';
 
 //好友列表主页面
 class Contacts extends StatefulWidget {

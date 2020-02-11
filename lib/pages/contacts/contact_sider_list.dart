@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import './contact_vo.dart';
+import 'contact_vo.dart';
 
 class ContactSiderList extends StatefulWidget {
   //好友列表项数据

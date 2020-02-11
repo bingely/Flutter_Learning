@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/me/ImItem.dart';
+
+import 'ImItem.dart';
 
 class MePage extends StatelessWidget{
   @override

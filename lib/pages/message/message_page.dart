@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/message/message_data.dart';
-import 'package:flutter_qyyim/message/message_item.dart';
+import 'package:flutter_qyyim/pages/message/message_data.dart';
+import 'package:flutter_qyyim/pages/message/message_item.dart';
 
 class MessagePage extends StatefulWidget {
   @override

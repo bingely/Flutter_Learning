@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './contact_item.dart';
+import 'contact_item.dart';
 
 //好友列表头部
 class ContactHeader extends StatelessWidget {

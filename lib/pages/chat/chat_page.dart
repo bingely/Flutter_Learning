@@ -1,14 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/chat/chat_details_row.dart';
-import 'package:flutter_qyyim/chat/chat_more_icon.dart';
-import 'package:flutter_qyyim/chat/chat_more_page.dart';
-import 'package:flutter_qyyim/chat/indicator_page_view.dart';
-import 'package:flutter_qyyim/chat/model/chat_data.dart';
 import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/ui/commom_bar.dart';
 import 'package:flutter_qyyim/ui/main_input.dart';
+
+import 'chat_details_row.dart';
+import 'chat_more_icon.dart';
+import 'chat_more_page.dart';
+import 'indicator_page_view.dart';
+import 'model/chat_data.dart';
 
 // 聊天page
 class ChatPage extends StatefulWidget{

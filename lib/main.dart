@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/app_page.dart';
-import 'package:flutter_qyyim/chat/chat_page.dart';
 import 'package:flutter_qyyim/load_page.dart';
-import 'package:flutter_qyyim/message/message_page.dart';
-import 'package:flutter_qyyim/search/search.dart';
+import 'package:flutter_qyyim/pages/chat/chat_page.dart';
+import 'package:flutter_qyyim/pages/message/message_page.dart';
+import 'package:flutter_qyyim/pages/search/search.dart';
 
 void main() => runApp(MaterialApp(
   // Flutter去除右上角Debug标签

@@ -2,7 +2,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/chat/model/chat_data.dart';
+import 'package:flutter_qyyim/ui/message_view/text_msg.dart';
+
+import 'model/chat_data.dart';
 
 class SendMessageView extends StatefulWidget {
   final ChatData model;

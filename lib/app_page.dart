@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/contacts/contacts.dart';
-import 'package:flutter_qyyim/me/me_page.dart';
-import 'package:flutter_qyyim/message/message_page.dart';
+import 'package:flutter_qyyim/pages/contacts/contacts.dart';
+import 'package:flutter_qyyim/pages/me/me_page.dart';
+import 'package:flutter_qyyim/pages/message/message_page.dart';
 
 class AppPage extends StatefulWidget {
   @override

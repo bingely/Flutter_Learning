@@ -1,9 +1,11 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/chat/indicator_page_view.dart';
-import 'package:flutter_qyyim/chat/model/chat_data.dart';
-import 'package:flutter_qyyim/chat/send_messageview.dart';
+import 'package:flutter_qyyim/pages/chat/send_messageview.dart';
+
+import 'indicator_page_view.dart';
+import 'model/chat_data.dart';
+
 
 class ChatDetailsBody extends StatelessWidget {
   final ScrollController sC;

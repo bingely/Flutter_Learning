@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import './message_data.dart';
+import 'package:flutter_qyyim/common/touch_callback.dart';
+import 'message_data.dart';
 import 'package:date_format/date_format.dart';
-import '../common/touch_callback.dart';
 
 //聊天信息项
 class MessageItem extends StatelessWidget{
