@@ -28,7 +28,7 @@ class _SendMessageViewState extends State<SendMessageView> {
     var iosS = msgStr.contains('downloadFlag:') && msgStr.contains('second:');
     bool iosSound = isI && iosS;
     if (msgType == "Text" || iosText) {
-      return new TextMsg(msg['text'], widget.model);
+     // return new TextMsg(msg['text'], widget.model);
     } /*else if (msgType == "Image" || iosImg) {
       return new ImgMsg(msg, widget.model);
     } else if (msgType == 'Sound' || iosSound) {
@@ -36,5 +36,7 @@ class _SendMessageViewState extends State<SendMessageView> {
     } else {
       return new Text('未知消息');
     }*/
+    //return new Text('未知消息');
+    return new TextMsg(msg['text'], widget.model);
   }
 }

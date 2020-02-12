@@ -1,8 +1,10 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/config/const.dart';
+import 'package:flutter_qyyim/config/contacts.dart';
 
 class ChatDetailsRow extends StatefulWidget {
   final GestureTapCallback voiceOnTap;
+  final GestureTapCallback emojOnTap;
   final bool isVoice;
   final LayoutWidgetBuilder edit;
   final Widget more;
@@ -11,6 +13,7 @@ class ChatDetailsRow extends StatefulWidget {
 
   ChatDetailsRow({
     this.voiceOnTap,
+    this.emojOnTap,
     this.isVoice,
     this.edit,
     this.more,
@@ -47,13 +50,13 @@ class ChatDetailsRowState extends State<ChatDetailsRow> {
       child: new Container(
         height: 50.0,
         padding: EdgeInsets.symmetric(horizontal: 8.0),
-        /*decoration: BoxDecoration(
+        decoration: BoxDecoration(
           color: Color(AppColors.ChatBoxBg),
           border: Border(
             top: BorderSide(color: lineColor, width: Constants.DividerWidth),
             bottom: BorderSide(color: lineColor, width: Constants.DividerWidth),
           ),
-        ),*/
+        ),
         child: new Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -79,7 +82,9 @@ class ChatDetailsRowState extends State<ChatDetailsRow> {
             new InkWell(
               child: new Image.asset('assets/images/chat/ic_Emotion.webp',
                   width: 30, fit: BoxFit.cover),
-              onTap: () {},
+              onTap: () {
+                widget.emojOnTap();
+              },
             ),
             widget.more,
           ],

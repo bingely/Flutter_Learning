@@ -140,9 +140,3 @@ class AppPageState extends State<AppPage> {
     });
   }
 }
-
-
-// 这个怎么抽离
-class _BottomNavigationBarWidget extends BottomNavigationBar {
-  //type: BottomNavigationBarType
-}

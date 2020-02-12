@@ -27,7 +27,10 @@ dependencies:
   toast: any
   cached_network_image: any
 
-  provider: ^4.0.3
+  provider: ^3.0.0+1
+
+  emoji_picker: ^0.1.0
+  extended_text: ^0.6.6
 
   # webview
   #flutter_webview_plugin: "^0.3.0+2"

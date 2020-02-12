@@ -14,7 +14,7 @@ class WrapPage extends StatelessWidget {
         alignment: WrapAlignment.center,
         children: <Widget>[
           Chip(avatar: CircleAvatar(backgroundColor: Colors.blue,child: Text('A'))),
-          Chip(),
+          //Chip(),
         ],
       ),
     );

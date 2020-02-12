@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/common/route.dart';
+import 'package:flutter_qyyim/pages/me/emoj_page.dart';
 
 import 'ImItem.dart';
 
@@ -23,10 +25,36 @@ class MePage extends StatelessWidget{
             color: Colors.white,
             child: Column(
               children: <Widget>[
-                ImItem(
-                  imagePath: 'images/icon_me_message.png',
-                  title: '设置',
-                ),
+                new Center(
+                  child: RaisedButton(
+                    child: Text("test"),
+                    onPressed: (){
+                      print("hello");
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (buidContext){
+                            return EmojPage();
+                          }
+                      ));
+                    },
+                  ),
+                )
+                ,
+                GestureDetector(
+                  child: ImItem(
+                    imagePath: 'images/icon_me_message.png',
+                    title: '设置',
+                  ),
+                  onTap: (){
+                    print("hello");
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (buidContext){
+                        return EmojPage();
+                      }
+                    ));
+                    //routePush(new EmojPage());
+                  },
+                )
+                ,
                 Padding(
                   padding: EdgeInsets.only(left: 15.0, right: 15.0),
                   child: Divider(

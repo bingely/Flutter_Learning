@@ -78,6 +78,27 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.8"
+  emoji_picker:
+    dependency: "direct main"
+    description:
+      name: emoji_picker
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.0"
+  extended_text:
+    dependency: "direct main"
+    description:
+      name: extended_text
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.6.9"
+  extended_text_library:
+    dependency: transitive
+    description:
+      name: extended_text_library
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.5.3"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -135,13 +156,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.8"
-  nested:
-    dependency: transitive
-    description:
-      name: nested
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.0.4"
   path:
     dependency: transitive
     description:
@@ -183,7 +197,7 @@ packages:
       name: provider
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "4.0.3"
+    version: "3.2.0"
   quiver:
     dependency: transitive
     description:
@@ -317,4 +331,4 @@ packages:
     version: "3.5.0"
 sdks:
   dart: ">=2.6.0 <3.0.0"
-  flutter: ">=1.12.13+hotfix.4 <2.0.0"
+  flutter: ">=1.12.13+hotfix.4 <1.12.16"

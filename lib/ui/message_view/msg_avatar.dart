@@ -21,9 +21,7 @@ class MsgAvatar extends StatelessWidget {
         ),
         margin: EdgeInsets.only(right: 10.0),
         child: new ImageView(
-          img: model.id == globalModel.account
-              ? globalModel.avatar??defIcon
-              : model.avatar,
+          img: defIcon,
           height: 50,
           width: 50,
           fit: BoxFit.cover,

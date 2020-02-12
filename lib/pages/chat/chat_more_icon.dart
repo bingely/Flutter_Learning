@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/common/check.dart';
 
 import 'package:flutter_qyyim/common/commom_button.dart';
+import 'package:flutter_qyyim/config/const.dart';
 
 class ChatMoreIcon extends StatelessWidget {
   final bool isMore;
@@ -17,7 +19,7 @@ class ChatMoreIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return value != ""
+    return strNoEmpty(value)
         ? new ComMomButton(
             text: '发送',
             style: TextStyle(color: Colors.white),
@@ -32,7 +34,7 @@ class ChatMoreIcon extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 5.0),
               child: new Image.asset(
                 'assets/images/chat/ic_chat_more.webp',
-                color: Colors.green,
+                color: mainTextColor,
                 fit: BoxFit.cover,
               ),
             ),

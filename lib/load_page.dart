@@ -12,14 +12,13 @@ class LoadPageState extends State<LoadPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(Duration(milliseconds: 500), () {
       Navigator.pushReplacementNamed(context, 'app');
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Center(
       child: Stack(
         children: <Widget>[
