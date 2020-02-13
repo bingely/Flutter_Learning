@@ -43,7 +43,7 @@ class EmojiUitl {
 
   Map<String, String> get emojiMap => _emojiMap;
 
-  final String _emojiFilePath = "assets";
+  final String _emojiFilePath = "assets/emoj";
 
   static EmojiUitl _instance;
   static EmojiUitl get instance {

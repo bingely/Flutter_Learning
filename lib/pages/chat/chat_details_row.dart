@@ -76,7 +76,13 @@ class ChatDetailsRowState extends State<ChatDetailsRow> {
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(5.0)),
-                child: new LayoutBuilder(builder: widget.edit),
+                child: /*widget.isVoice
+                    ? new ChatVoice(
+                  voiceFile: (path) {
+                    setState(() => this.path = path);
+                  },
+                )
+                    :*/ new LayoutBuilder(builder: widget.edit),
               ),
             ),
             new InkWell(

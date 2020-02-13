@@ -6,6 +6,7 @@ import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/config/contacts.dart';
 import 'package:flutter_qyyim/ui/commom_bar.dart';
 import 'package:flutter_qyyim/ui/main_input.dart';
+import 'package:flutter_qyyim/ui/special_text/emoji_text.dart';
 
 import 'chat_details_body.dart';
 import 'chat_details_row.dart';
@@ -35,13 +36,13 @@ class ChatePageState extends State<ChatPage> {
   List<ChatData> chatData = [];
   bool _isVoice = false;
   bool _isMore = false;
+  bool _isEmoj = false;
   double keyboardHeight = 270.0;
 
   TextEditingController _textController = TextEditingController();
   FocusNode _focusNode = new FocusNode();
   ScrollController _sC = ScrollController();
   PageController pageC = new PageController();
-
 
   @override
   void initState() {
@@ -50,7 +51,7 @@ class ChatePageState extends State<ChatPage> {
 
     _sC.addListener(() => FocusScope.of(context).requestFocus(new FocusNode()));
     //initPlatformState();
-   // Notice.addListener(WeChatActions.msg(), (v) => getChatMsgData());
+    // Notice.addListener(WeChatActions.msg(), (v) => getChatMsgData());
   }
 
   @override
@@ -68,14 +69,20 @@ class ChatePageState extends State<ChatPage> {
           : new Spacer(),
       // 底部
       new ChatDetailsRow(
-        voiceOnTap: () => {},
-        emojOnTap: () => print("emojontap"),
+        voiceOnTap: () => onTapHandle(ButtonType.voice),
+        emojOnTap: () {
+          _isEmoj = true;
+          onTapHandle(ButtonType.more);
+        },
         isVoice: _isVoice,
         edit: edit,
         more: new ChatMoreIcon(
           value: _textController.text,
           onTap: () => _handleSubmittedData(_textController.text),
-          moreTap: () => onTapHandle(ButtonType.more),
+          moreTap: () {
+            _isEmoj = false;
+            onTapHandle(ButtonType.more);
+          },
         ),
         id: widget.id,
         type: widget.type,
@@ -85,17 +92,19 @@ class ChatePageState extends State<ChatPage> {
         height: _isMore && !_focusNode.hasFocus ? keyboardHeight : 0.0,
         width: winWidth(context),
         color: Color(AppColors.ChatBoxBg),
-        child: new IndicatorPageView(
-          pageC: pageC,
-          pages: List.generate(2, (index) {
-            return new ChatMorePage(
-              index: index,
-              id: widget.id,
-              type: widget.type,
-              keyboardHeight: keyboardHeight,
-            );
-          }),
-        ),
+        child: _isEmoj
+            ? buildEmojiGird()
+            : new IndicatorPageView(
+                pageC: pageC,
+                pages: List.generate(2, (index) {
+                  return new ChatMorePage(
+                    index: index,
+                    id: widget.id,
+                    type: widget.type,
+                    keyboardHeight: keyboardHeight,
+                  );
+                }),
+              ),
       ),
     ];
 
@@ -106,6 +115,24 @@ class ChatePageState extends State<ChatPage> {
         decoration: BoxDecoration(color: chatBg),
         child: new Column(children: body),
       ),
+    );
+  }
+
+  Widget buildEmojiGird() {
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 8, crossAxisSpacing: 10.0, mainAxisSpacing: 10.0),
+      itemBuilder: (context, index) {
+        return GestureDetector(
+          child: Image.asset(EmojiUitl.instance.emojiMap["[${index + 1}]"]),
+          behavior: HitTestBehavior.translucent,
+          onTap: () {
+            // insertText("[${index + 1}]");
+          },
+        );
+      },
+      itemCount: EmojiUitl.instance.emojiMap.length,
+      padding: EdgeInsets.all(5.0),
     );
   }
 
@@ -122,10 +149,12 @@ class ChatePageState extends State<ChatPage> {
   onTapHandle(ButtonType type) {
     setState(() {
       if (type == ButtonType.voice) {
+        _isEmoj = false;
+
         _focusNode.unfocus();
         _isMore = false;
         _isVoice = !_isVoice;
-      } else {
+      } else if (type == ButtonType.more) {
         _isVoice = false;
         if (_focusNode.hasFocus) {
           _focusNode.unfocus();
@@ -142,14 +171,12 @@ class ChatePageState extends State<ChatPage> {
     chatData.insert(0, new ChatData(msg: {"text": text}));
     // 刷新数据源 TODO
     //await sendTextMsg('${widget.id}', widget.type, text);
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   Widget edit(context, size) {
     // 计算当前的文本需要占用的行数
-    TextSpan _text = TextSpan(text: _textController.text);
+    TextSpan _text = TextSpan(text: _textController.text, style: AppStyles.ChatBoxTextStyle);
 
     TextPainter _tp = TextPainter(
         text: _text,
@@ -173,12 +200,12 @@ class ChatePageState extends State<ChatPage> {
       controller: _textController,
       focusNode: _focusNode,
       maxLines: 99,
-      // cursorColor: const Color(AppColors.ChatBoxCursorColor),
+      cursorColor: const Color(AppColors.ChatBoxCursorColor),
       decoration: InputDecoration(
           border: InputBorder.none, contentPadding: const EdgeInsets.all(5.0)),
       onTap: () => setState(() {}),
       onChanged: (v) => setState(() {}),
-      //style: AppStyles.ChatBoxTextStyle,
+      style: AppStyles.ChatBoxTextStyle,
     );
   }
 }

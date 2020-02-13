@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/common/ui.dart';
+import 'package:flutter_qyyim/common/win_media.dart';
+import 'package:flutter_qyyim/config/const.dart';
 
 
 class MoreItemCard extends StatelessWidget {
@@ -11,12 +14,12 @@ class MoreItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double _margin =
-        keyboardHeight != null && keyboardHeight != 0.0 ? keyboardHeight : 0.0;
+    keyboardHeight != null && keyboardHeight != 0.0 ? keyboardHeight : 0.0;
     double _top = _margin != 0.0 ? _margin / 10 : 20.0;
 
     return new Container(
       padding: EdgeInsets.only(top: _top, bottom: 5.0),
-      width: 100,
+      width: (winWidth(context) - 70) / 4,
       child: new Column(
         children: <Widget>[
           new Container(
@@ -45,10 +48,10 @@ class MoreItemCard extends StatelessWidget {
               ),
             ),
           ),
-          //new prefix0.Space(height: mainSpace / 2),
+          new Space(height: mainSpace / 2),
           new Text(
             name ?? '',
-            style: TextStyle(color: Colors.red, fontSize: 11),
+            style: TextStyle(color: mainTextColor, fontSize: 11),
           ),
         ],
       ),

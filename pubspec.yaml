@@ -32,6 +32,7 @@ dependencies:
   emoji_picker: ^0.1.0
   #extended_text: ^0.6.6
   extended_text_field: ^0.4.9
+  extended_text: any
 
 
   # webview
@@ -196,4 +197,52 @@ flutter:
 
     - assets/data/friends.json
 
+    - assets/emoj/1.png
+    - assets/emoj/2.png
+    - assets/emoj/3.png
+    - assets/emoj/4.png
+    - assets/emoj/5.png
+    - assets/emoj/6.png
+    - assets/emoj/7.png
+    - assets/emoj/8.png
+    - assets/emoj/9.png
+    - assets/emoj/10.png
+    - assets/emoj/11.png
+    - assets/emoj/12.png
+    - assets/emoj/13.png
+    - assets/emoj/14.png
+    - assets/emoj/15.png
+    - assets/emoj/16.png
+    - assets/emoj/17.png
+    - assets/emoj/18.png
+    - assets/emoj/19.png
+    - assets/emoj/20.png
+    - assets/emoj/21.png
+    - assets/emoj/22.png
+    - assets/emoj/23.png
+    - assets/emoj/24.png
+    - assets/emoj/25.png
+    - assets/emoj/26.png
+    - assets/emoj/27.png
+    - assets/emoj/28.png
+    - assets/emoj/29.png
+    - assets/emoj/30.png
+    - assets/emoj/31.png
+    - assets/emoj/32.png
+    - assets/emoj/33.png
+    - assets/emoj/34.png
+    - assets/emoj/35.png
+    - assets/emoj/36.png
+    - assets/emoj/37.png
+    - assets/emoj/38.png
+    - assets/emoj/39.png
+    - assets/emoj/40.png
+    - assets/emoj/41.png
+    - assets/emoj/42.png
+    - assets/emoj/43.png
+    - assets/emoj/44.png
+    - assets/emoj/45.png
+    - assets/emoj/46.png
+    - assets/emoj/47.png
+    - assets/emoj/48.png
 

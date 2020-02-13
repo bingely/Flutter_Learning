@@ -1,10 +1,10 @@
-import 'package:extended_text_field/extended_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_qyyim/common/win_media.dart';
 import 'package:flutter_qyyim/ui/edit/text_span_builder.dart';
 import 'package:flutter_qyyim/ui/fluttercadis/my_extended_text_selection_controls.dart';
 import 'package:flutter_qyyim/ui/pop/magic_pop.dart';
+import 'package:extended_text/extended_text.dart';
 
 
 class TextItemContainer extends StatefulWidget {
@@ -54,7 +54,10 @@ class _TextItemContainerState extends State<TextItemContainer> {
           specialTextSpanBuilder: _spanBuilder,
           style: TextStyle(fontSize: 15),
         ),*/
-          child: ExtendedTextField(
+          child: ExtendedText(
+              widget.text
+          ),
+          /*child: ExtendedTextField(
             specialTextSpanBuilder: MySpecialTextSpanBuilder(
               showAtBackground: true,
             ),
@@ -62,7 +65,22 @@ class _TextItemContainerState extends State<TextItemContainer> {
             textSelectionControls: _myExtendedMaterialTextSelectionControls,
             maxLines: null,
             focusNode: _focusNode,
-          ),
+            decoration: InputDecoration(
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      //sessions.insert(0, _textEditingController.text);
+                      _textEditingController.value =
+                          _textEditingController.value.copyWith(
+                              text: "",
+                              selection: TextSelection.collapsed(offset: 0),
+                              composing: TextRange.empty);
+                    });
+                  },
+                  child: Icon(Icons.send),
+                ),
+                contentPadding: EdgeInsets.all(12.0)),
+          ),*/
         ));
   }
 }
