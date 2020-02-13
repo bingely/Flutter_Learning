@@ -30,7 +30,9 @@ dependencies:
   provider: ^3.0.0+1
 
   emoji_picker: ^0.1.0
-  extended_text: ^0.6.6
+  #extended_text: ^0.6.6
+  extended_text_field: ^0.4.9
+
 
   # webview
   #flutter_webview_plugin: "^0.3.0+2"
@@ -44,7 +46,6 @@ dependencies:
   #permission_handler: ^3.1.0
   # 录音插件
   #flutter_plugin_record: ^0.0.9
-
 
 
 

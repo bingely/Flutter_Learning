@@ -85,13 +85,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.1.0"
-  extended_text:
+  extended_text_field:
     dependency: "direct main"
     description:
-      name: extended_text
+      name: extended_text_field
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.6.9"
+    version: "0.4.9"
   extended_text_library:
     dependency: transitive
     description:
@@ -331,4 +331,4 @@ packages:
     version: "3.5.0"
 sdks:
   dart: ">=2.6.0 <3.0.0"
-  flutter: ">=1.12.13+hotfix.4 <1.12.16"
+  flutter: ">=1.12.13+hotfix.4 <2.0.0"
