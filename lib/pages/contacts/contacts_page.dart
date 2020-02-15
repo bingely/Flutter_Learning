@@ -184,6 +184,8 @@ class _ContactsPageState extends State<ContactsPage>
         ),
       );
     }
-    return new Scaffold(body: new Stack(children: body));
+    return new Scaffold(
+        appBar: AppBar(title: Text("联系人")),
+        body: new Stack(children: body));
   }
 }

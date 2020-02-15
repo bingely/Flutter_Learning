@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/common/route.dart';
 
 import 'ImItem.dart';
 
@@ -7,6 +6,7 @@ class MePage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text("我的")),
       body: ListView(
         children: <Widget>[
           // 头像部分
