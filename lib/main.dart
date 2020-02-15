@@ -7,6 +7,7 @@ import 'app.dart';
 import 'config/provider_config.dart';
 import 'config/storage_manager.dart';
 
+/// 应用入口处
 Future<void> main() async {
   /// 确保初始化
   WidgetsFlutterBinding.ensureInitialized();

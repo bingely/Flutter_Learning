@@ -6,10 +6,10 @@ import 'package:flutter_qyyim/pages/search/search.dart';
 import 'package:flutter_qyyim/provider/global_model.dart';
 import 'package:provider/provider.dart';
 
-import 'app_page.dart';
+import 'pages/root_page.dart';
 import 'common/route.dart';
 import 'config/const.dart';
-import 'load_page.dart';
+import 'pages/load_page.dart';
 
 class MyApp extends StatefulWidget {
   @override
@@ -31,14 +31,14 @@ class _MyAppState extends State<MyApp> {
       title: model.appName,
       theme: ThemeData(
         scaffoldBackgroundColor: bgColor,
-        hintColor: Colors.grey.withOpacity(0.3),
-        splashColor: Colors.transparent,
-        canvasColor: Colors.transparent,
+        //hintColor: Colors.grey.withOpacity(0.3),
+        //splashColor: Colors.transparent,
+        //canvasColor: Colors.transparent,
       ),
       debugShowCheckedModeBanner: false,
       locale: model.currentLocale,
       routes: <String, WidgetBuilder>{
-        'app': (BuildContext context) => AppPage(),
+        'app': (BuildContext context) => RootPage(),
         'chat': (BuildContext context) => ChatPage(),
         'msglist': (BuildContext context) => MessagePage(),
         'search': (BuildContext context) => SearchWidget()

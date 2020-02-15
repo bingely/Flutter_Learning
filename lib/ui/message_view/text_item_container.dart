@@ -24,6 +24,8 @@ class _TextItemContainerState extends State<TextItemContainer> {
   TextEditingController _textEditingController = TextEditingController();
   MyExtendedMaterialTextSelectionControls _myExtendedMaterialTextSelectionControls = MyExtendedMaterialTextSelectionControls();
 
+
+  MySpecialTextSpanBuilder _mySpecialTextSpanBuilder = MySpecialTextSpanBuilder();
   @override
   Widget build(BuildContext context) {
     return new MagicPop(
@@ -47,15 +49,13 @@ class _TextItemContainerState extends State<TextItemContainer> {
             borderRadius: BorderRadius.all(Radius.circular(5.0)),
           ),
           margin: EdgeInsets.only(right: 7.0),
-          /*child: ExtendedTextField(
-          widget.text ?? '文字为空',
-          maxLines: 99,
-          overflow: TextOverflow.ellipsis,
-          specialTextSpanBuilder: _spanBuilder,
-          style: TextStyle(fontSize: 15),
-        ),*/
           child: ExtendedText(
-              widget.text
+              widget.text,
+              textAlign: TextAlign.left,
+              specialTextSpanBuilder: _mySpecialTextSpanBuilder,
+              onSpecialTextTap: (value) {
+
+              }
           ),
           /*child: ExtendedTextField(
             specialTextSpanBuilder: MySpecialTextSpanBuilder(

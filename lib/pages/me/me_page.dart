@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/route.dart';
-import 'package:flutter_qyyim/pages/me/emoj_page.dart';
 
 import 'ImItem.dart';
 
@@ -32,7 +31,7 @@ class MePage extends StatelessWidget{
                       print("hello");
                       Navigator.push(context, MaterialPageRoute(
                           builder: (buidContext){
-                            return EmojPage();
+                           // return EmojPage();
                           }
                       ));
                     },
@@ -48,7 +47,7 @@ class MePage extends StatelessWidget{
                     print("hello");
                     Navigator.push(context, MaterialPageRoute(
                       builder: (buidContext){
-                        return EmojPage();
+                       // return EmojPage();
                       }
                     ));
                     //routePush(new EmojPage());

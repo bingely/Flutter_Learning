@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:extended_text_field/extended_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/win_media.dart';
 import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/config/contacts.dart';
 import 'package:flutter_qyyim/ui/commom_bar.dart';
+import 'package:flutter_qyyim/ui/edit/text_span_builder.dart';
 import 'package:flutter_qyyim/ui/main_input.dart';
 import 'package:flutter_qyyim/ui/special_text/emoji_text.dart';
 
@@ -127,13 +129,44 @@ class ChatePageState extends State<ChatPage> {
           child: Image.asset(EmojiUitl.instance.emojiMap["[${index + 1}]"]),
           behavior: HitTestBehavior.translucent,
           onTap: () {
-            // insertText("[${index + 1}]");
+             insertText("[${index + 1}]");
           },
         );
       },
       itemCount: EmojiUitl.instance.emojiMap.length,
       padding: EdgeInsets.all(5.0),
     );
+  }
+
+  void insertText(String text) {
+    var value = _textController.value;
+    var start = value.selection.baseOffset;
+    var end = value.selection.extentOffset;
+    if (value.selection.isValid) {
+      String newText = '';
+      if (value.selection.isCollapsed) {
+        if (end > 0) {
+          newText += value.text.substring(0, end);
+        }
+        newText += text;
+        if (value.text.length > end) {
+          newText += value.text.substring(end, value.text.length);
+        }
+      } else {
+        newText = value.text.replaceRange(start, end, text);
+        end = start;
+      }
+
+      _textController.value = value.copyWith(
+          text: newText,
+          selection: value.selection.copyWith(
+              baseOffset: end + text.length, extentOffset: end + text.length));
+    } else {
+      _textController.value = TextEditingValue(
+          text: text,
+          selection:
+          TextSelection.fromPosition(TextPosition(offset: text.length)));
+    }
   }
 
   Future getChatMsgData() async {
@@ -184,28 +217,28 @@ class ChatePageState extends State<ChatPage> {
         textAlign: TextAlign.left);
     _tp.layout(maxWidth: size.maxWidth);
 
-//    return ExtendedTextField(
-//      specialTextSpanBuilder: TextSpanBuilder(showAtBackground: true),
-//      onTap: () => setState(() {}),
-//      onChanged: (v) => setState(() {}),
-//      decoration: InputDecoration(
-//          border: InputBorder.none, contentPadding: const EdgeInsets.all(5.0)),
-//      controller: _textController,
-//      focusNode: _focusNode,
-//      maxLines: 99,
-//      cursorColor: const Color(AppColors.ChatBoxCursorColor),
-//      style: AppStyles.ChatBoxTextStyle,
-//    );
-    return TextField(
+    return ExtendedTextField(
+      specialTextSpanBuilder: MySpecialTextSpanBuilder(showAtBackground: true),
+      onTap: () => setState(() {}),
+      onChanged: (v) => setState(() {}),
+      decoration: InputDecoration(
+          border: InputBorder.none, contentPadding: const EdgeInsets.all(5.0)),
       controller: _textController,
       focusNode: _focusNode,
       maxLines: 99,
       cursorColor: const Color(AppColors.ChatBoxCursorColor),
-      decoration: InputDecoration(
-          border: InputBorder.none, contentPadding: const EdgeInsets.all(5.0)),
-      onTap: () => setState(() {}),
-      onChanged: (v) => setState(() {}),
       style: AppStyles.ChatBoxTextStyle,
     );
+//    return TextField(
+//      controller: _textController,
+//      focusNode: _focusNode,
+//      maxLines: 99,
+//      cursorColor: const Color(AppColors.ChatBoxCursorColor),
+//      decoration: InputDecoration(
+//          border: InputBorder.none, contentPadding: const EdgeInsets.all(5.0)),
+//      onTap: () => setState(() {}),
+//      onChanged: (v) => setState(() {}),
+//      style: AppStyles.ChatBoxTextStyle,
+//    );
   }
 }
