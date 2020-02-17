@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/config/contacts.dart';
 
+import 'chat_voice.dart';
+
 class ChatDetailsRow extends StatefulWidget {
   final GestureTapCallback voiceOnTap;
   final GestureTapCallback emojOnTap;
@@ -76,13 +78,13 @@ class ChatDetailsRowState extends State<ChatDetailsRow> {
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(5.0)),
-                child: /*widget.isVoice
+                child: widget.isVoice
                     ? new ChatVoice(
                   voiceFile: (path) {
                     setState(() => this.path = path);
                   },
                 )
-                    :*/ new LayoutBuilder(builder: widget.edit),
+                    : new LayoutBuilder(builder: widget.edit),
               ),
             ),
             new InkWell(

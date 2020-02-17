@@ -1,7 +1,8 @@
 
 import 'package:flutter/material.dart';
-//import 'package:image_picker/image_picker.dart';
+import 'package:image_picker/image_picker.dart';
 
+import 'handle/message_handle.dart';
 import 'more_item_card.dart';
 
 class ChatMorePage extends StatefulWidget {
@@ -20,29 +21,21 @@ class _ChatMorePageState extends State<ChatMorePage> {
   List data = [
     {"name": "相册", "icon": "assets/images/chat/ic_details_photo.webp"},
     {"name": "拍摄", "icon": "assets/images/chat/ic_details_camera.webp"},
-    {"name": "视频通话", "icon": "assets/images/chat/ic_details_media.webp"},
-    {"name": "位置", "icon": "assets/images/chat/ic_details_localtion.webp"},
-    {"name": "红包", "icon": "assets/images/chat/ic_details_red.webp"},
-    {"name": "转账", "icon": "assets/images/chat/ic_details_transfer.webp"},
     {"name": "语音输入", "icon": "assets/images/chat/ic_chat_voice.webp"},
-    {"name": "我的收藏", "icon": "assets/images/chat/ic_details_favorite.webp"},
   ];
 
-  List dataS = [
-    {"name": "名片", "icon": "assets/images/chat/ic_details_card.webp"},
-    {"name": "文件", "icon": "assets/images/chat/ic_details_file.webp"},
-  ];
 
   action(String name)async {
     if (name == '相册') {
-      /*sendImageMsg(widget.id, widget.type, source: ImageSource.gallery,
+      sendImageMsg(widget.id, widget.type, source: ImageSource.gallery,
           callback: (v) {
         if (v == null) return;
-        Notice.send(WeChatActions.msg(), v ?? '');
-      });*/
-      //ImagePicker.pickImage(source:ImageSource.gallery);
+        print(v);
+        //Notice.send(WeChatActions.msg(), v ?? '');
+      });
+      ImagePicker.pickImage(source:ImageSource.gallery);
     } else if (name == '拍摄') {
-     // ImagePicker.pickImage(source:ImageSource.camera);
+      ImagePicker.pickImage(source:ImageSource.camera);
       /*try {
         List<CameraDescription> cameras;
 
@@ -82,10 +75,12 @@ class _ChatMorePageState extends State<ChatMorePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.index == 0) {
+    /*if (widget.index == 0) {
       return itemBuild(data);
     } else {
       return itemBuild(dataS);
-    }
+    }*/
+
+    return itemBuild(data);
   }
 }
