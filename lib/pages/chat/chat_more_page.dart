@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+//import 'package:image_picker/image_picker.dart';
 
 import 'more_item_card.dart';
 
@@ -39,8 +40,9 @@ class _ChatMorePageState extends State<ChatMorePage> {
         if (v == null) return;
         Notice.send(WeChatActions.msg(), v ?? '');
       });*/
+      //ImagePicker.pickImage(source:ImageSource.gallery);
     } else if (name == '拍摄') {
-
+     // ImagePicker.pickImage(source:ImageSource.camera);
       /*try {
         List<CameraDescription> cameras;
 

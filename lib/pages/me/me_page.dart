@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/common/route.dart';
+import 'package:flutter_qyyim/pages/search/search.dart';
 
 import 'ImItem.dart';
 
@@ -29,29 +31,28 @@ class MePage extends StatelessWidget{
                     child: Text("test"),
                     onPressed: (){
                       print("hello");
-                      Navigator.push(context, MaterialPageRoute(
+                      /*Navigator.push(context, MaterialPageRoute(
                           builder: (buidContext){
-                           // return EmojPage();
+                           return SearchWidget();
                           }
-                      ));
+                      ));*/
+
+                      routePush(new SearchWidget());
+
                     },
                   ),
-                )
-                ,
-                GestureDetector(
-                  child: ImItem(
-                    imagePath: 'images/icon_me_message.png',
-                    title: '设置',
+                ),
+                new Center(
+                  child: GestureDetector(
+                    child: ImItem(
+                      imagePath: 'images/icon_me_message.png',
+                      title: '设置',
+                    ),
+                    onTap: (){
+                      print("hello");
+                      routePush(new SearchWidget());
+                    },
                   ),
-                  onTap: (){
-                    print("hello");
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (buidContext){
-                       // return EmojPage();
-                      }
-                    ));
-                    //routePush(new EmojPage());
-                  },
                 )
                 ,
                 Padding(
