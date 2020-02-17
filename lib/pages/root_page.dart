@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/pages/contacts/contacts_page.dart';
 import 'package:flutter_qyyim/pages/me/me_page.dart';
 import 'package:flutter_qyyim/pages/message/message_page.dart';
+import 'package:badges/badges.dart';
 
 /// 用来放置几个大模块的容器页面
 class RootPage extends StatefulWidget {
@@ -42,6 +43,7 @@ class RootPageState extends State<RootPage> {
           _controller.jumpToPage(index);
           setState(() {
             _currentIndex = index;
+            print(index);
           });
         }),
         items: [
@@ -53,16 +55,29 @@ class RootPageState extends State<RootPage> {
     );
   }
 
-
   _bottomItem(String title, IconData icon, int index) {
     return BottomNavigationBarItem(
-        icon: Icon(
-          icon,
-          color: _defaultColor,
+        icon: Badge(
+          child: Icon(
+            icon,
+            color: _defaultColor,
+          ),
+          badgeContent: Text(
+            "3",
+            style: TextStyle(color: Colors.white),
+          ),
+          showBadge: icon == Icons.chat,
         ),
-        activeIcon: Icon(
-          icon,
-          color: _activeColor,
+        activeIcon: Badge(
+          child: Icon(
+            icon,
+            color: _activeColor,
+          ),
+          badgeContent: Text(
+            "3",
+            style: TextStyle(color: Colors.white),
+          ),
+          showBadge: icon == Icons.chat,
         ),
         title: Text(
           title,
