@@ -9,11 +9,13 @@ import 'package:flutter_qyyim/ui/commom_bar.dart';
 import 'package:flutter_qyyim/ui/edit/text_span_builder.dart';
 import 'package:flutter_qyyim/ui/main_input.dart';
 import 'package:flutter_qyyim/ui/special_text/emoji_text.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'chat_details_body.dart';
 import 'chat_details_row.dart';
 import 'chat_more_icon.dart';
 import 'chat_more_page.dart';
+import 'handle/message_handle.dart';
 import 'indicator_page_view.dart';
 import 'model/chat_data.dart';
 
@@ -53,7 +55,7 @@ class ChatePageState extends State<ChatPage> {
 
     _sC.addListener(() => FocusScope.of(context).requestFocus(new FocusNode()));
     //initPlatformState();
-    // Notice.addListener(WeChatActions.msg(), (v) => getChatMsgData());
+    //Notice.addListener(WeChatActions.msg(), (v) => getChatMsgData());
   }
 
   @override
@@ -104,6 +106,15 @@ class ChatePageState extends State<ChatPage> {
                     id: widget.id,
                     type: widget.type,
                     keyboardHeight: keyboardHeight,
+                    moreTap: () {
+                      sendImageMsg(widget.id, widget.type,
+                          source: ImageSource.gallery, callback: (v) {
+                        if (v == null) return;
+                        print(v);
+                        _handleSubmittedImgData(v);
+                        // Notice.send(WeChatActions.msg(), v ?? '');
+                      });
+                    },
                   );
                 }),
               ),
@@ -129,7 +140,7 @@ class ChatePageState extends State<ChatPage> {
           child: Image.asset(EmojiUitl.instance.emojiMap["[${index + 1}]"]),
           behavior: HitTestBehavior.translucent,
           onTap: () {
-             insertText("[${index + 1}]");
+            insertText("[${index + 1}]");
           },
         );
       },
@@ -165,7 +176,7 @@ class ChatePageState extends State<ChatPage> {
       _textController.value = TextEditingValue(
           text: text,
           selection:
-          TextSelection.fromPosition(TextPosition(offset: text.length)));
+              TextSelection.fromPosition(TextPosition(offset: text.length)));
     }
   }
 
@@ -201,7 +212,20 @@ class ChatePageState extends State<ChatPage> {
 
   _handleSubmittedData(String text) async {
     _textController.clear();
-    chatData.insert(0, new ChatData(msg: {"text": text}));
+    chatData.insert(0, new ChatData(msg: {"text": text, "type": "Text"}));
+    // 刷新数据源 TODO
+    //await sendTextMsg('${widget.id}', widget.type, text);
+    setState(() {});
+  }
+
+  _handleSubmittedImgData(String text) async {
+    _textController.clear();
+    chatData.insert(
+        0,
+        new ChatData(msg: {
+          "imageList": [text],
+          "type": "Image"
+        }));
     // 刷新数据源 TODO
     //await sendTextMsg('${widget.id}', widget.type, text);
     setState(() {});
@@ -209,7 +233,8 @@ class ChatePageState extends State<ChatPage> {
 
   Widget edit(context, size) {
     // 计算当前的文本需要占用的行数
-    TextSpan _text = TextSpan(text: _textController.text, style: AppStyles.ChatBoxTextStyle);
+    TextSpan _text =
+        TextSpan(text: _textController.text, style: AppStyles.ChatBoxTextStyle);
 
     TextPainter _tp = TextPainter(
         text: _text,
@@ -229,16 +254,5 @@ class ChatePageState extends State<ChatPage> {
       cursorColor: const Color(AppColors.ChatBoxCursorColor),
       style: AppStyles.ChatBoxTextStyle,
     );
-//    return TextField(
-//      controller: _textController,
-//      focusNode: _focusNode,
-//      maxLines: 99,
-//      cursorColor: const Color(AppColors.ChatBoxCursorColor),
-//      decoration: InputDecoration(
-//          border: InputBorder.none, contentPadding: const EdgeInsets.all(5.0)),
-//      onTap: () => setState(() {}),
-//      onChanged: (v) => setState(() {}),
-//      style: AppStyles.ChatBoxTextStyle,
-//    );
   }
 }

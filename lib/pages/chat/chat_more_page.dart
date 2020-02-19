@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -11,10 +10,13 @@ class ChatMorePage extends StatefulWidget {
   final int type;
   final double keyboardHeight;
 
-  ChatMorePage({this.index = 0, this.id, this.type, this.keyboardHeight});
+  final GestureTapCallback moreTap;
+
+  ChatMorePage(
+      {this.index = 0, this.id, this.type, this.keyboardHeight, this.moreTap});
 
   @override
-  _ChatMorePageState createState() => _ChatMorePageState();
+  _ChatMorePageState createState() => _ChatMorePageState(moreTap);
 }
 
 class _ChatMorePageState extends State<ChatMorePage> {
@@ -24,18 +26,25 @@ class _ChatMorePageState extends State<ChatMorePage> {
     {"name": "语音输入", "icon": "assets/images/chat/ic_chat_voice.webp"},
   ];
 
+  var moreTapt;
 
-  action(String name)async {
+
+  _ChatMorePageState(moreTapt){
+    this.moreTapt = moreTapt;
+  }
+
+
+  action(String name) async {
     if (name == '相册') {
       sendImageMsg(widget.id, widget.type, source: ImageSource.gallery,
           callback: (v) {
         if (v == null) return;
         print(v);
-        //Notice.send(WeChatActions.msg(), v ?? '');
+        // Notice.send(WeChatActions.msg(), v ?? '');
       });
-      ImagePicker.pickImage(source:ImageSource.gallery);
+      //ImagePicker.pickImage(source: ImageSource.gallery);
     } else if (name == '拍摄') {
-      ImagePicker.pickImage(source:ImageSource.camera);
+      ImagePicker.pickImage(source: ImageSource.camera);
       /*try {
         List<CameraDescription> cameras;
 
@@ -66,7 +75,11 @@ class _ChatMorePageState extends State<ChatMorePage> {
             name: name,
             icon: icon,
             keyboardHeight: widget.keyboardHeight,
-            onPressed: () => action(name),
+            onPressed: () {
+              if (moreTapt != null) {
+                moreTapt();
+              }
+            },
           );
         }),
       ),
