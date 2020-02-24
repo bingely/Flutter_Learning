@@ -58,7 +58,7 @@ dependencies:
   #flutter_plugin_record: ^0.0.9
   flutter_sound: any
   #拍照
-  camera: 0.5.7+1
+  camera: ^0.5.7+4
   video_player: 0.10.0
   # 红点
   badges: ^1.1.0

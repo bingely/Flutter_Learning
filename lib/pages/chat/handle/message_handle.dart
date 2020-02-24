@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_qyyim/common/route.dart';
 import 'package:flutter_qyyim/config/t.dart';
+import 'package:flutter_qyyim/pages/chat/video/camera_app.dart';
 import 'package:flutter_qyyim/tool/handler_utils.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -53,8 +54,8 @@ Future<void> sendVedioMsg() async {
     WidgetsFlutterBinding.ensureInitialized();
     cameras = await availableCameras();
 
-    routePush(new ShootPage(cameras));
+    routePush(new CameraApp(cameras: cameras,));
   } on CameraException catch (e) {
-    logError(e.code, e.description);
+    //logError(e.code, e.description);
   }
 }
