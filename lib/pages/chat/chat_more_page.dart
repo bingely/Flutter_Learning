@@ -1,4 +1,9 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/common/route.dart';
+import 'package:flutter_qyyim/config/t.dart';
+import 'package:flutter_qyyim/pages/chat/shoot_page.dart';
+import 'package:flutter_qyyim/tool/handler_utils.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'handle/message_handle.dart';
@@ -9,8 +14,7 @@ class ChatMorePage extends StatefulWidget {
   final String id;
   final int type;
   final double keyboardHeight;
-
-  final GestureTapCallback moreTap;
+  final Callback moreTap;
 
   ChatMorePage(
       {this.index = 0, this.id, this.type, this.keyboardHeight, this.moreTap});
@@ -23,7 +27,6 @@ class _ChatMorePageState extends State<ChatMorePage> {
   List data = [
     {"name": "相册", "icon": "assets/images/chat/ic_details_photo.webp"},
     {"name": "拍摄", "icon": "assets/images/chat/ic_details_camera.webp"},
-    {"name": "语音输入", "icon": "assets/images/chat/ic_chat_voice.webp"},
   ];
 
   var moreTapt;
@@ -44,8 +47,8 @@ class _ChatMorePageState extends State<ChatMorePage> {
       });
       //ImagePicker.pickImage(source: ImageSource.gallery);
     } else if (name == '拍摄') {
-      ImagePicker.pickImage(source: ImageSource.camera);
-      /*try {
+      //ImagePicker.pickImage(source: ImageSource.camera);
+      try {
         List<CameraDescription> cameras;
 
         WidgetsFlutterBinding.ensureInitialized();
@@ -53,8 +56,8 @@ class _ChatMorePageState extends State<ChatMorePage> {
 
         routePush(new ShootPage(cameras));
       } on CameraException catch (e) {
-        logError(e.code, e.description);
-      }*/
+       logError(e.code, e.description);
+      }
 
     } else {
       //showToast(context,'敬请期待$name');
@@ -77,7 +80,7 @@ class _ChatMorePageState extends State<ChatMorePage> {
             keyboardHeight: widget.keyboardHeight,
             onPressed: () {
               if (moreTapt != null) {
-                moreTapt();
+                moreTapt(name);
               }
             },
           );

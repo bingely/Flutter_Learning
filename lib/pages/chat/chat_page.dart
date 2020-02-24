@@ -1,10 +1,13 @@
 import 'dart:async';
 
+import 'package:camera/camera.dart';
 import 'package:extended_text_field/extended_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/common/route.dart';
 import 'package:flutter_qyyim/common/win_media.dart';
 import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/config/contacts.dart';
+import 'package:flutter_qyyim/pages/chat/shoot_page.dart';
 import 'package:flutter_qyyim/ui/commom_bar.dart';
 import 'package:flutter_qyyim/ui/edit/text_span_builder.dart';
 import 'package:flutter_qyyim/ui/main_input.dart';
@@ -106,14 +109,20 @@ class ChatePageState extends State<ChatPage> {
                     id: widget.id,
                     type: widget.type,
                     keyboardHeight: keyboardHeight,
-                    moreTap: () {
-                      sendImageMsg(widget.id, widget.type,
-                          source: ImageSource.gallery, callback: (v) {
-                        if (v == null) return;
-                        print(v);
-                        _handleSubmittedImgData(v);
-                        // Notice.send(WeChatActions.msg(), v ?? '');
-                      });
+                    moreTap: (name) {
+                      print(index);
+                      if (name == '相册') {
+                        sendImageMsg(widget.id, widget.type,
+                            source: ImageSource.gallery, callback: (v) {
+                              if (v == null) return;
+                              print(v);
+                              _handleSubmittedImgData(v);
+                              // Notice.send(WeChatActions.msg(), v ?? '');
+                            });
+                      } else{
+                        sendVedioMsg();
+                      }
+
                     },
                   );
                 }),

@@ -50,6 +50,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.0"
+  camera:
+    dependency: "direct main"
+    description:
+      name: camera
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.5.7+1"
   charcode:
     dependency: transitive
     description:
@@ -206,12 +213,12 @@ packages:
     source: hosted
     version: "1.6.4"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.6.0"
+    version: "1.6.1"
   pedantic:
     dependency: transitive
     description:
@@ -371,6 +378,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.8"
+  video_player:
+    dependency: "direct main"
+    description:
+      name: video_player
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.10.0"
   xml:
     dependency: transitive
     description:
