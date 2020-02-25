@@ -20,21 +20,16 @@ class ChatMorePage extends StatefulWidget {
       {this.index = 0, this.id, this.type, this.keyboardHeight, this.moreTap});
 
   @override
-  _ChatMorePageState createState() => _ChatMorePageState(moreTap);
+  _ChatMorePageState createState() => _ChatMorePageState();
 }
 
 class _ChatMorePageState extends State<ChatMorePage> {
   List data = [
     {"name": "相册", "icon": "assets/images/chat/ic_details_photo.webp"},
     {"name": "拍摄", "icon": "assets/images/chat/ic_details_camera.webp"},
+    {"name": "视频", "icon": "assets/images/chat/ic_details_camera.webp"},
   ];
 
-  var moreTapt;
-
-
-  _ChatMorePageState(moreTapt){
-    this.moreTapt = moreTapt;
-  }
 
 
   action(String name) async {
@@ -79,8 +74,8 @@ class _ChatMorePageState extends State<ChatMorePage> {
             icon: icon,
             keyboardHeight: widget.keyboardHeight,
             onPressed: () {
-              if (moreTapt != null) {
-                moreTapt(name);
+              if (widget.moreTap != null) {
+                widget.moreTap(name);
               }
             },
           );

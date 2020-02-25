@@ -354,6 +354,9 @@ class _ShootPageState extends State<ShootPage> with WidgetsBindingObserver {
       if (mounted) setState(() {});
       if (controller.value.hasError) {
         showToast(context, 'Camera error ${controller.value.errorDescription}');
+
+        print('Camera error ${controller.value.errorDescription}');
+
       }
     });
 

@@ -119,8 +119,21 @@ class ChatePageState extends State<ChatPage> {
                               _handleSubmittedImgData(v);
                               // Notice.send(WeChatActions.msg(), v ?? '');
                             });
-                      } else{
-                        sendVedioMsg();
+                      } else if (name == "拍摄"){
+                        sendImageMsg(widget.id, widget.type,
+                            source: ImageSource.camera, callback: (v) {
+                              if (v == null) return;
+                              print(v);
+                              _handleSubmittedImgData(v);
+                              // Notice.send(WeChatActions.msg(), v ?? '');
+                            });
+                      }else {
+                        sendVideoMsg(widget.id, widget.type,
+                             callback: (v) {
+                              if (v == null) return;
+                              print("视频地址"+v);
+                              _handleSubmittedVideoData(v);
+                            });
                       }
 
                     },
@@ -234,6 +247,19 @@ class ChatePageState extends State<ChatPage> {
         new ChatData(msg: {
           "imageList": [text],
           "type": "Image"
+        }));
+    // 刷新数据源 TODO
+    //await sendTextMsg('${widget.id}', widget.type, text);
+    setState(() {});
+  }
+
+  _handleSubmittedVideoData(String text) async {
+    _textController.clear();
+    chatData.insert(
+        0,
+        new ChatData(msg: {
+          "videosrc": [text],
+          "type": "Video"
         }));
     // 刷新数据源 TODO
     //await sendTextMsg('${widget.id}', widget.type, text);
