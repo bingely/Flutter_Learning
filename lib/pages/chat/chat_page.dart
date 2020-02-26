@@ -7,7 +7,9 @@ import 'package:flutter_qyyim/common/route.dart';
 import 'package:flutter_qyyim/common/win_media.dart';
 import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/config/contacts.dart';
+import 'package:flutter_qyyim/pages/chat/camarademo/camera_screen.dart';
 import 'package:flutter_qyyim/pages/chat/shoot_page.dart';
+import 'package:flutter_qyyim/pages/chat/video/video_page.dart';
 import 'package:flutter_qyyim/ui/commom_bar.dart';
 import 'package:flutter_qyyim/ui/edit/text_span_builder.dart';
 import 'package:flutter_qyyim/ui/main_input.dart';
@@ -127,7 +129,13 @@ class ChatePageState extends State<ChatPage> {
                               _handleSubmittedImgData(v);
                               // Notice.send(WeChatActions.msg(), v ?? '');
                             });
-                      }else {
+                      } else if (name == "自定义视频"){
+                        final _cameraKey = GlobalKey<CameraScreenState>();
+                        //routePush(new VideoPage(key: _cameraKey));
+                        Navigator.pushNamed(context, "video_page",arguments: "url").then((url)=> _handleSubmittedVideoData(url)
+                        );
+                      }
+                      else {
                         sendVideoMsg(widget.id, widget.type,
                              callback: (v) {
                               if (v == null) return;

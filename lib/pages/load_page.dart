@@ -15,8 +15,8 @@ class LoadPageState extends State<LoadPage> {
   void initState() {
     super.initState();
     Future.delayed(Duration(milliseconds: 500), () {
-      //Navigator.pushReplacementNamed(context, 'app');
-      sendVedioMsg();
+      Navigator.pushReplacementNamed(context, 'app');
+      //sendVedioMsg();
     });
   }
 

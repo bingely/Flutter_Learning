@@ -2,10 +2,14 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_qyyim/pages/chat/camarademo/gallery.dart';
 import 'package:flutter_qyyim/pages/chat/camarademo/video_timer.dart';
 import 'package:flutter_qyyim/pages/chat/video/video_demo.dart';
 import 'package:flutter_qyyim/ui/show_toast.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:thumbnails/thumbnails.dart';
+import 'package:path/path.dart' as path;
 
 class VideoPage extends StatefulWidget {
   VideoPage({Key key}) : super(key: key);
@@ -49,6 +53,7 @@ class VideoPageState extends State<VideoPage> {
 
   @override
   Widget build(BuildContext context) {
+    // 检查相机初始化条件
     if (_controller != null) {
       if (!_controller.value.isInitialized) {
         return Container();
@@ -67,85 +72,223 @@ class VideoPageState extends State<VideoPage> {
       return Container();
     }
 
-    return new Scaffold(
+    return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
+      key: _scaffoldKey,
+      extendBody: false,
       body: Stack(
         children: <Widget>[
-          // 相机画面
-          Container(
-            child: Center(child: _cameraPreviewWidget()),
-            color: Colors.black,
-          ),
-          // 拍照或录制视频最后预览图
+          _buildCameraPreview(),
           Positioned(
-            right: 10,
-            top: MediaQuery.of(context).size.height / 2, // 状态栏高度的一半
-            child: _testWidget(),
-          ),
-          // 底部视图
-          _cameraBottomWidget(),
-        ],
-      ),
-    );
-  }
-
-  Widget _cameraPreviewWidget() {
-    return new AspectRatio(
-      aspectRatio: _controller.value.aspectRatio,
-      child: new CameraPreview(_controller),
-    );
-  }
-
-  Widget _cameraBottomWidget() {
-    return Positioned(
-      bottom: 30,
-      left: 0,
-      right: 0,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            width: 40,
-          ),
-          Column(
-            children: <Widget>[
-              Text(
-                '轻触拍照，长按摄像',
-                style: TextStyle(color: Colors.red),
+            top: 24.0,
+            left: 12.0,
+            child: IconButton(
+              icon: Icon(
+                Icons.switch_camera,
+                color: Colors.white,
               ),
-              new Listener(
-                child: new Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                  ),
-                  height: 60.0,
-                  width: 60.0,
-                ),
-                onPointerDown: (v) {
-                  setState(() {
-                    //开始计时
-                    onVideoRecordButtonPressed();
-                  });
+              onPressed: () {
+                _onCameraSwitch();
+              },
+            ),
+          ),
+          Positioned(
+            right: 0,
+            top: MediaQuery.of(context).size.height/2,
+            child: Container(
+              color: Colors.white,
+              margin: EdgeInsets.all(10.0),
+              height: 25.0,
+              child: FlatButton(
+                onPressed: () async {
+                    // 关闭当前页面，把视频路径传递回来 TODO
+                  List<FileSystemEntity> files = await _getAllImages();
+                  Navigator.pop(context,files[0].path);
                 },
-              )
-            ],
+                color: Colors.white,
+                child: Text(
+                  "发送"
+                ),
+              ),
+            ),
+          ),
+          if (_isRecordingMode)
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 32.0,
+              child: VideoTimer(
+                key: _timerKey,
+              ),
+            )
+        ],
+      ),
+      bottomNavigationBar: _buildBottomNavigationBar(),
+    );
+  }
+
+  Widget _buildBottomNavigationBar() {
+    return Container(
+      color: Colors.transparent,
+      height: 100.0,
+      width: double.infinity,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          FutureBuilder(
+            future: getLastImage(),
+            builder: (context, snapshot) {
+              if (snapshot.data == null) {
+                return Container(
+                  width: 40.0,
+                  height: 40.0,
+                );
+              }
+              return GestureDetector(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Gallery(),
+                  ),
+                ),
+                child: Container(
+                  width: 40.0,
+                  height: 40.0,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(4.0),
+                    child: Image.file(
+                      snapshot.data,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+          CircleAvatar(
+            backgroundColor: Colors.white,
+            radius: 28.0,
+            child: IconButton(
+              icon: Icon(
+                (_isRecordingMode)
+                    ? (_isRecording) ? Icons.stop : Icons.videocam
+                    : Icons.camera_alt,
+                size: 28.0,
+                color: (_isRecording) ? Colors.red : Colors.black,
+              ),
+              onPressed: () {
+                if (!_isRecordingMode) {
+                  _captureImage();
+                } else {
+                  if (_isRecording) {
+                    stopVideoRecording();
+                  } else {
+                    startVideoRecording();
+                  }
+                }
+              },
+            ),
+          ),
+          IconButton(
+            icon: Icon(
+              (_isRecordingMode) ? Icons.camera_alt : Icons.videocam,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              setState(() {
+                _isRecordingMode = !_isRecordingMode;
+              });
+            },
           ),
         ],
       ),
     );
   }
+
+  void _captureImage() async {
+    print('_captureImage');
+    if (_controller.value.isInitialized) {
+      SystemSound.play(SystemSoundType.click);
+      final Directory extDir = await getApplicationDocumentsDirectory();
+      final String dirPath = '${extDir.path}/media';
+      await Directory(dirPath).create(recursive: true);
+      final String filePath = '$dirPath/${_timestamp()}.jpeg';
+      print('path: $filePath');
+      await _controller.takePicture(filePath);
+      setState(() {});
+    }
+  }
+  Future<void> stopVideoRecording() async {
+    if (!_controller.value.isRecordingVideo) {
+      return null;
+    }
+    _timerKey.currentState.stopTimer();
+    setState(() {
+      _isRecording = false;
+    });
+
+    try {
+      await _controller.stopVideoRecording();
+    } on CameraException catch (e) {
+      _showCameraException(e);
+      return null;
+    }
+  }
+
+  Future<FileSystemEntity> getLastImage() async {
+    final Directory extDir = await getApplicationDocumentsDirectory();
+    final String dirPath = '${extDir.path}/media';
+    final myDir = Directory(dirPath);
+    List<FileSystemEntity> _images;
+    _images = myDir.listSync(recursive: true, followLinks: false);
+    _images.sort((a, b) {
+      return b.path.compareTo(a.path);
+    });
+    var lastFile = _images[0];
+    var extension = path.extension(lastFile.path);
+    if (extension == '.jpeg') {
+      return lastFile;
+    } else {
+      String thumb = await Thumbnails.getThumbnail(
+          videoFile: lastFile.path, imageType: ThumbFormat.PNG, quality: 30);
+      return File(thumb);
+    }
+  }
+
+  Widget _buildCameraPreview() {
+    final size = MediaQuery.of(context).size;
+    return ClipRect(
+      child: Container(
+        child: Transform.scale(
+          scale: _controller.value.aspectRatio / size.aspectRatio,
+          child: Center(
+            child: AspectRatio(
+              aspectRatio: _controller.value.aspectRatio,
+              child: CameraPreview(_controller),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
 
   void onVideoRecordButtonPressed() {}
 
   Future<String> startVideoRecording() async {
+    print('startVideoRecording');
     if (!_controller.value.isInitialized) {
-      showToast(context, "先选择一个相机");
       return null;
     }
+    setState(() {
+      _isRecording = true;
+    });
+    _timerKey.currentState.startTimer();
+
     final Directory extDir = await getApplicationDocumentsDirectory();
-    final String dirPath = '${extDir.path}/movies/flutter_im';
+    final String dirPath = '${extDir.path}/media';
     await Directory(dirPath).create(recursive: true);
-    final String filePath = '$dirPath/${timestamp()}.mp4';
+    final String filePath = '$dirPath/${_timestamp()}.mp4';
 
     if (_controller.value.isRecordingVideo) {
       // A recording is already started, do nothing.
@@ -153,7 +296,7 @@ class VideoPageState extends State<VideoPage> {
     }
 
     try {
-      videoPath = filePath;
+//      videoPath = filePath;
       await _controller.startVideoRecording(filePath);
     } on CameraException catch (e) {
       _showCameraException(e);
@@ -166,6 +309,48 @@ class VideoPageState extends State<VideoPage> {
     logError(e.code, e.description);
     showToast(context, 'Error: ${e.code}\n${e.description}');
   }
+
+  Future<void> _onCameraSwitch() async {
+    final CameraDescription cameraDescription =
+    (_controller.description == _cameras[0]) ? _cameras[1] : _cameras[0];
+    if (_controller != null) {
+      await _controller.dispose();
+    }
+    _controller = CameraController(cameraDescription, ResolutionPreset.medium);
+    _controller.addListener(() {
+      if (mounted) setState(() {});
+      if (_controller.value.hasError) {
+        showInSnackBar('Camera error ${_controller.value.errorDescription}');
+      }
+    });
+
+    try {
+      await _controller.initialize();
+    } on CameraException catch (e) {
+      _showCameraException(e);
+    }
+
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  void showInSnackBar(String message) {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  String _timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
+  Future<List<FileSystemEntity>> _getAllImages() async {
+    final Directory extDir = await getApplicationDocumentsDirectory();
+    final String dirPath = '${extDir.path}/media';
+    final myDir = Directory(dirPath);
+    List<FileSystemEntity> _images;
+    _images = myDir.listSync(recursive: true, followLinks: false);
+    _images.sort((a, b) {
+      return b.path.compareTo(a.path);
+    });
+    return _images;
+  }
 }
 
 Widget _testWidget() {
@@ -175,4 +360,3 @@ Widget _testWidget() {
   );
 }
 
-String timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
