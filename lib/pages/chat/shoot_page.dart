@@ -37,10 +37,11 @@ class _ShootPageState extends State<ShootPage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    // 添加页面生命周期监听
     WidgetsBinding.instance.addObserver(this);
 
     if (widget.cameras.isNotEmpty) {
-      cameraDescription = widget.cameras[!isReverse ? 0 : 1];
+      cameraDescription = widget.cameras[!isReverse ? 0 : 1]; // _camera[0]它是我们的后置摄像机。
       onNewCameraSelected(cameraDescription);
     }
   }

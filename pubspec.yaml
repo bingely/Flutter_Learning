@@ -65,6 +65,13 @@ dependencies:
   badges: ^1.1.0
   # 获取系统路径
   path_provider: ^1.6.1
+  # 生成视频缩略图
+  thumbnails:
+    git:
+      url: https://github.com/divyanshub024/Flutter_Thumbnails.git
+  # 启动系统分享
+  esys_flutter_share: ^1.0.2
+
 
 dev_dependencies:
   flutter_test:

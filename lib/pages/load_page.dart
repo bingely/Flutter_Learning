@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'chat/handle/message_handle.dart';
+
 // 启动页
 class LoadPage extends StatefulWidget {
   @override
@@ -13,7 +15,8 @@ class LoadPageState extends State<LoadPage> {
   void initState() {
     super.initState();
     Future.delayed(Duration(milliseconds: 500), () {
-      Navigator.pushReplacementNamed(context, 'app');
+      //Navigator.pushReplacementNamed(context, 'app');
+      sendVedioMsg();
     });
   }
 

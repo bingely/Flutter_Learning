@@ -2,29 +2,38 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/pages/chat/camarademo/video_timer.dart';
 import 'package:flutter_qyyim/pages/chat/video/video_demo.dart';
 import 'package:flutter_qyyim/ui/show_toast.dart';
 import 'package:path_provider/path_provider.dart';
 
 class VideoPage extends StatefulWidget {
-  List<CameraDescription> cameras;
-
-  VideoPage({this.cameras});
+  VideoPage({Key key}) : super(key: key);
 
   @override
-  _VideoPageState createState() => new _VideoPageState();
+  VideoPageState createState() => new VideoPageState();
 }
 
-class _VideoPageState extends State<VideoPage> {
-  CameraController controller;
+class VideoPageState extends State<VideoPage> {
+  CameraController _controller;
+  List<CameraDescription> _cameras;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  bool _isRecordingMode = false;
+  bool _isRecording = false;
+  final _timerKey = GlobalKey<VideoTimerState>();
 
   String videoPath;
 
   @override
   void initState() {
+    _initCamera();
     super.initState();
-    controller = CameraController(widget.cameras[0], ResolutionPreset.medium);
-    controller.initialize().then((_) {
+  }
+
+  Future<void> _initCamera() async {
+    _cameras = await availableCameras();
+    _controller = CameraController(_cameras[1], ResolutionPreset.medium);
+    _controller.initialize().then((_) {
       if (!mounted) {
         return;
       }
@@ -34,12 +43,30 @@ class _VideoPageState extends State<VideoPage> {
 
   @override
   void dispose() {
-    controller?.dispose();
+    _controller?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_controller != null) {
+      if (!_controller.value.isInitialized) {
+        return Container();
+      }
+    } else {
+      return const Center(
+        child: SizedBox(
+          width: 32,
+          height: 32,
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
+    if (!_controller.value.isInitialized) {
+      return Container();
+    }
+
     return new Scaffold(
       body: Stack(
         children: <Widget>[
@@ -62,15 +89,9 @@ class _VideoPageState extends State<VideoPage> {
   }
 
   Widget _cameraPreviewWidget() {
-    if (controller == null || !controller.value.isInitialized) {
-      return Text(
-        "预览图占位",
-        style: TextStyle(color: Colors.red, fontSize: 24.0),
-      );
-    }
     return new AspectRatio(
-      aspectRatio: controller.value.aspectRatio,
-      child: new CameraPreview(controller),
+      aspectRatio: _controller.value.aspectRatio,
+      child: new CameraPreview(_controller),
     );
   }
 
@@ -114,12 +135,10 @@ class _VideoPageState extends State<VideoPage> {
     );
   }
 
-  void onVideoRecordButtonPressed() {
+  void onVideoRecordButtonPressed() {}
 
-  }
-
-  Future<String> startVideoRecording() async{
-    if (!controller.value.isInitialized) {
+  Future<String> startVideoRecording() async {
+    if (!_controller.value.isInitialized) {
       showToast(context, "先选择一个相机");
       return null;
     }
@@ -128,28 +147,26 @@ class _VideoPageState extends State<VideoPage> {
     await Directory(dirPath).create(recursive: true);
     final String filePath = '$dirPath/${timestamp()}.mp4';
 
-    if (controller.value.isRecordingVideo) {
+    if (_controller.value.isRecordingVideo) {
       // A recording is already started, do nothing.
       return null;
     }
 
     try {
       videoPath = filePath;
-      await controller.startVideoRecording(filePath);
+      await _controller.startVideoRecording(filePath);
     } on CameraException catch (e) {
       _showCameraException(e);
       return null;
     }
     return filePath;
-
   }
+
   void _showCameraException(CameraException e) {
     logError(e.code, e.description);
     showToast(context, 'Error: ${e.code}\n${e.description}');
   }
 }
-
-
 
 Widget _testWidget() {
   return Text(
