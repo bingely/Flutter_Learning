@@ -79,4 +79,17 @@ class GlobalModel extends ChangeNotifier {
     if (!goToLogin) initInfo();
     notifyListeners();
   }
+
+
+
+  int _count = 0;
+
+  // 读方法
+  int get count => _count;
+
+  // write
+  void incresement() {
+    _count++;
+    notifyListeners();
+  }
 }

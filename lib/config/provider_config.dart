@@ -13,10 +13,21 @@ class ProviderConfig {
     return _instance;
   }
 
-  ///全局
+  ///全局   由于封装的数据资源不仅需要为子 Widget 提供读的能力，还要提供写的能力，因此我们需要使用 Provider 的升级版 ChangeNotifierProvider
   ChangeNotifierProvider<GlobalModel> getGlobal(Widget child) {
     return ChangeNotifierProvider<GlobalModel>(
       builder: (context) => GlobalModel(),
+      child: child,
+    );
+  }
+
+  /// 多状态的资源封装
+  MultiProvider getMultiGlobal(Widget child) {
+    return MultiProvider(
+      providers: [
+        Provider.value(value: 30.0),
+        ChangeNotifierProvider.value(value: GlobalModel())
+      ],
       child: child,
     );
   }

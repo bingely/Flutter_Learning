@@ -16,7 +16,7 @@ Future<void> main() async {
   await StorageManager.init();
 
   /// APP入口并配置Provider
-  runApp(ProviderConfig.getInstance().getGlobal(MyApp()));
+  runApp(ProviderConfig.getInstance().getMultiGlobal(MyApp()));
 
   /// Android状态栏透明
   if (Platform.isAndroid) {
