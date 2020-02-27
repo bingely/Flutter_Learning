@@ -19,6 +19,10 @@ class VideoTimerState extends State<VideoTimer> {
           (Timer timer) => setState(
             () {
           _start = _start + 1;
+          // 大于10s,停止拍照
+          if (_start > 10) {
+           // startTimer();
+          }
         },
       ),
     );

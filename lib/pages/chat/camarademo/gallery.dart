@@ -16,7 +16,7 @@ class _GalleryState extends State<Gallery> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
       ),
@@ -61,10 +61,10 @@ class _GalleryState extends State<Gallery> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              IconButton(
+             /* IconButton(
                 icon: Icon(Icons.share),
                 onPressed: () => _shareFile(),
-              ),
+              ),*/
               IconButton(
                 icon: Icon(Icons.delete),
                 onPressed: _deleteFile,

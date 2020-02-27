@@ -97,7 +97,21 @@ class CameraScreenState extends State<CameraScreen>
               child: VideoTimer(
                 key: _timerKey,
               ),
-            )
+            ),
+          Positioned(
+            top: MediaQuery.of(context).size.height / 2,
+            right: 0,
+            child: RaisedButton(
+              onPressed: (){
+                _getAllImages().then((filesysEntries){
+                  Navigator.pop(context, filesysEntries[0].path);
+                });
+              },
+              child: Text("发送",style: TextStyle(
+                color: Colors.white
+              ),),
+            ),
+          )
         ],
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),
@@ -123,7 +137,6 @@ class CameraScreenState extends State<CameraScreen>
 
   Widget _buildBottomNavigationBar() {
     return Container(
-      color: Theme.of(context).bottomAppBarColor,
       height: 100.0,
       width: double.infinity,
       child: Row(
@@ -199,6 +212,18 @@ class CameraScreenState extends State<CameraScreen>
     );
   }
 
+  Future<List<FileSystemEntity>> _getAllImages() async {
+    final Directory extDir = await getApplicationDocumentsDirectory();
+    final String dirPath = '${extDir.path}/media';
+    final myDir = Directory(dirPath);
+    List<FileSystemEntity> _images;
+    _images = myDir.listSync(recursive: true, followLinks: false);
+    _images.sort((a, b) {
+      return b.path.compareTo(a.path);
+    });
+    return _images;
+  }
+
   Future<FileSystemEntity> getLastImage() async {
     final Directory extDir = await getApplicationDocumentsDirectory();
     final String dirPath = '${extDir.path}/media';
@@ -221,7 +246,7 @@ class CameraScreenState extends State<CameraScreen>
 
   Future<void> _onCameraSwitch() async {
     final CameraDescription cameraDescription =
-    (_controller.description == _cameras[0]) ? _cameras[1] : _cameras[0];
+        (_controller.description == _cameras[0]) ? _cameras[1] : _cameras[0];
     if (_controller != null) {
       await _controller.dispose();
     }

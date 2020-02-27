@@ -132,7 +132,12 @@ class ChatePageState extends State<ChatPage> {
                       } else if (name == "自定义视频"){
                         final _cameraKey = GlobalKey<CameraScreenState>();
                         //routePush(new VideoPage(key: _cameraKey));
-                        Navigator.pushNamed(context, "video_page",arguments: "url").then((url)=> _handleSubmittedVideoData(url)
+                        Navigator.pushNamed(context, "video_page",arguments: "url").then((url) {
+                          if (url != null) {
+                            print("video_page$url");
+                            _handleSubmittedVideoData(url);
+                          }
+                        }
                         );
                       }
                       else {

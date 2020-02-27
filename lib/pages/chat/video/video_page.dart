@@ -73,7 +73,6 @@ class VideoPageState extends State<VideoPage> {
     }
 
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
       key: _scaffoldKey,
       extendBody: false,
       body: Stack(
@@ -129,7 +128,6 @@ class VideoPageState extends State<VideoPage> {
 
   Widget _buildBottomNavigationBar() {
     return Container(
-      color: Colors.transparent,
       height: 100.0,
       width: double.infinity,
       child: Row(
