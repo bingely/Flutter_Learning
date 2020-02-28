@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
         'search': (BuildContext context) => SearchWidget(),
         'video_page': (BuildContext context) => CameraScreen()
       },
-      home: JsonPage(),//RouterTestRoute
+      home: LoadPage(),//RouterTestRoute
     );
   }
 }

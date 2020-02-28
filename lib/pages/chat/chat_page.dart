@@ -10,6 +10,8 @@ import 'package:flutter_qyyim/config/contacts.dart';
 import 'package:flutter_qyyim/pages/chat/camarademo/camera_screen.dart';
 import 'package:flutter_qyyim/pages/chat/shoot_page.dart';
 import 'package:flutter_qyyim/pages/chat/video/video_page.dart';
+import 'package:flutter_qyyim/testdemo/cross_data/custom_event.dart';
+import 'package:flutter_qyyim/testdemo/cross_data/event_bus.dart';
 import 'package:flutter_qyyim/ui/commom_bar.dart';
 import 'package:flutter_qyyim/ui/edit/text_span_builder.dart';
 import 'package:flutter_qyyim/ui/main_input.dart';
@@ -20,6 +22,7 @@ import 'chat_details_body.dart';
 import 'chat_details_row.dart';
 import 'chat_more_icon.dart';
 import 'chat_more_page.dart';
+import 'event/MsgEvent.dart';
 import 'handle/message_handle.dart';
 import 'indicator_page_view.dart';
 import 'model/chat_data.dart';
@@ -53,6 +56,8 @@ class ChatePageState extends State<ChatPage> {
   ScrollController _sC = ScrollController();
   PageController pageC = new PageController();
 
+  StreamSubscription subscription;
+
   @override
   void initState() {
     super.initState();
@@ -61,6 +66,18 @@ class ChatePageState extends State<ChatPage> {
     _sC.addListener(() => FocusScope.of(context).requestFocus(new FocusNode()));
     //initPlatformState();
     //Notice.addListener(WeChatActions.msg(), (v) => getChatMsgData());
+
+    subscription = eventBus.on<MsgEvent>().listen((event) {
+      // 更新 msg
+      print("声音的路径${event.content}");
+      _handleSubmittedVideoData(event.content);
+    });
+  }
+
+  @override
+  void dispose() {
+    subscription.cancel(); //State 销毁时，清理注册
+    super.dispose();
   }
 
   @override
@@ -116,39 +133,37 @@ class ChatePageState extends State<ChatPage> {
                       if (name == '相册') {
                         sendImageMsg(widget.id, widget.type,
                             source: ImageSource.gallery, callback: (v) {
-                              if (v == null) return;
-                              print(v);
-                              _handleSubmittedImgData(v);
-                              // Notice.send(WeChatActions.msg(), v ?? '');
-                            });
-                      } else if (name == "拍摄"){
+                          if (v == null) return;
+                          print(v);
+                          _handleSubmittedImgData(v);
+                          // Notice.send(WeChatActions.msg(), v ?? '');
+                        });
+                      } else if (name == "拍摄") {
                         sendImageMsg(widget.id, widget.type,
                             source: ImageSource.camera, callback: (v) {
-                              if (v == null) return;
-                              print(v);
-                              _handleSubmittedImgData(v);
-                              // Notice.send(WeChatActions.msg(), v ?? '');
-                            });
-                      } else if (name == "自定义视频"){
+                          if (v == null) return;
+                          print(v);
+                          _handleSubmittedImgData(v);
+                          // Notice.send(WeChatActions.msg(), v ?? '');
+                        });
+                      } else if (name == "自定义视频") {
                         final _cameraKey = GlobalKey<CameraScreenState>();
                         //routePush(new VideoPage(key: _cameraKey));
-                        Navigator.pushNamed(context, "video_page",arguments: "url").then((url) {
+                        Navigator.pushNamed(context, "video_page",
+                                arguments: "url")
+                            .then((url) {
                           if (url != null) {
                             print("video_page$url");
                             _handleSubmittedVideoData(url);
                           }
-                        }
-                        );
+                        });
+                      } else {
+                        sendVideoMsg(widget.id, widget.type, callback: (v) {
+                          if (v == null) return;
+                          print("视频地址" + v);
+                          _handleSubmittedVideoData(v);
+                        });
                       }
-                      else {
-                        sendVideoMsg(widget.id, widget.type,
-                             callback: (v) {
-                              if (v == null) return;
-                              print("视频地址"+v);
-                              _handleSubmittedVideoData(v);
-                            });
-                      }
-
                     },
                   );
                 }),
@@ -271,8 +286,23 @@ class ChatePageState extends State<ChatPage> {
     chatData.insert(
         0,
         new ChatData(msg: {
-          "videosrc": [text],
-          "type": "Video"
+          "soundUrls": [text],
+          'urls': [text],
+          "type": "Sound",
+          "path": text
+        }));
+    // 刷新数据源 TODO
+    //await sendTextMsg('${widget.id}', widget.type, text);
+    setState(() {});
+  }
+
+  _handleSubmittedVoiceData(String text) async {
+    _textController.clear();
+    chatData.insert(
+        0,
+        new ChatData(msg: {
+          "voicesrc": [text],
+          "type": "voice"
         }));
     // 刷新数据源 TODO
     //await sendTextMsg('${widget.id}', widget.type, text);

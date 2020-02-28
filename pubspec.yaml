@@ -19,7 +19,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  flutter_localizations:
+    sdk: flutter
   # iOS style icons
   cupertino_icons: ^0.1.2
   # 数据相关
@@ -57,8 +58,9 @@ dependencies:
   # 权限管理
   #permission_handler: ^3.1.0
   # 录音插件
-  #flutter_plugin_record: ^0.0.9
-  flutter_sound: any
+  #flutter_plugin_record: ^0.0.9  The Android Gradle plugin supports only Kotlin Gradle plugin version 1.3.10 and higher.
+  flutter_sound: 1.7.0
+  audioplayers: 0.13.3
   #拍照 用于自定义录像功能
   camera: ^0.5.7+4
   # 播放视频

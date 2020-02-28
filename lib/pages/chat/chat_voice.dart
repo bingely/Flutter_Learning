@@ -3,7 +3,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/win_media.dart';
+import 'package:flutter_qyyim/pages/chat/event/MsgEvent.dart';
+import 'package:flutter_qyyim/testdemo/cross_data/custom_event.dart';
+import 'package:flutter_qyyim/testdemo/cross_data/event_bus.dart';
 import 'package:flutter_qyyim/tool/date.dart';
+import 'package:flutter_qyyim/ui/message_view/voice_dialog.dart';
 import 'package:flutter_qyyim/ui/show_toast.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 
@@ -36,6 +40,9 @@ class _ChatVoiceWidgetState extends State<ChatVoice> {
   OverlayEntry overlayEntry;
   FlutterSound flutterSound;
 
+
+  String voicepath;
+
   @override
   void initState() {
     super.initState();
@@ -43,15 +50,16 @@ class _ChatVoiceWidgetState extends State<ChatVoice> {
     flutterSound.setSubscriptionDuration(0.01);
     flutterSound.setDbPeakLevelUpdate(0.8);
     flutterSound.setDbLevelEnabled(true);
-   // initializeDateFormatting();
+    //initializeDateFormatting();
   }
 
   void start() async {
     print('开始拉。当前路径');
     try {
-
       String path = await flutterSound
-          .startRecorder(uri:Platform.isIOS ? 'ios.m4a' : 'android.mp4');
+          .startRecorder(Platform.isIOS ? 'ios.m4a' : 'android.mp4'); // android.mp4
+      print('startRecorder-----$path');
+      voicepath = path;
       widget.voiceFile(path);
       _recorderSubscription =
           flutterSound.onRecorderStateChanged.listen((e) {});
@@ -90,14 +98,14 @@ class _ChatVoiceWidgetState extends State<ChatVoice> {
       DateTime current = DateTime.fromMillisecondsSinceEpoch(date);
 
       String recordingTime =
-          DateTimeForMater.formatDateV(current, format: "ss:SS");
+      DateTimeForMater.formatDateV(current, format: "ss:SS");
       index = int.parse(recordingTime.toString().substring(3, 5));
     });
 
     start();
 
     if (overlayEntry == null) {
-      //overlayEntry = showVoiceDialog(context, index: index);
+      overlayEntry = showVoiceDialog(context, index: index);
     }
   }
 
@@ -117,7 +125,9 @@ class _ChatVoiceWidgetState extends State<ChatVoice> {
       print("取消发送");
     } else {
       print("进行发送");
-      //Notice.send(WeChatActions.voiceImg(), true);
+     // Notice.send(WeChatActions.voiceImg(), true);
+      eventBus.fire(MsgEvent(content: voicepath));
+
     }
   }
 
