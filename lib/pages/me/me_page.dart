@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/route.dart';
+import 'package:flutter_qyyim/config/const.dart';
+import 'package:flutter_qyyim/pages/me/list_tile_view.dart';
 import 'package:flutter_qyyim/pages/search/search.dart';
 
 import 'ImItem.dart';
@@ -75,6 +77,15 @@ class MePage extends StatelessWidget{
                 )
               ],
             ),
+          ),
+          ListTileView(
+            border: Border(bottom: BorderSide(color: lineColor, width: 0.2)),
+            title: 'test',
+            isLabel: true,
+            label: 'labletx',
+            padding: EdgeInsets.symmetric(vertical: 16.0),
+            width: 25.0,
+            fit: BoxFit.cover,
           )
         ],
 
