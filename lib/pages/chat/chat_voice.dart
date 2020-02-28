@@ -126,7 +126,7 @@ class _ChatVoiceWidgetState extends State<ChatVoice> {
     } else {
       print("进行发送");
      // Notice.send(WeChatActions.voiceImg(), true);
-      eventBus.fire(MsgEvent(content: voicepath));
+      eventBus.fire(MsgEvent(content: voicepath,type: MsgType.VOICE));
 
     }
   }

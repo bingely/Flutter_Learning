@@ -78,7 +78,7 @@ class ChatePageState extends State<ChatPage> {
         _handleSubmittedImgData(content);
       } else {
         print("声音的路径${event.content}");
-        _handleSubmittedVideoData(event.content);
+        _handleSubmittedVoiceData(event.content);
       }
     });
   }
@@ -318,8 +318,10 @@ class ChatePageState extends State<ChatPage> {
     chatData.insert(
         0,
         new ChatData(msg: {
-          "voicesrc": [text],
-          "type": "voice"
+          "soundUrls": [text],
+          'urls': [text],
+          "type": "Sound",
+          "path": text
         }));
     // 刷新数据源 TODO
     //await sendTextMsg('${widget.id}', widget.type, text);
