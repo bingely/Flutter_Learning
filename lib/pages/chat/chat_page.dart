@@ -28,7 +28,7 @@ import 'indicator_page_view.dart';
 import 'model/chat_data.dart';
 
 // 底部按钮有两种状态
-enum ButtonType { voice, more }
+enum ButtonType { voice, emoj, more }
 
 // 聊天page
 class ChatPage extends StatefulWidget {
@@ -61,7 +61,8 @@ class ChatePageState extends State<ChatPage> {
   @override
   void initState() {
     super.initState();
-    getChatMsgData();
+    // 模拟保存在数据库中的聊天数据
+    //getChatMsgData();
 
     _sC.addListener(() => FocusScope.of(context).requestFocus(new FocusNode()));
     //initPlatformState();
@@ -97,8 +98,7 @@ class ChatePageState extends State<ChatPage> {
       new ChatDetailsRow(
         voiceOnTap: () => onTapHandle(ButtonType.voice),
         emojOnTap: () {
-          _isEmoj = true;
-          onTapHandle(ButtonType.more);
+          onTapHandle(ButtonType.emoj);
         },
         isVoice: _isVoice,
         edit: edit,
@@ -106,7 +106,6 @@ class ChatePageState extends State<ChatPage> {
           value: _textController.text,
           onTap: () => _handleSubmittedData(_textController.text),
           moreTap: () {
-            _isEmoj = false;
             onTapHandle(ButtonType.more);
           },
         ),
@@ -115,7 +114,7 @@ class ChatePageState extends State<ChatPage> {
       ),
       // 底部展开
       new Container(
-        height: _isMore && !_focusNode.hasFocus ? keyboardHeight : 0.0,
+        height: (_isMore || _isEmoj) && !_focusNode.hasFocus ? keyboardHeight : 0.0,
         width: winWidth(context),
         color: Color(AppColors.ChatBoxBg),
         child: _isEmoj
@@ -243,18 +242,28 @@ class ChatePageState extends State<ChatPage> {
   onTapHandle(ButtonType type) {
     setState(() {
       if (type == ButtonType.voice) {
-        _isEmoj = false;
 
         _focusNode.unfocus();
         _isMore = false;
+        _isEmoj = false;
         _isVoice = !_isVoice;
       } else if (type == ButtonType.more) {
         _isVoice = false;
+        _isEmoj = false;
         if (_focusNode.hasFocus) {
           _focusNode.unfocus();
           _isMore = true;
         } else {
           _isMore = !_isMore;
+        }
+      } else if (type == ButtonType.emoj) {
+        _isVoice = false;
+        _isMore = false;
+        if (_focusNode.hasFocus) {
+          _focusNode.unfocus();
+          _isEmoj = true;
+        } else {
+          _isEmoj = !_isEmoj;
         }
       }
     });
@@ -325,7 +334,7 @@ class ChatePageState extends State<ChatPage> {
       onTap: () => setState(() {}),
       onChanged: (v) => setState(() {}),
       decoration: InputDecoration(
-          border: InputBorder.none, contentPadding: const EdgeInsets.all(5.0)),
+          border: InputBorder.none, contentPadding: const EdgeInsets.only(left:5.0)),
       controller: _textController,
       focusNode: _focusNode,
       maxLines: 99,

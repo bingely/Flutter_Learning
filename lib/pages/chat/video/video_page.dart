@@ -74,7 +74,7 @@ class VideoPageState extends State<VideoPage> {
 
     return Scaffold(
       key: _scaffoldKey,
-      extendBody: false,
+      extendBody: true,
       body: Stack(
         children: <Widget>[
           _buildCameraPreview(),

@@ -3,13 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_qyyim/pages/chat/camarademo/camera_screen.dart';
 import 'package:flutter_qyyim/pages/chat/chat_page.dart';
 import 'package:flutter_qyyim/pages/chat/video/video_page.dart';
-import 'package:flutter_qyyim/pages/me/me_page.dart';
 import 'package:flutter_qyyim/pages/message/message_page.dart';
 import 'package:flutter_qyyim/pages/search/search.dart';
 import 'package:flutter_qyyim/provider/global_model.dart';
-import 'package:flutter_qyyim/testdemo/dio_page.dart';
-import 'package:flutter_qyyim/testdemo/file_data_page.dart';
-import 'package:flutter_qyyim/testdemo/json_page.dart';
 import 'package:provider/provider.dart';
 
 import 'pages/root_page.dart';
@@ -48,7 +44,7 @@ class _MyAppState extends State<MyApp> {
         'chat': (BuildContext context) => ChatPage(),
         'msglist': (BuildContext context) => MessagePage(),
         'search': (BuildContext context) => SearchWidget(),
-        'video_page': (BuildContext context) => CameraScreen()
+        'video_page': (BuildContext context) => VideoPage()
       },
       home: LoadPage(),//RouterTestRoute
     );
