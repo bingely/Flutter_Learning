@@ -2,8 +2,12 @@
 
 class MsgEvent {
   String content;
-  int type;
+  MsgType type;
 
   MsgEvent({this.content, this.type});
 
+}
+
+enum MsgType{
+  IMG,VIDEO
 }

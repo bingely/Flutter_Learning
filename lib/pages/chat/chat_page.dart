@@ -70,8 +70,16 @@ class ChatePageState extends State<ChatPage> {
 
     subscription = eventBus.on<MsgEvent>().listen((event) {
       // 更新 msg
-      print("声音的路径${event.content}");
-      _handleSubmittedVideoData(event.content);
+      MsgType msgType = event.type;
+      String content = event.content;
+      if (msgType == MsgType.VIDEO) {
+        _handleSubmittedVideoData(content);
+      } else if (msgType == MsgType.IMG) {
+        _handleSubmittedImgData(content);
+      } else {
+        print("声音的路径${event.content}");
+        _handleSubmittedVideoData(event.content);
+      }
     });
   }
 
@@ -114,7 +122,8 @@ class ChatePageState extends State<ChatPage> {
       ),
       // 底部展开
       new Container(
-        height: (_isMore || _isEmoj) && !_focusNode.hasFocus ? keyboardHeight : 0.0,
+        height:
+            (_isMore || _isEmoj) && !_focusNode.hasFocus ? keyboardHeight : 0.0,
         width: winWidth(context),
         color: Color(AppColors.ChatBoxBg),
         child: _isEmoj
@@ -153,7 +162,7 @@ class ChatePageState extends State<ChatPage> {
                             .then((url) {
                           if (url != null) {
                             print("video_page$url");
-                            _handleSubmittedVideoData(url);
+                           // _handleSubmittedVideoData(url);
                           }
                         });
                       } else {
@@ -242,7 +251,6 @@ class ChatePageState extends State<ChatPage> {
   onTapHandle(ButtonType type) {
     setState(() {
       if (type == ButtonType.voice) {
-
         _focusNode.unfocus();
         _isMore = false;
         _isEmoj = false;
@@ -295,9 +303,9 @@ class ChatePageState extends State<ChatPage> {
     chatData.insert(
         0,
         new ChatData(msg: {
-          "soundUrls": [text],
+          "videosrc": [text],
           'urls': [text],
-          "type": "Sound",
+          "type": "Video",
           "path": text
         }));
     // 刷新数据源 TODO
@@ -334,7 +342,8 @@ class ChatePageState extends State<ChatPage> {
       onTap: () => setState(() {}),
       onChanged: (v) => setState(() {}),
       decoration: InputDecoration(
-          border: InputBorder.none, contentPadding: const EdgeInsets.only(left:5.0)),
+          border: InputBorder.none,
+          contentPadding: const EdgeInsets.only(left: 5.0)),
       controller: _textController,
       focusNode: _focusNode,
       maxLines: 99,

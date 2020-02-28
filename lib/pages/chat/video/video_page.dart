@@ -91,26 +91,26 @@ class VideoPageState extends State<VideoPage> {
               },
             ),
           ),
-          Positioned(
-            right: 0,
-            top: MediaQuery.of(context).size.height/2,
-            child: Container(
-              color: Colors.white,
-              margin: EdgeInsets.all(10.0),
-              height: 25.0,
-              child: FlatButton(
-                onPressed: () async {
-                    // 关闭当前页面，把视频路径传递回来 TODO
-                  List<FileSystemEntity> files = await _getAllImages();
-                  Navigator.pop(context,files[0].path);
-                },
-                color: Colors.white,
-                child: Text(
-                  "发送"
-                ),
-              ),
-            ),
-          ),
+//          Positioned(
+//            right: 0,
+//            top: MediaQuery.of(context).size.height/2,
+//            child: Container(
+//              color: Colors.white,
+//              margin: EdgeInsets.all(10.0),
+//              height: 25.0,
+//              child: FlatButton(
+//                onPressed: () async {
+//                    // 关闭当前页面，把视频路径传递回来 TODO
+//                  List<FileSystemEntity> files = await _getAllImages();
+//                  Navigator.pop(context,files[0].path);
+//                },
+//                color: Colors.white,
+//                child: Text(
+//                  "发送"
+//                ),
+//              ),
+//            ),
+//          ),
           if (_isRecordingMode)
             Positioned(
               left: 0,
@@ -143,12 +143,7 @@ class VideoPageState extends State<VideoPage> {
                 );
               }
               return GestureDetector(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Gallery(),
-                  ),
-                ),
+                onTap: () => gotoGallery(),
                 child: Container(
                   width: 40.0,
                   height: 40.0,
@@ -213,16 +208,34 @@ class VideoPageState extends State<VideoPage> {
       final String filePath = '$dirPath/${_timestamp()}.jpeg';
       print('path: $filePath');
       await _controller.takePicture(filePath);
-      setState(() {});
+      setState(() {
+        gotoGallery();
+      });
     }
   }
+
+
+  gotoGallery(){
+    Navigator.pushNamed(context, "gallay",
+        arguments: "url")
+        .then((url) {
+      if (url != null) {
+        Navigator.pop(context);
+        // _handleSubmittedVideoData(url);
+      }
+    });
+  }
+
+
   Future<void> stopVideoRecording() async {
     if (!_controller.value.isRecordingVideo) {
       return null;
     }
     _timerKey.currentState.stopTimer();
+
     setState(() {
       _isRecording = false;
+      gotoGallery();
     });
 
     try {

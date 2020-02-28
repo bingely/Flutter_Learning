@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/pages/chat/camarademo/video_preview.dart';
+import 'package:flutter_qyyim/pages/chat/event/MsgEvent.dart';
+import 'package:flutter_qyyim/testdemo/cross_data/event_bus.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 
@@ -13,6 +15,8 @@ class Gallery extends StatefulWidget {
 
 class _GalleryState extends State<Gallery> {
   String currentFilePath;
+  var extension;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +41,7 @@ class _GalleryState extends State<Gallery> {
             itemCount: snapshot.data.length,
             itemBuilder: (context, index) {
               currentFilePath = snapshot.data[index].path;
-              var extension = path.extension(snapshot.data[index].path);
+              extension = path.extension(snapshot.data[index].path);
               if (extension == '.jpeg') {
                 return Container(
                   height: 300,
@@ -61,10 +65,16 @@ class _GalleryState extends State<Gallery> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-             /* IconButton(
-                icon: Icon(Icons.share),
-                onPressed: () => _shareFile(),
-              ),*/
+              IconButton(
+                  icon: Icon(Icons.send),
+                  onPressed: () {
+                    eventBus.fire(MsgEvent(
+                        content: currentFilePath,
+                        type: extension == '.jpeg' ? MsgType.IMG : MsgType
+                            .VIDEO));
+                    Navigator.pop(context,"needfinshpage");
+                  }
+              ),
               IconButton(
                 icon: Icon(Icons.delete),
                 onPressed: _deleteFile,

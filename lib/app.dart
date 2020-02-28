@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_qyyim/pages/chat/camarademo/camera_screen.dart';
+import 'package:flutter_qyyim/pages/chat/camarademo/gallery.dart';
 import 'package:flutter_qyyim/pages/chat/chat_page.dart';
 import 'package:flutter_qyyim/pages/chat/video/video_page.dart';
 import 'package:flutter_qyyim/pages/message/message_page.dart';
@@ -44,7 +45,8 @@ class _MyAppState extends State<MyApp> {
         'chat': (BuildContext context) => ChatPage(),
         'msglist': (BuildContext context) => MessagePage(),
         'search': (BuildContext context) => SearchWidget(),
-        'video_page': (BuildContext context) => VideoPage()
+        'video_page': (BuildContext context) => VideoPage(),
+        'gallay': (BuildContext context) => Gallery()
       },
       home: LoadPage(),//RouterTestRoute
     );
