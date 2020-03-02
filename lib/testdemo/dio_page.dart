@@ -2,6 +2,10 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/api/dio.dart';
+import 'package:flutter_qyyim/api/github_api.dart';
+import 'package:flutter_qyyim/api/trabel_tab_api.dart';
+import 'package:flutter_qyyim/api/wanandroid_api.dart';
 
 class DioPage extends StatefulWidget {
 
@@ -31,7 +35,9 @@ class _DioPageState extends State<DioPage> {
       ),
       body: RaisedButton(
         onPressed: () {
-          getRequest();
+         // getRequest();
+      //    fetchTravelTab();
+          fetchChapters();
         },
         child: Text("请求"),
       ),
@@ -54,3 +60,8 @@ void getRequest() async {
     print("Error: ${response.statusCode}");
   }
 }
+
+
+
+
+
