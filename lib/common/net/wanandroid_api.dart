@@ -14,7 +14,7 @@ class Http extends BaseHttp {
     interceptors
       ..add(ApiInterceptor())
     // cookie持久化 异步   可能的场景比如 登录后会在cookie中返回账号密码，只要在客户端做cookie持久化存储即可自动登录验证。
-      ..add(CookieManager(
-          PersistCookieJar(dir: StorageManager.temporaryDirectory.path)));
+      ..add(CookieManager(PersistCookieJar(dir: StorageManager.temporaryDirectory.path)))
+      ;
   }
 }

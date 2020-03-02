@@ -31,15 +31,34 @@ class _DioPageState extends State<DioPage> {
       appBar: new AppBar(
         title: new Text('diodemo'),
       ),
-      body: RaisedButton(
-        onPressed: () {
-         // getRequest();
-      //    fetchTravelTab();
-          fetchChapters();
-          fetchBanners();
-        },
-        child: Text("请求"),
+      body: Column(
+        children: <Widget>[
+          RaisedButton(
+            onPressed: () {
+              // getRequest();
+              //    fetchTravelTab();
+              fetchChapters();
+              fetchBanners();
+
+              login("bingley","bingleywan");
+            },
+            child: Text("请求/并登录"),
+          ),
+          RaisedButton(
+            onPressed: () {
+              logout();
+            },
+            child: Text("退出"),
+          ),
+          RaisedButton(
+            onPressed: () {
+              fetchCollectList(0);
+            },
+            child: Text("收藏"),
+          )
+        ],
       ),
+
     );
   }
 

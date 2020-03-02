@@ -9,6 +9,8 @@ import 'package:flutter_qyyim/pages/message/message_page.dart';
 import 'package:flutter_qyyim/pages/search/search.dart';
 import 'package:flutter_qyyim/provider/global_model.dart';
 import 'package:flutter_qyyim/testdemo/dio_page.dart';
+import 'package:flutter_qyyim/testdemo/sliver_page.dart';
+import 'package:flutter_qyyim/testdemo/wann/user/login_page.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -53,7 +55,7 @@ class _MyAppState extends State<MyApp> {
             'video_page': (BuildContext context) => VideoPage(),
             'gallay': (BuildContext context) => Gallery()
           },
-          home: DioPage(), //RouterTestRoute
+          home: LoadPage(), //RouterTestRoute
         ));
   }
 }

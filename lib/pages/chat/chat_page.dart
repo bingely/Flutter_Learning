@@ -4,6 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:extended_text_field/extended_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/route.dart';
+import 'package:flutter_qyyim/common/service/wanandroid_service.dart';
 import 'package:flutter_qyyim/common/win_media.dart';
 import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/config/contacts.dart';
@@ -143,6 +144,7 @@ class ChatePageState extends State<ChatPage> {
                             source: ImageSource.gallery, callback: (v) {
                           if (v == null) return;
                           print(v);
+                          updateUserPic(v);
                           _handleSubmittedImgData(v);
                           // Notice.send(WeChatActions.msg(), v ?? '');
                         });
