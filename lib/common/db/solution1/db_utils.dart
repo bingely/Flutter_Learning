@@ -1,10 +1,12 @@
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 import 'db_base_bean.dart';
+import 'db_open_helper.dart';
 
 /// https://www.jianshu.com/p/7d9a73a857e0 参考修改
 /// 数据库存储
@@ -13,8 +15,10 @@ class DbUtils {
 
   // 数据库路径
   String databasesPath;
+
   // 数据库
   Database database;
+
   // 数据库版本
   int dbVersion = 1;
 
@@ -36,23 +40,12 @@ class DbUtils {
 
     database = await openDatabase(join(databasesPath, dbName + '.db'),
         version: dbVersion, onCreate: (Database db, int version) async {
-          /// 表语句
-          // 用户表
-          await db.execute(
-              'CREATE TABLE UserInfo (userName TEXT PRIMARY KEY, nickName TEXT, headImgUrl TEXT, phone TEXT, idCard TEXT, telephone TEXT, emailYear TEXT, birthday TEXT, year TEXT, bankCard TEXT, province TEXT, city TEXT, county TEXT, town TEXT, address TEXT, sex INTEGER, status INTEGER, poorNumberCard TEXT, openBank TEXT, relationUser TEXT, relationName TEXT, appRole TEXT, createTime TEXT, updateTime Text)');
-          // 收货地址信息表
-          await db.execute(
-              'CREATE TABLE PickInfo (id TEXT PRIMARY KEY, userName TEXT, tel TEXT, receiver TEXT, province TEXT, city TEXT, county TEXT, address TEXT, status TEXT)');
-
-          // 学生
-          await db.execute(
-            'CREAE TABLE STUDENT ('
-          );
-
-        }, onUpgrade: (Database db, int oldVersion, int newVersion) {
-          // 版本更新可能牵扯到重新插入表、删除表、表中字段变更-具体更新相关sql语句进行操作
-        });
+      DbOpenHelper.creteTables(db);
+    }, onUpgrade: (Database db, int oldVersion, int newVersion) {
+      DbOpenHelper.onUpgrade(db, oldVersion, newVersion);
+    });
   }
+
 
   // 插入数据
   Future<void> insertItem<T extends DbBaseBean>(T t) async {

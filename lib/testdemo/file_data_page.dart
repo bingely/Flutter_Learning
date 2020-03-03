@@ -1,10 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
+import 'package:flutter_qyyim/common/db/student_dao.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite/sqlite_api.dart';
+import 'package:path/path.dart';
+
+import 'bean/student.dart';
 
 class FileDataPage extends StatefulWidget {
   @override
@@ -12,18 +16,20 @@ class FileDataPage extends StatefulWidget {
 }
 
 class _FileDataPageState extends State<FileDataPage> {
+
   @override
-  void initState() {
+  Future<void> initState()  {
     _localFile;
 
-    initSqlite();
+
+    DbUtils.getInstance().openDb("qqyim");
+
 
     super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -50,9 +56,7 @@ class _FileDataPageState extends State<FileDataPage> {
           ),
           Text("SharedPrefernces 操作"),
           RaisedButton(
-            onPressed: () async {
-
-            },
+            onPressed: () async {},
             child: Text("写"),
           ),
           RaisedButton(
@@ -61,25 +65,58 @@ class _FileDataPageState extends State<FileDataPage> {
           ),
           Text("sqlite操作"),
           RaisedButton(
-            onPressed: () {},
+            onPressed: () async {
+
+              var student1 = StudentDao(id: '1232', name: '张三1', score: 90);
+              var student2 = StudentDao(id: '4563', name: '李四2', score: 80);
+              var student3 = StudentDao(id: '7894', name: '王五3', score: 85);
+
+
+              // 插入 3 个 Student 对象
+
+
+
+              DbUtils.getInstance().insertItem(student1);
+              DbUtils.getInstance().insertItem(student2);
+              DbUtils.getInstance().insertItem(student3);
+
+
+            },
             child: Text("写"),
           ),
           RaisedButton(
-            onPressed: () {},
+            onPressed: () {
+              // 读取出数据库中插入的 Student 对象集合
+              //students().then((list)=>list.forEach((s)=>print(s.name)));
+              DbUtils.getInstance().queryItems(StudentDao())
+              .then((list)=>list.forEach((StudentDao student){
+                print(student.name);
+              }));
+
+            },
             child: Text("读"),
+          ),
+          RaisedButton(
+            onPressed: () {
+             // DbUtils.getInstance().
+            },
+            child: Text("改"),
+          ),
+          RaisedButton(
+            onPressed: () {
+
+              DbUtils.getInstance().deleteDb("student");
+
+            },
+            child: Text("删"),
           ),
         ],
       ),
     );
   }
 
-  Future<void> initSqlite() async {
-//    final Future<Database> database = openDatabase(
-//        join(await getDatabasesPath(), 'students_database.db'),
-//        onCreate: (db, version)=>db.execute("CREATE TABLE students(id TEXT PRIMARY KEY, name TEXT, score INTEGER)"),
-//        version: 1,
-//    );
-  }
+
+
 }
 
 // 创建文件目录
@@ -120,6 +157,3 @@ Future<void> _incrementCounter() async {
   int counter = (prefs.getInt('counter') ?? 0) + 1;
   prefs.setInt('counter', counter);
 }
-
-
-
