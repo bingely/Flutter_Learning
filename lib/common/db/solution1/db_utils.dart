@@ -46,7 +46,6 @@ class DbUtils {
     });
   }
 
-
   // 插入数据
   Future<void> insertItem<T extends DbBaseBean>(T t) async {
     if (null == database || !database.isOpen) return;
@@ -66,7 +65,7 @@ class DbUtils {
     if (null == database || !database.isOpen) return null;
 
     // 删除表
-    if (key.isEmpty || value.isEmpty) {
+    if (key == null || value == null || key.isEmpty || value.isEmpty) {
       await database.delete(t.getTableName());
     } else {
       // 删除数据
@@ -100,7 +99,7 @@ class DbUtils {
     List<Map<String, dynamic>> maps = List();
 
     // 列表数据
-    if (key.isEmpty || value.isEmpty) {
+    if (key == null || value == null || key.isEmpty || value.isEmpty) {
       maps = await database.query(t.getTableName());
     } else {
       maps = await database.query(
@@ -115,6 +114,9 @@ class DbUtils {
       return t.fromJson(maps[i]);
     });
   }
+
+
+
 
   /// 关闭数据库
   closeDb() async {

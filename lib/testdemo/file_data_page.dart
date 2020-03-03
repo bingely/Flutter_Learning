@@ -105,7 +105,7 @@ class _FileDataPageState extends State<FileDataPage> {
           RaisedButton(
             onPressed: () {
 
-              DbUtils.getInstance().deleteDb("student");
+              DbUtils.getInstance().deleteItem(StudentDao());
 
             },
             child: Text("删"),
