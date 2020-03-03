@@ -144,7 +144,6 @@ class ChatePageState extends State<ChatPage> {
                             source: ImageSource.gallery, callback: (v) {
                           if (v == null) return;
                           print(v);
-                          updateUserPic(v);
                           _handleSubmittedImgData(v);
                           // Notice.send(WeChatActions.msg(), v ?? '');
                         });
