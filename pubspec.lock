@@ -186,6 +186,20 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_luakit_plugin:
+    dependency: transitive
+    description:
+      name: flutter_luakit_plugin
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.2.0"
+  flutter_orm_plugin:
+    dependency: "direct main"
+    description:
+      name: flutter_orm_plugin
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.3.1"
   flutter_page_indicator:
     dependency: transitive
     description:
