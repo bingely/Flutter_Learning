@@ -17,9 +17,7 @@ class ListViewPageState extends State<ListViewPage> {
   }
 }
 
-
-class InfiniteListView extends State<ListViewPage>{
-
+class InfiniteListView extends State<ListViewPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
