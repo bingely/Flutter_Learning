@@ -5,11 +5,20 @@ class WsManager {
   /// 连接的远程地址
   String url = 'ws://echo.websocket.org';
 
-  static WsManager wsManager;
+   static WsManager wsManager;
 
   static IOWebSocketChannel socketChannel;
 
-  _init() {
+
+  int reconnectCount = 0; // 重连次数
+  final int MAX_RECONNECT_COUNT = 5; // 重连次数，看需求，自定义
+
+  /// ping interval time
+  static final int PING_INTERVAL = 30 * 1000;
+
+  var connecting = false; //websocket连接状态
+
+  init() {
     try {
       if (socketChannel == null) {
         socketChannel = new IOWebSocketChannel.connect(url);
@@ -17,15 +26,9 @@ class WsManager {
 
         // 监听动作
         socketChannel.stream.listen(
-          (message) {
-            debugPrint('ws channel message$message');
-          },
-          onDone: () {
-            debugPrint('ws channel closed');
-          },
-          onError: (error) {
-            debugPrint('ws error $error');
-          },
+          (data) => listenMessage(data),
+          onDone: onDone,
+          onError: onError,
         );
       }
     } catch (e) {
@@ -41,7 +44,6 @@ class WsManager {
     return wsManager;
   }
 
-
   // 发送数据
 
   // 关闭动作
@@ -51,7 +53,22 @@ class WsManager {
     }
   }
 
-  // 重连逻辑 TODO
+  // 重连逻辑
+  void onDone() {
+    debugPrint('ws channel closed');
+    print('ws channel--->websocket断开了');
+    init();
+    print('ws channel--->websocket重连');
+  }
 
+  onError(error){
+    print('ws channel-->error------------>${error}');
+  }
+
+  listenMessage(data) {
+    connecting = true;
+    debugPrint('ws channel---> message$data');
+    // 解析数据 TODO
+  }
 
 }

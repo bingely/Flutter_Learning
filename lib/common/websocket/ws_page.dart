@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/tool/platform_utils.dart';
 import 'package:web_socket_channel/io.dart';
-
+import 'ws_manager.dart';
 import 'package:web_socket_channel/status.dart' as status;
 
 
@@ -15,8 +15,7 @@ class _WsPageState extends State<WsPage> {
 
   @override
   void initState() {
-    channel = IOWebSocketChannel.connect('ws://echo.websocket.org',
-        pingInterval: Duration(minutes: 3));
+    WsManager.getInstance().init();
     super.initState();
   }
 
