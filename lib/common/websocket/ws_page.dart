@@ -12,16 +12,19 @@ class WsPage extends StatefulWidget {
 
 class _WsPageState extends State<WsPage> {
   IOWebSocketChannel channel;
-
+  WsManager _wsManager;
   @override
   void initState() {
-    WsManager.getInstance().init();
+    _wsManager = WsManager.getInstance();
+    _wsManager.connect();
+    channel = _wsManager.socketChannel;
+
     super.initState();
   }
 
   @override
   void dispose() {
-    channel.sink.close();
+    _wsManager.close();
     super.dispose();
   }
 
@@ -33,13 +36,13 @@ class _WsPageState extends State<WsPage> {
       ),
       body: Column(
         children: <Widget>[
-          StreamBuilder(
+         /* StreamBuilder(
             stream: channel?.stream,
             builder: (context, snapshot) {
               print("object-------");
               return Text(snapshot.hasData ? '${snapshot.data}' : '');
             },
-          ),
+          ),*/
           RaisedButton(
             child: Text('connect'),
             onPressed: () {
