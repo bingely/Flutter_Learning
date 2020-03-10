@@ -26,6 +26,7 @@ import 'package:flutter_qyyim/testdemo/wann/user/login_page.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import 'common/websocket/ws_page.dart';
 import 'pages/root_page.dart';
 import 'common/route.dart';
 import 'config/const.dart';
@@ -67,7 +68,7 @@ class _MyAppState extends State<MyApp> {
             'video_page': (BuildContext context) => VideoPage(),
             'gallay': (BuildContext context) => Gallery()
           },
-          home: LoadPage(), //RouterTestRoute
+          home: WsPage(), //RouterTestRoute
         ));
   }
 }

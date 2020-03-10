@@ -11,13 +11,11 @@ class WsPage extends StatefulWidget {
 }
 
 class _WsPageState extends State<WsPage> {
-  IOWebSocketChannel channel;
   WsManager _wsManager;
   @override
   void initState() {
     _wsManager = WsManager.getInstance();
     _wsManager.connect();
-    channel = _wsManager.socketChannel;
 
     super.initState();
   }
@@ -57,12 +55,40 @@ class _WsPageState extends State<WsPage> {
               },onDone: (){
 
               });*/
+
+              RequestMap.requestNotPayOrder(context)
+                  .timeout(Duration(seconds: Utils.getConnectTime()), onTimeout: (sink) {
+                ShowLoadLoadingDialog.hideLoadingDialog();
+              }).listen((data) async {
+                ShowLoadLoadingDialog.hideLoadingDialog();
+                if (data?.data != null) {
+                  if (data.data.appNoPwd) {
+                    if (data.data.notPayNum == 0) {
+                      String result =
+                      await scanQrCodePlatform.invokeMethod('startCaptureActivity');
+                      handleCaptureResult(result);
+                    } else {
+                      showDialogType = 1;
+                      showDialog<Null>(
+                          context: context, //BuildContext对象
+                          barrierDismissible: true,
+                          builder: (BuildContext context) {
+                            return getCustomDialog();
+                          });
+                    }
+                  } else {
+                    ToastUtils.toastUtils(context, msg: S.of(context).mian_page_no_pwd);
+                  }
+                }
+              }, onError: (err) {
+                ShowLoadLoadingDialog.hideLoadingDialog();
+              });
             },
           ),
           RaisedButton(
             child: Text('send'),
             onPressed: () {
-              channel.sink.add("connected!"); // 将数据发送到服务器
+              _wsManager.getSocketChannel().sink.add("sendCMD!"); // 将数据发送到服务器
             },
           )
         ],
