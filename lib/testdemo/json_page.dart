@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -47,8 +46,9 @@ class _JsonPageState extends State<JsonPage> {
       body: RaisedButton(
         onPressed: () {
           // 如果 JSON 的数据格式比较复杂，数据量又大，这种解析方式可能会造成短期 UI 无法响应
-          compute(parseStudent, jsonString)
-              .then((student) => {print(student.teacher.name)});
+          parseStudent(jsonString);
+          /*compute(parseStudent, jsonString)
+              .then((student) => {print(student.teacher.name)});*/
         },
         child: Text("解析"),
       ),
@@ -58,6 +58,7 @@ class _JsonPageState extends State<JsonPage> {
   Student parseStudent(String content) {
     final jsonResponse = json.decode(content);
     Student student = Student.fromJson(jsonResponse);
+    print(student.teacher.name);
     return student;
   }
 }

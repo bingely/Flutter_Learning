@@ -87,12 +87,14 @@ dependencies:
   connectivity: ^0.4.8+2
   #^0.23.1 新版和旧版api相差较大
   rxdart: ^0.18.1
+  # json 注解
+  json_annotation: ^2.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-
+  build_runner: ^1.0.0
+  json_serializable: ^2.0.0
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
 

@@ -64,20 +64,7 @@ class _DioPageState extends State<DioPage> {
 
 }
 
-void getRequest() async {
-  // 创建网络调用示例
-  Dio dio = new Dio();
 
-  // 设置 URI 及请求 user-agent 后发起请求
-  var response = await dio.get("https://flutter.dev", options:Options(headers: {"user-agent" : "Custom-UA"}));
-
-  // 打印请求结果
-  if(response.statusCode == HttpStatus.ok) {
-    print(response.data.toString());
-  } else {
-    print("Error: ${response.statusCode}");
-  }
-}
 
 
 

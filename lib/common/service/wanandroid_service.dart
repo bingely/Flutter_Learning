@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/net/wanandroid_api.dart';
@@ -6,7 +8,6 @@ import 'dio.dart';
 
 class WanAndroidRepository {
   // 轮播
-
   fetchChapters() async {
     Response response = await dio.get('https://wanandroid.com/wxarticle/chapters/json');
     print("${response.data}===>${response.statusCode}");
@@ -54,3 +55,17 @@ updateUserPic(String imgurl) async{
 }
 
 
+void getRequest() async {
+  // 创建网络调用示例
+  Dio dio = new Dio();
+
+  // 设置 URI 及请求 user-agent 后发起请求
+  var response = await dio.get("https://flutter.dev", options:Options(headers: {"user-agent" : "Custom-UA"}));
+
+  // 打印请求结果
+  if(response.statusCode == HttpStatus.ok) {
+    print(response.data.toString());
+  } else {
+    print("Error: ${response.statusCode}");
+  }
+}
