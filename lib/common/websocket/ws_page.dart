@@ -56,7 +56,7 @@ class _WsPageState extends State<WsPage> {
 
               });*/
 
-              RequestMap.requestNotPayOrder(context)
+              /*RequestMap.requestNotPayOrder(context)
                   .timeout(Duration(seconds: Utils.getConnectTime()), onTimeout: (sink) {
                 ShowLoadLoadingDialog.hideLoadingDialog();
               }).listen((data) async {
@@ -82,7 +82,7 @@ class _WsPageState extends State<WsPage> {
                 }
               }, onError: (err) {
                 ShowLoadLoadingDialog.hideLoadingDialog();
-              });
+              });*/
             },
           ),
           RaisedButton(

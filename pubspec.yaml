@@ -85,8 +85,8 @@ dependencies:
   esys_flutter_share: ^1.0.2
   # 网络检测
   connectivity: ^0.4.8+2
-  #
-  rxdart: ^0.23.1
+  #^0.23.1 新版和旧版api相差较大
+  rxdart: ^0.18.1
 
 dev_dependencies:
   flutter_test:
