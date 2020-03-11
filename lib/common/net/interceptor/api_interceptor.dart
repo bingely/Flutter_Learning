@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../not_sucess_exception.dart';
 import '../response_data.dart';
-import '../wanandroid_api.dart';
+import '../dio_utils.dart';
 
 // 封装的是解析数据过程
 class ApiInterceptor extends Interceptor{

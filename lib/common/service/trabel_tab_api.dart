@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/model/travel_tab_model.dart';
+import 'package:flutter_qyyim/models/travel_tab_model.dart';
 
 import 'dio.dart';
 

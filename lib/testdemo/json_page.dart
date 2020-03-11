@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/common/net/rxhttp/NetCallBack.dart';
+import 'package:flutter_qyyim/common/net/rxhttp/rxdio.dart';
 
 import 'bean/student.dart';
 
@@ -27,7 +29,7 @@ class _JsonPageState extends State<JsonPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    RxDio.initDatabase();
     super.initState();
   }
 
@@ -49,6 +51,26 @@ class _JsonPageState extends State<JsonPage> {
           parseStudent(jsonString);
           /*compute(parseStudent, jsonString)
               .then((student) => {print(student.teacher.name)});*/
+
+
+          RxDio<String>()
+            ..setBaseUrl("https://www.wanandroid.com/")
+            ..setPath("wxarticle/chapters/json")
+            ..setMethord(REQUEST_METHORD.GET)
+            ..setCacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
+            ..call(
+              new NetCallback(
+                onCacheFinish: (data) {
+                  print("缓存回调：" + data);
+                },
+                onNetFinish: (data) {
+                  print("网络回调：" + data);
+                },
+                onUnkownFinish: (data) {
+                  print("未知回调：" + data);
+                },
+              ),
+            );
         },
         child: Text("解析"),
       ),

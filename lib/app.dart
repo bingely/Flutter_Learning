@@ -20,6 +20,7 @@ import 'package:flutter_qyyim/testdemo/container_class_chapter5/scaffold_page.da
 import 'package:flutter_qyyim/testdemo/container_class_chapter5/transform_page.dart';
 import 'package:flutter_qyyim/testdemo/dio_page.dart';
 import 'package:flutter_qyyim/testdemo/file_data_page.dart';
+import 'package:flutter_qyyim/testdemo/json_page.dart';
 import 'package:flutter_qyyim/testdemo/layout_chpter4/align_layout_page.dart';
 import 'package:flutter_qyyim/testdemo/sliver_page.dart';
 import 'package:flutter_qyyim/testdemo/wann/user/login_page.dart';
@@ -68,7 +69,7 @@ class _MyAppState extends State<MyApp> {
             'video_page': (BuildContext context) => VideoPage(),
             'gallay': (BuildContext context) => Gallery()
           },
-          home: WsPage(), //RouterTestRoute
+          home: LoadPage(), //RouterTestRoute
         ));
   }
 }

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/common/net/wanandroid_api.dart';
+import 'package:flutter_qyyim/common/net/dio_utils.dart';
 
 import 'dio.dart';
 
