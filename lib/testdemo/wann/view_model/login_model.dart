@@ -10,6 +10,9 @@ class LoginModel extends ViewStateModel {
   // 登陆、退出
   Future<bool> login(loginName, password) async{
     //setBusy();
-    return false;
+    var user = await WanAndroidRepository.login(loginName,password);
+    // 保存用户数据
+    userModel.saveUser(user);
+    return true;
   }
 }

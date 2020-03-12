@@ -3,41 +3,47 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/net/dio_utils.dart';
+import 'package:flutter_qyyim/pages/trip/model/travel_model.dart';
+import 'package:flutter_qyyim/testdemo/wann/model/user.dart';
 
 import 'dio.dart';
 
+/// 服务端接口
+/// 因为 在拦截器已经做了一层respsse 判断， 所以这里只得到response 后直接 json解析
+/// 注意list类型的解析
 class WanAndroidRepository {
+
+  static Future fetchBanners() async {
+    var response = await http.get('banner/json');
+  }
+
+
   // 轮播
-  fetchChapters() async {
+  static fetchChapters() async {
     Response response = await dio.get('https://wanandroid.com/wxarticle/chapters/json');
     print("${response.data}===>${response.statusCode}");
   }
-}
-
-Future fetchBanners() async {
-  var response = await http.get('banner/json');
-
-}
-
-fetchChapters() async {
-  Response response = await http.get('wxarticle/chapters/json');
-}
 
 
-login(String username, String password) async{
-  await http.post('user/login',queryParameters: {'username': username,
-    'password': password});
-}
+  static Future login(String username, String password) async{
+    var response = await http.post('user/login',queryParameters: {'username': username,
+      'password': password});
+    return User.fromJsonMap(response.data);
+  }
 
-/// 登出
-logout() async {
-  /// 自动移除cookie
-  await http.get('user/logout/json');
-}
+  /// 登出
+  static logout() async {
+    /// 自动移除cookie
+    await http.get('user/logout/json');
+  }
 // 收藏列表
-fetchCollectList(int pageNum) async{
-  await http.get<Map>('lg/collect/list/$pageNum/json');
+  static fetchCollectList(int pageNum) async{
+    await http.get<Map>('lg/collect/list/$pageNum/json');
+  }
 }
+
+
+
 
 // file test
 updateUserPic(String imgurl) async{

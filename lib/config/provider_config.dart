@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/provider/global_model.dart';
 import 'package:flutter_qyyim/testdemo/wann/view_model/login_model.dart';
+import 'package:flutter_qyyim/testdemo/wann/view_model/user_model.dart';
 import 'package:provider/provider.dart';
 
 /// ProviderConfig  provider配置
@@ -28,7 +29,9 @@ class ProviderConfig {
       providers: [
         Provider.value(value: 30.0),
         ChangeNotifierProvider.value(value: GlobalModel()),
-        ChangeNotifierProvider.value(value: LoginModel())
+        ChangeNotifierProvider.value(value: LoginModel()),
+        ChangeNotifierProvider.value(value: UserModel()),
+       // ChangeNotifierProvider(builder: (context)=>LoginModel(),)  // 还可以这种写法
       ],
       child: child,
     );
@@ -41,6 +44,6 @@ class ProviderConfig {
       child: child,
     );
   }*/
-
+  // 私有化，不通过构造函数
   ProviderConfig._internal();
 }

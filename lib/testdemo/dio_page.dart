@@ -37,22 +37,21 @@ class _DioPageState extends State<DioPage> {
             onPressed: () {
               // getRequest();
               //    fetchTravelTab();
-              fetchChapters();
-              fetchBanners();
+              WanAndroidRepository.fetchChapters();
+              WanAndroidRepository.fetchBanners();
 
-              login("bingley","bingleywan");
             },
             child: Text("请求/并登录"),
           ),
           RaisedButton(
             onPressed: () {
-              logout();
+              WanAndroidRepository.logout();
             },
             child: Text("退出"),
           ),
           RaisedButton(
             onPressed: () {
-              fetchCollectList(0);
+              WanAndroidRepository.fetchCollectList(0);
             },
             child: Text("收藏"),
           )

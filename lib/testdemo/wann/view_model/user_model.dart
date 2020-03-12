@@ -1,7 +1,8 @@
+import 'package:flutter_qyyim/common/view_state_model.dart';
 import 'package:flutter_qyyim/testdemo/provider/change_notifier.dart';
 import 'package:flutter_qyyim/testdemo/wann/model/user.dart';
 
-class UserModel extends ChangeNotifier {
+class UserModel extends ViewStateModel {
 
   User _user;
 
@@ -10,4 +11,14 @@ class UserModel extends ChangeNotifier {
   set user(User value) {
     _user = value;
   }
+
+  void saveUser(User user) {
+    _user = user;
+    notifyListeners();
+    // 保存数据库 TODO
+
+  }
+
+
+
 }

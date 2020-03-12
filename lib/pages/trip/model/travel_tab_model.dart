@@ -1,10 +1,10 @@
 ///旅拍类别模型
 class TravelTabModel {
-  Map params; // 这个可以替换成class吗？
+  Map params;
   String url;
   List<TravelTab> tabs;
 
-  TravelTabModel({this.params, this.url, this.tabs});
+  TravelTabModel({this.url, this.tabs});
 
   TravelTabModel.fromJson(Map<String, dynamic> json) {
     url = json['url'];
@@ -25,8 +25,6 @@ class TravelTabModel {
     }
     return data;
   }
-
-
 }
 
 class TravelTab {
