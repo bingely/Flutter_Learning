@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/pages/contacts/contacts_page.dart';
@@ -5,19 +6,30 @@ import 'package:flutter_qyyim/pages/me/me_page.dart';
 import 'package:flutter_qyyim/pages/message/message_page.dart';
 import 'package:badges/badges.dart';
 
+List<Widget> widegets = <Widget>[
+  new MessagePage(),
+  new ContactsPage(),
+  new MePage(),
+];
+
 /// 用来放置几个大模块的容器页面
-class RootPage extends StatefulWidget {
+class TabNavigatorPage extends StatefulWidget {
   @override
-  RootPageState createState() {
-    return RootPageState();
+  TabNavigatorPageState createState() {
+    return TabNavigatorPageState();
   }
 }
 
-class RootPageState extends State<RootPage> {
-  // 当前选中的页面索引
+class TabNavigatorPageState extends State<TabNavigatorPage> {
+
   final _defaultColor = Colors.grey;
   final _activeColor = Colors.blue;
+  // 当前选中的页面索引
   int _currentIndex = 0;
+
+  DateTime _lastPressed;
+
+
   final PageController _controller = PageController(
     initialPage: 0,
   );
@@ -26,14 +38,20 @@ class RootPageState extends State<RootPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       //  中间显示的
-      body: PageView(
-        controller: _controller,
-        children: <Widget>[
-          new MessagePage(),
-          new ContactsPage(),
-          new MePage(),
-        ],
-        physics: NeverScrollableScrollPhysics(),
+      body: WillPopScope(
+        onWillPop: () async{
+          if (_lastPressed == null || DateTime.now().difference(_lastPressed)> Duration(seconds: 1)) {
+            //两次点击间隔超过1秒则重新计时
+            _lastPressed = DateTime.now();
+            return false;
+          }
+          return true;
+        },
+        child: PageView(
+          controller: _controller,
+          children: widegets,
+          physics: NeverScrollableScrollPhysics(),
+        ),
       ),
       // 底部导航按钮
       bottomNavigationBar: BottomNavigationBar(

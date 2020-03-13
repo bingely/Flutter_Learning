@@ -5,7 +5,7 @@ import 'package:flutter_qyyim/pages/chat/chat_page.dart';
 import 'package:flutter_qyyim/pages/chat/video/video_page.dart';
 import 'package:flutter_qyyim/pages/load_page.dart';
 import 'package:flutter_qyyim/pages/message/message_page.dart';
-import 'package:flutter_qyyim/pages/root_page.dart';
+import 'package:flutter_qyyim/pages/tab_navigator_page.dart';
 import 'package:flutter_qyyim/pages/search/search.dart';
 import 'package:flutter_qyyim/ui/page_route_anim.dart';
 
@@ -24,16 +24,18 @@ class RouteName {
   static const String app = 'app';
 }
 
+/// CupertinoPageRoute 是一种具有带有滑动关闭的苹果页面效果
+/// NoAnimRouteBuilder 无动画效果
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RouteName.splash:
         return NoAnimRouteBuilder(LoadPage());
       case RouteName.app:
-        return NoAnimRouteBuilder(RootPage());
+        return NoAnimRouteBuilder(TabNavigatorPage());
       case RouteName.chat:
         return CupertinoPageRoute(
-          builder: (_) => ChatPage()
+          builder: (context) => ChatPage()
         );
         //return NoAnimRouteBuilder(ChatPage());
       case RouteName.msglist:

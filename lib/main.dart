@@ -3,10 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import 'app.dart';
+import 'common/route.dart';
+import 'config/const.dart';
 import 'config/provider_config.dart';
+import 'config/router_manger.dart';
 import 'config/storage_manager.dart';
+import 'provider/global_model.dart';
 
 /// 应用入口处
 Future<void> main() async {
@@ -19,12 +23,39 @@ Future<void> main() async {
  // Provider.debugCheckInvalidValueType = null;
 
   /// APP入口并配置Provider
-  runApp(ProviderConfig.getInstance().getMultiGlobal(MyApp()));
+  runApp(ProviderConfig.getInstance().getMultiGlobal(App()));
 
   /// Android状态栏透明
   if (Platform.isAndroid) {
     SystemUiOverlayStyle systemUiOverlayStyle =
         SystemUiOverlayStyle(statusBarColor: Colors.transparent);
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+  }
+}
+
+class App extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<GlobalModel>(
+      builder: (context,model,child){
+        return RefreshConfiguration(
+            hideFooterWhenNotFull: true, //列表数据不满一页,不触发加载更多
+            child: new MaterialApp(
+              navigatorKey: navGK,
+              title: model.appName,
+              theme: ThemeData(
+                scaffoldBackgroundColor: bgColor,
+                //hintColor: Colors.grey.withOpacity(0.3),
+                //splashColor: Colors.transparent,
+                //canvasColor: Colors.transparent,
+              ),
+              debugShowCheckedModeBanner: false,
+              locale: model.currentLocale,
+              // 路由管理注入
+              onGenerateRoute: Router.generateRoute,
+              initialRoute: RouteName.splash,//RouterTestRoute
+            ));
+      },
+    );
   }
 }

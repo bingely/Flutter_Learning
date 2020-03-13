@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/config/router_manger.dart';
 import 'package:flutter_qyyim/tool/check.dart';
 import 'package:flutter_qyyim/tool/win_media.dart';
 import 'package:flutter_qyyim/pages/message/message_data.dart';
@@ -29,7 +30,7 @@ class MessagePageState extends State<MessagePage> {
           GestureDetector(
             onTap: () {
               //跳转至搜索页面
-              Navigator.pushNamed(context, 'search');
+              Navigator.pushNamed(context, RouteName.search);
             },
             child: Icon(
               //搜索图标
