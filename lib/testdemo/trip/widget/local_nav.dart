@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/pages/trip/model/common_model.dart';
-import 'package:flutter_qyyim/pages/trip/widget/webview.dart';
+import 'package:flutter_qyyim/testdemo/trip/model/common_model.dart';
+import 'package:flutter_qyyim/testdemo/trip/widget/webview.dart';
 import 'package:flutter_qyyim/tool/navigator_util.dart';
 
 class LocalNav extends StatelessWidget {

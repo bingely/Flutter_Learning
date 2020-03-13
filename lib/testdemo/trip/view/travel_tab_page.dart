@@ -9,7 +9,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/service/trabel_service.dart';
-import 'package:flutter_qyyim/pages/trip/model/travel_model.dart';
+import 'package:flutter_qyyim/testdemo/trip/model/travel_model.dart';
 import 'package:flutter_qyyim/ui/loading_container.dart';
 import 'package:flutter_qyyim/tool/navigator_util.dart';
 import 'package:flutter_qyyim/ui/webview.dart';

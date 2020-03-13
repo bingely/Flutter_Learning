@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/net/dio_utils.dart';
-import 'package:flutter_qyyim/pages/trip/model/travel_model.dart';
 import 'package:flutter_qyyim/testdemo/wann/model/tree.dart';
 import 'package:flutter_qyyim/testdemo/wann/model/user.dart';
 

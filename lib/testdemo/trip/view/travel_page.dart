@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/service/trabel_service.dart';
-import 'package:flutter_qyyim/pages/trip/model/travel_tab_model.dart';
-import 'package:flutter_qyyim/pages/trip/view/travel_tab_page.dart';
+import 'package:flutter_qyyim/testdemo/trip/model/travel_tab_model.dart';
+import 'package:flutter_qyyim/testdemo/trip/view/travel_tab_page.dart';
 import 'package:underline_indicator/underline_indicator.dart';
 
 class TravelPage extends StatefulWidget {

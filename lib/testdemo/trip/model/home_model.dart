@@ -4,7 +4,7 @@
 //gridNav	Object	NonNull
 //subNavList	Array	NonNull
 //salesBox	Object	NonNull
-import 'package:flutter_qyyim/pages/trip/model/sales_box_model.dart';
+import 'package:flutter_qyyim/testdemo/trip/model/sales_box_model.dart';
 
 import 'common_model.dart';
 import 'config_model.dart';
