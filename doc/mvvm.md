@@ -16,3 +16,34 @@ ui/ 下分为了pages widget
 
 # 升级版本
 https://www.jianshu.com/p/a13d38ba617f
+
+
+# 没看懂为啥这样封装
+class _ProviderWidgetState<T extends ChangeNotifier>
+    extends State<ProviderWidget<T>> {
+  T model;
+
+  @override
+  void initState() {
+    model = widget.model;
+    widget.onModelReady?.call(model);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    if (widget.autoDispose) model.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<T>.value(
+      value: model,
+      child: Consumer<T>(
+        builder: widget.builder,
+        child: widget.child,
+      ),
+    );
+  }
+}

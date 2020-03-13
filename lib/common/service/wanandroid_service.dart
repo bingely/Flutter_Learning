@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/net/dio_utils.dart';
+import 'package:flutter_qyyim/testdemo/wann/model/article.dart';
 import 'package:flutter_qyyim/testdemo/wann/model/tree.dart';
 import 'package:flutter_qyyim/testdemo/wann/model/user.dart';
 
@@ -46,14 +47,16 @@ class WanAndroidRepository {
     return response.data.map<Tree>((item) => Tree.fromJsonMap(item)).toList();
   }
 
-  static Future projectCategories() async {
-    var response = await http.get("");
-    response.data.map<Tree>((item) => Tree.fromJsonMap(item)).toList();
-  }
 
-  static Future ff() async {
-    var response = await http.get("path");
-    return response.data.map<Tree>((item) => Tree.fromJsonMap(item)).toList();
+
+  // 文章
+  static Future fetchArticles(int pageNum, {int cid}) async {
+    await Future.delayed(Duration(seconds: 1)); //增加动效
+    var response = await http.get('article/list/$pageNum/json',
+        queryParameters: (cid != null ? {'cid': cid} : null));
+    return response.data['datas']
+        .map<Article>((item) => Article.fromMap(item))
+        .toList();
   }
 }
 
