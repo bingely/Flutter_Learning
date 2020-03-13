@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
-class ProjectPage extends StatefulWidget {
+import 'article_list_page.dart';
 
+class ProjectPage extends StatefulWidget {
   @override
   _ProjectPageState createState() => new _ProjectPageState();
 }
 
-class _ProjectPageState extends State<ProjectPage> {
+class _ProjectPageState extends State<ProjectPage> with SingleTickerProviderStateMixin{
+
+  TabController tabController;
 
   @override
   void initState() {
-    // TODO: implement initState
+    tabController = TabController(length: 1, vsync: this);
     super.initState();
   }
 
@@ -24,9 +27,19 @@ class _ProjectPageState extends State<ProjectPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('project_demo'),
+        title: TabBar(
+          controller: tabController,
+          tabs: <Widget>[
+            Tab(
+              text: 'hello',
+            ),
+          ],
+        ),
+      ),
+      body: TabBarView(
+        controller: tabController,
+        children: <Widget>[ArticleListPage()],
       ),
     );
   }
-
 }

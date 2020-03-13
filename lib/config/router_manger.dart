@@ -7,6 +7,9 @@ import 'package:flutter_qyyim/pages/load_page.dart';
 import 'package:flutter_qyyim/pages/message/message_page.dart';
 import 'package:flutter_qyyim/pages/tab_navigator_page.dart';
 import 'package:flutter_qyyim/pages/search/search.dart';
+import 'package:flutter_qyyim/pages/trip/view/travel_home_page.dart';
+import 'package:flutter_qyyim/testdemo/wann/pages/project/article_list_item.dart';
+import 'package:flutter_qyyim/testdemo/wann/pages/project/project_page.dart';
 import 'package:flutter_qyyim/ui/page_route_anim.dart';
 
 /// 路由名字
@@ -30,7 +33,7 @@ class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RouteName.splash:
-        return NoAnimRouteBuilder(LoadPage());
+        return NoAnimRouteBuilder(TravelHomePage());
       case RouteName.app:
         return NoAnimRouteBuilder(TabNavigatorPage());
       case RouteName.chat:

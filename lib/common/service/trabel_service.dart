@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/pages/trip/model/home_model.dart';
 import 'package:flutter_qyyim/pages/trip/model/travel_model.dart';
 import 'package:flutter_qyyim/pages/trip/model/travel_tab_model.dart';
 
@@ -11,8 +12,22 @@ String tab = 'http://www.devio.org/io/flutter_app/json/travel_page.json';
 ///旅拍页接口 ??
 const _TRAVEL_URL =
     'https://m.ctrip.com/restapi/soa2/16189/json/searchTripShootListForHomePageV2?_fxpcqlniredt=09031014111431397988&__gw_appid=99999999&__gw_ver=1.0&__gw_from=10650013707&__gw_platform=H5';
+const HOME_URL = 'http://www.devio.org/io/flutter_app/json/home_page.json';
 
 class TravelResponsitory {
+
+
+  static Future<HomeModel> fetchHome() async {
+    final response = await dio.get(HOME_URL);
+    print("${response.data}===>${response.statusCode}");
+    if (response.statusCode == 200) {
+      return HomeModel.fromJson(response.data);
+    } else {
+      throw Exception('Failed to load home_page.json');
+    }
+
+
+  }
 
   ///旅拍类别
   static Future<TravelTabModel> fetchTravelTab() async {
