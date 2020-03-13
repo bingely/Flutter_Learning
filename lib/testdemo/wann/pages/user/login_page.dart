@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/common/base/provider_widget.dart';
 import 'package:flutter_qyyim/common/service/wanandroid_service.dart';
-import 'package:flutter_qyyim/testdemo/wann/user/login_field_widget.dart';
 import 'package:flutter_qyyim/testdemo/wann/view_model/login_model.dart';
 import 'package:flutter_qyyim/tool/toast.dart';
 import 'package:provider/provider.dart';
+import 'login_field_widget.dart';
 import 'login_widget.dart';
 
 class LoginPage extends StatefulWidget {
@@ -26,14 +27,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-   // LoginModel.login("bingley","bingleywan");
     // 拿到provider 引用
-    var model = Provider.of<LoginModel>(context);
-    model.login("bingley","bingleywan").then((islogin){
-      if (islogin) {
-          Toast.show("成功登录", context);
-      }
-    });
     return new Scaffold(
       body: CustomScrollView(
         physics: ClampingScrollPhysics(),
@@ -51,12 +45,35 @@ class _LoginPageState extends State<LoginPage> {
                     children: <Widget>[
                       //LoginLogo(),
                       LoginFormContainer(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            LoginTextField(),
-                            LoginTextField(),
-                          ],
+                        child: ProviderWidget<LoginModel>(
+                          model: LoginModel(Provider.of(context)),
+                          onModelReady: (model) {
+                          },
+                          builder: (context, model, child) {
+                            return Form(
+                              child: child,
+                            );
+                          },
+
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              LoginTextField(),
+                              LoginTextField(),
+                              RaisedButton(
+                                onPressed: (){
+                                  var model = LoginModel(Provider.of(context));
+                                  model.login("bingley", "bingleywan").then((islogin) {
+                                    if (islogin) {
+                                      Toast.show("成功登录", context);
+
+                                    }
+                                  });
+                                },
+                                child: Text('login'),
+                              )
+                            ],
+                          ),
                         ),
                       )
                     ],

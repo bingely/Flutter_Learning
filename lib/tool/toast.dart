@@ -61,7 +61,7 @@ class ToastView {
                   color: background,
                   borderRadius: BorderRadius.circular(backgroundRadius),
                 ),
-                constraints: BoxConstraints(minHeight: 52,minWidth: 210),
+                constraints: BoxConstraints(minHeight: 52, minWidth: 210),
                 child: _buildContent(type, msg, textColor),
               ),
             ),
@@ -91,8 +91,13 @@ class ToastView {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Icon(type ==1 ?Icons.check_circle:Icons.error,color: Colors.white,),
-          Padding(padding: EdgeInsets.only(top: 16.0),),
+          Icon(
+            type == 1 ? Icons.check_circle : Icons.error,
+            color: Colors.white,
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 16.0),
+          ),
           Text(msg,
               maxLines: 20,
               overflow: TextOverflow.ellipsis,

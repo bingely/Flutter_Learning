@@ -54,8 +54,13 @@ dependencies:
   esys_flutter_share: ^1.0.2
   # 瀑布布局
   flutter_staggered_grid_view: ^0.2.7
+  #
   underline_indicator: ^0.0.2
-
+  # 二维码
+  qr_flutter: ^3.1.0
+  barcode_scan: 2.0.1
+  # 企业级大型应用 路由管理
+  fluro: ^1.6.1
 
 
   # ****************************数据相关******************************************

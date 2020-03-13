@@ -29,7 +29,6 @@ class ProviderConfig {
       providers: [
         Provider.value(value: 30.0),
         ChangeNotifierProvider.value(value: GlobalModel()),
-        ChangeNotifierProvider.value(value: LoginModel()),
         ChangeNotifierProvider.value(value: UserModel()),
        // ChangeNotifierProvider(builder: (context)=>LoginModel(),)  // 还可以这种写法
       ],

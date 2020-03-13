@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/common/check.dart';
+import 'package:flutter_qyyim/tool/check.dart';
 import 'package:flutter_qyyim/common/pinyin/pinyin_helper.dart';
 import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/config/keys.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/common/check.dart';
+import 'package:flutter_qyyim/tool/check.dart';
 import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/ui/pop/popup_menu_route_layout.dart';
 import 'triangle_painter.dart';

@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/common/check.dart';
+import 'package:flutter_qyyim/tool/check.dart';
 import 'package:flutter_qyyim/common/ui.dart';
 import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/pages/chat/model/chat_data.dart';

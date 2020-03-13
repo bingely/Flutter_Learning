@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/common/check.dart';
+import 'package:flutter_qyyim/tool/check.dart';
 
 import 'package:flutter_qyyim/common/commom_button.dart';
 import 'package:flutter_qyyim/config/const.dart';

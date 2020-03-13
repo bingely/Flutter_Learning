@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/common/check.dart';
-import 'package:flutter_qyyim/common/win_media.dart';
+import 'package:flutter_qyyim/tool/check.dart';
+import 'package:flutter_qyyim/tool/win_media.dart';
 import 'package:flutter_qyyim/pages/message/message_data.dart';
 import 'package:flutter_qyyim/pages/message/message_item.dart';
 import 'package:flutter_qyyim/ui/pop/w_popup_menu.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_qyyim/common/win_media.dart';
+import 'package:flutter_qyyim/tool/win_media.dart';
 import 'package:flutter_qyyim/ui/edit/text_span_builder.dart';
 import 'package:flutter_qyyim/ui/fluttercadis/my_extended_text_selection_controls.dart';
 import 'package:flutter_qyyim/ui/pop/magic_pop.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/ui.dart';
-import 'package:flutter_qyyim/common/win_media.dart';
+import 'package:flutter_qyyim/tool/win_media.dart';
 import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/ui/image_view.dart';
 
