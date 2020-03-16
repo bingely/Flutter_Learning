@@ -8,9 +8,11 @@ import 'package:flutter_qyyim/testdemo/trip/view/travel_tab_page.dart';
 import 'package:flutter_qyyim/testdemo/wann/pages/project/project_page.dart';
 import 'package:flutter_qyyim/testdemo/wann/pages/user/login_page.dart';
 
+import '../sliver_page.dart';
+
 List<Widget> widegets = <Widget>[
   new ProjectPage(),
-  new TravelTabPage(),
+  new SliverPage(),
   new LoginPage(),
 ];
 

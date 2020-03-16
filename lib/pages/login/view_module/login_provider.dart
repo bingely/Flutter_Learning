@@ -1,7 +1,7 @@
 
 
 import 'package:dio/dio.dart';
-import 'package:flutter_qyyim/common/base/base.dart';
+import 'package:flutter_qyyim/common/provider/base.dart';
 import 'package:flutter_qyyim/pages/login/module/repository.dart';
 import 'package:rxdart/rxdart.dart';
 /// ViewModel 层

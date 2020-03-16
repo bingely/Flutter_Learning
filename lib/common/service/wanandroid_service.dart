@@ -42,7 +42,7 @@ class WanAndroidRepository {
   }
 
   // 体系分类
-  static Future fetchProjectCategories() async {
+  static Future<List<Tree>> fetchProjectCategories() async {
     var response = await http.get('project/tree/json');
     return response.data.map<Tree>((item) => Tree.fromJsonMap(item)).toList();
   }
@@ -50,7 +50,7 @@ class WanAndroidRepository {
 
 
   // 文章
-  static Future fetchArticles(int pageNum, {int cid}) async {
+  static Future<List<Article>> fetchArticles(int pageNum, {int cid}) async {
     await Future.delayed(Duration(seconds: 1)); //增加动效
     var response = await http.get('article/list/$pageNum/json',
         queryParameters: (cid != null ? {'cid': cid} : null));

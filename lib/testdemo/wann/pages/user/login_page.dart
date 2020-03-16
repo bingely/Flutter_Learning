@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/common/base/provider_widget.dart';
+import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/common/service/wanandroid_service.dart';
 import 'package:flutter_qyyim/testdemo/wann/view_model/login_model.dart';
 import 'package:flutter_qyyim/tool/toast.dart';

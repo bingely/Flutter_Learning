@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/common/base/provider_widget.dart';
+import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/testdemo/trip/widget/loading_container.dart';
 import 'package:flutter_qyyim/testdemo/wann/model/tree.dart';
 import 'package:flutter_qyyim/testdemo/wann/view_model/project_model.dart';
@@ -38,7 +38,6 @@ class _ProjectPageState extends State<ProjectPage>
       },
       builder: (context, model, child) {
         List<Tree> treeList = model.list;
-        //tabController = TabController(length: treeList.length, vsync: this);
 
         return ValueListenableProvider<int>.value(
           value: valueNotifier,
@@ -63,16 +62,18 @@ class _ProjectPageState extends State<ProjectPage>
                     }),
                   ),
                 ),
-                body: model.isBusy?LoadingContainer(
-                  isLoading: true,
-                  child: TabBarView(
-                    children: List.generate(treeList.length,
+                body: model.isBusy
+                    ? LoadingContainer(
+                        isLoading: true,
+                        child: TabBarView(
+                          children: List.generate(treeList.length,
+                              (index) => ArticleListPage(treeList[index].id)),
+                        ),
+                      )
+                    : TabBarView(
+                        children: List.generate(treeList.length,
                             (index) => ArticleListPage(treeList[index].id)),
-                  ),
-                ):TabBarView(
-                  children: List.generate(treeList.length,
-                      (index) => ArticleListPage(treeList[index].id)),
-                ),
+                      ),
               );
             }),
           ),

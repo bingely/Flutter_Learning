@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/common/base/base.dart';
+import 'package:flutter_qyyim/common/provider/base.dart';
 import 'package:flutter_qyyim/pages/login/view_module/login_provider.dart';
 
 class GitLoginPage extends PageProvideNode<LoginProvider> {

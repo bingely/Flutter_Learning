@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+const int LENGTH_SHORT = 1;
+const int LENGTH_LONG = 2;
+const int BOTTOM = 0;
+const int CENTER = 1;
+const int TOP = 2;
+const int ERROR = -1;
+const int NORMAL = 0;
+const int SUCCESS = 1;
+
 /// toast
 class Toast {
-  static const int LENGTH_SHORT = 1;
-  static const int LENGTH_LONG = 2;
-  static const int BOTTOM = 0;
-  static const int CENTER = 1;
-  static const int TOP = 2;
-  static const int ERROR = -1;
-  static const int NORMAL = 0;
-  static const int SUCCESS = 1;
-
   static void show(String msg, BuildContext context,
       {int type = NORMAL,
       int duration = 1,
@@ -71,7 +71,7 @@ class ToastView {
     _isVisible = true;
     overlayState.insert(overlayEntry);
     await new Future.delayed(
-        Duration(seconds: duration == null ? Toast.LENGTH_SHORT : duration));
+        Duration(seconds: duration == null ? LENGTH_SHORT : duration));
     dismiss();
   }
 
