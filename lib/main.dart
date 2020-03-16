@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -10,6 +11,7 @@ import 'config/const.dart';
 import 'config/provider_config.dart';
 import 'config/router_manger.dart';
 import 'config/storage_manager.dart';
+import 'generated/l10n.dart';
 import 'provider/global_model.dart';
 
 /// 应用入口处
@@ -43,15 +45,25 @@ class App extends StatelessWidget {
             child: new MaterialApp(
               navigatorKey: navGK,
               title: model.appName,
+              /// 主题
               theme: ThemeData(
                 scaffoldBackgroundColor: bgColor,
                 //hintColor: Colors.grey.withOpacity(0.3),
                 //splashColor: Colors.transparent,
                 //canvasColor: Colors.transparent,
               ),
-              debugShowCheckedModeBanner: false,
+              /// 国际化配置
               locale: model.currentLocale,
-              // 路由管理注入
+              localizationsDelegates: const [
+                S.delegate,
+                RefreshLocalizations.delegate, //下拉刷新
+                GlobalCupertinoLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate
+              ],
+              supportedLocales: S.delegate.supportedLocales,
+              debugShowCheckedModeBanner: false,
+              /// 路由管理注入
               onGenerateRoute: Router.generateRoute,
               initialRoute: RouteName.splash,//RouterTestRoute
             ));

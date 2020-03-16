@@ -285,3 +285,6 @@ flutter:
     - assets/emoj/46.png
     - assets/emoj/47.png
     - assets/emoj/48.png
+
+flutter_intl:
+  enabled: true

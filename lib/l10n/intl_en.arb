@@ -1,0 +1,12 @@
+{
+  "appName": "qyyIm",
+  "actionConfirm": "确认",
+  "actionCancel": "取消",
+  "viewStateMessageError": "加载失败",
+  "viewStateMessageNetworkError": "网络连接异常,请检查网络或稍后重试",
+  "viewStateMessageEmpty": "空空如也",
+  "viewStateMessageUnAuth": "未登录",
+  "viewStateButtonRefresh": "刷新一下",
+  "viewStateButtonRetry": "重试",
+  "viewStateButtonLogin": "登录"
+}
