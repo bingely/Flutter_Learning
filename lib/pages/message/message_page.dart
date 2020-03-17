@@ -6,14 +6,14 @@ import 'package:flutter_qyyim/pages/message/message_data.dart';
 import 'package:flutter_qyyim/pages/message/message_item.dart';
 import 'package:flutter_qyyim/ui/pop/w_popup_menu.dart';
 
-class MessagePage extends StatefulWidget {
+class MessagePage extends StatefulWidget  {
   @override
   MessagePageState createState() {
     return MessagePageState();
   }
 }
 
-class MessagePageState extends State<MessagePage> {
+class MessagePageState extends State<MessagePage> with AutomaticKeepAliveClientMixin{
   final List actions = [
     {"title": '发起群聊', 'icon': 'assets/images/contacts_add_newmessage.png'},
     {"title": '添加朋友', 'icon': 'assets/images/ic_add_friend.webp'},
@@ -65,4 +65,7 @@ class MessagePageState extends State<MessagePage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

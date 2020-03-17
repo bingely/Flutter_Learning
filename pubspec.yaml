@@ -1,16 +1,7 @@
 name: flutter_qyyim
 description: A new Flutter application.
 
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+
 version: 1.0.0+1
 
 environment:
@@ -106,45 +97,15 @@ dev_dependencies:
     sdk: flutter
   build_runner: ^1.0.0
   json_serializable: ^2.0.0
-# For information on the generic Dart part of this file, see the
-# following page: https://www.dartlang.org/tools/pub/pubspec
 
-# The following section is specific to Flutter.
 flutter:
   uses-material-design: true
   assets:
-    #加载页面图片资源
-    - images/loading.jpeg
+    - assets/images/
+    - assets/emoj/
+    - assets/data/friends.json
 
-    #底部tab切换图片资源
-    - images/contact_list_normal.png
-    - images/contact_list_pressed.png
-    - images/profile_normal.png
-    - images/profile_pressed.png
-    - images/message_normal.png
-    - images/message_pressed.png
-
-    #菜单按钮
-    - images/icon_menu_addfriend.png
-    - images/icon_menu_group.png
-
-    #好友模块图标
-    - images/icon_addfriend.png
-    - images/icon_groupchat.png
-    - images/icon_public.png
-
-    #我的模块图标
-    - images/icon_me_friends.png
-    - images/icon_me_photo.png
-    - images/icon_me_file.png
-    - images/icon_me_service.png
-    - images/icon_me_message.png
-    - images/icon_me_clear.png
-    - images/code.png
-    - images/yixiu.jpeg
-
-    - assets/images/bsc.webp
-    - assets/images/bar_close.png
+    # webp格式的需要手动引入
     - assets/images/tabbar_contacts_c.webp
     - assets/images/tabbar_contacts_s.webp
     - assets/images/tabbar_discover_c.webp
@@ -236,57 +197,6 @@ flutter:
     - assets/images/discover/ff_Icon_search.webp
     - assets/images/discover/game_center_h5.webp
     - assets/images/discover/mini_program.webp
-
-    - assets/data/friends.json
-
-    - assets/emoj/1.png
-    - assets/emoj/2.png
-    - assets/emoj/3.png
-    - assets/emoj/4.png
-    - assets/emoj/5.png
-    - assets/emoj/6.png
-    - assets/emoj/7.png
-    - assets/emoj/8.png
-    - assets/emoj/9.png
-    - assets/emoj/10.png
-    - assets/emoj/11.png
-    - assets/emoj/12.png
-    - assets/emoj/13.png
-    - assets/emoj/14.png
-    - assets/emoj/15.png
-    - assets/emoj/16.png
-    - assets/emoj/17.png
-    - assets/emoj/18.png
-    - assets/emoj/19.png
-    - assets/emoj/20.png
-    - assets/emoj/21.png
-    - assets/emoj/22.png
-    - assets/emoj/23.png
-    - assets/emoj/24.png
-    - assets/emoj/25.png
-    - assets/emoj/26.png
-    - assets/emoj/27.png
-    - assets/emoj/28.png
-    - assets/emoj/29.png
-    - assets/emoj/30.png
-    - assets/emoj/31.png
-    - assets/emoj/32.png
-    - assets/emoj/33.png
-    - assets/emoj/34.png
-    - assets/emoj/35.png
-    - assets/emoj/36.png
-    - assets/emoj/37.png
-    - assets/emoj/38.png
-    - assets/emoj/39.png
-    - assets/emoj/40.png
-    - assets/emoj/41.png
-    - assets/emoj/42.png
-    - assets/emoj/43.png
-    - assets/emoj/44.png
-    - assets/emoj/45.png
-    - assets/emoj/46.png
-    - assets/emoj/47.png
-    - assets/emoj/48.png
 
 flutter_intl:
   enabled: true
