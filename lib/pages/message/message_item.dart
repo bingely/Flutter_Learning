@@ -1,13 +1,15 @@
+
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/route/route.dart';
 import 'package:flutter_qyyim/common/touch_callback.dart';
-import 'message_data.dart';
+import 'package:flutter_qyyim/ui/image_view.dart';
+import 'message.dart';
 import 'package:date_format/date_format.dart';
 
 //聊天信息项
 class MessageItem extends StatelessWidget {
-  final MessageData message;
+  final Message message;
 
   MessageItem(this.message);
 
@@ -38,8 +40,13 @@ class MessageItem extends StatelessWidget {
               //头像左右留一定的外边距
               margin: const EdgeInsets.only(left: 13.0, right: 13.0),
               child: Badge(
-                child: Image.network(
+                /*child: ImageView(
                   message.avatar,
+                  width: 48.0,
+                  height: 48.0,
+                ),*/
+                child: ImageView(
+                  img: message.avatar,
                   width: 48.0,
                   height: 48.0,
                 ),

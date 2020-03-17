@@ -27,6 +27,8 @@ class RouteName {
   static const String setting = 'setting';
   static const String chat = 'chat';
   static const String app = 'app';
+  static const String wanna = 'wanna';
+
 }
 
 /// CupertinoPageRoute 是一种具有带有滑动关闭的苹果页面效果
@@ -35,7 +37,7 @@ class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RouteName.splash:
-        return NoAnimRouteBuilder(LoadPage());
+        return NoAnimRouteBuilder(TabNavigatorPage());
       case RouteName.app:
         return NoAnimRouteBuilder(TabNavigatorPage());
       case RouteName.chat:
@@ -51,6 +53,8 @@ class Router {
         return NoAnimRouteBuilder(VideoPage());
       case RouteName.gallay:
         return NoAnimRouteBuilder(Gallery());
+      case RouteName.wanna:
+        return NoAnimRouteBuilder(TabNavigatorPageWana());
     }
   }
 }

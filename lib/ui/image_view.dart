@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/config/resource_mananger.dart';
 import 'package:flutter_qyyim/tool/check.dart';
 import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/config/t.dart';
@@ -32,6 +33,10 @@ class ImageView extends StatelessWidget {
         height: height,
         fit: fit,
         cacheManager: cacheManager,
+        placeholder: (_, __) =>
+            ImageHelper.placeHolder(width: width, height: height),
+        errorWidget: (_, __, ___) =>
+            ImageHelper.error(width: width, height: height),
       );
     } else if (File(img).existsSync()) {
       image = new Image.file(

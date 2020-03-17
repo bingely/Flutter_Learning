@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/testdemo/wann/model/article.dart';
 import 'package:flutter_qyyim/testdemo/wann/model/tree.dart';
-import 'package:flutter_qyyim/ui/image.dart';
+import 'package:flutter_qyyim/ui/image_view.dart';
 
 class ArticleItemWidget extends StatefulWidget {
 
@@ -46,9 +46,8 @@ class _ArticleItemWidgetState extends State<ArticleItemWidget> {
                   Row(
                     children: <Widget>[
                       ClipOval(
-                        child: WrapperImage(
-                          imageType: ImageType.random,
-                          url: widget.article.envelopePic,
+                        child: ImageView(
+                          img: widget.article.envelopePic,
                           height: 20,
                           width: 20,
                         ),
@@ -68,9 +67,8 @@ class _ArticleItemWidgetState extends State<ArticleItemWidget> {
                       Expanded(
                         child: Text(widget.article.desc),
                       ),
-                      WrapperImage(
-                        imageType: ImageType.random,
-                        url: widget.article.envelopePic,
+                      ImageView(
+                        img: widget.article.envelopePic,
                         height: 60,
                         width: 60,
                       )

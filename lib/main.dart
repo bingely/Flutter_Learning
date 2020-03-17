@@ -62,7 +62,7 @@ class App extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate
               ],
               supportedLocales: S.delegate.supportedLocales,
-              debugShowCheckedModeBanner: false,
+              debugShowCheckedModeBanner: true,
               /// 路由管理注入
               onGenerateRoute: Router.generateRoute,
               initialRoute: RouteName.splash,//RouterTestRoute

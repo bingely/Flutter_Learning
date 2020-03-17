@@ -55,6 +55,9 @@ class TabNavigatorPageState extends State<TabNavigatorPage> {
       ),
       // 底部导航按钮
       bottomNavigationBar: BottomNavigationBar(
+        elevation: 0,
+        unselectedFontSize: 12.0,
+        selectedFontSize: 12.0,
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
         onTap: ((index) {
