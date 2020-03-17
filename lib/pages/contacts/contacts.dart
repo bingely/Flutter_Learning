@@ -47,6 +47,7 @@ class ContactsPageData {
     final result = await getContactsFriends(user);
 
     getMethod(result) async {
+
       List<dynamic> dataMap = json.decode(result);
       int dLength = dataMap.length;
       for (int i = 0; i < dLength; i++) {
@@ -104,7 +105,9 @@ class ContactsPageData {
   }
 }
 
-getContactsFriends(String user) {}
+getContactsFriends(String user) {
+
+}
 
 Future<dynamic> getRemarkMethod(String id, {Callback callback}) async {
 

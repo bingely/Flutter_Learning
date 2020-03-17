@@ -1,6 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/common/route.dart';
+import 'package:flutter_qyyim/common/route/route.dart';
 import 'package:flutter_qyyim/common/touch_callback.dart';
 import 'message_data.dart';
 import 'package:date_format/date_format.dart';

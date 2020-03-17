@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/provider/global_model.dart';
+import 'package:flutter_qyyim/common/provider/global_model.dart';
 import 'package:flutter_qyyim/testdemo/rout/tip_route.dart';
 import 'package:provider/provider.dart';
 

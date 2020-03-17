@@ -7,6 +7,7 @@ import 'package:flutter_qyyim/pages/load_page.dart';
 import 'package:flutter_qyyim/pages/message/message_page.dart';
 import 'package:flutter_qyyim/pages/tab_navigator_page.dart';
 import 'package:flutter_qyyim/pages/search/search.dart';
+import 'package:flutter_qyyim/testdemo/contacts/contacts_page.dart';
 import 'package:flutter_qyyim/testdemo/trip/tab_navigator_page2.dart';
 import 'package:flutter_qyyim/testdemo/wann/pages/project/article_list_item.dart';
 import 'package:flutter_qyyim/testdemo/wann/pages/project/project_page.dart';
@@ -34,7 +35,7 @@ class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RouteName.splash:
-        return NoAnimRouteBuilder(TabNavigatorPageWana());
+        return NoAnimRouteBuilder(LoadPage());
       case RouteName.app:
         return NoAnimRouteBuilder(TabNavigatorPage());
       case RouteName.chat:

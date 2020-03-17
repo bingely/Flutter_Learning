@@ -1,5 +1,5 @@
 import 'package:flutter_qyyim/common/service/wanandroid_service.dart';
-import 'package:flutter_qyyim/common/view_state_model.dart';
+import 'package:flutter_qyyim/common/provider/view_state_model.dart';
 import 'package:flutter_qyyim/testdemo/wann/view_model/user_model.dart';
 
 class LoginModel extends ViewStateModel {

@@ -1,5 +1,5 @@
 
-import 'package:flutter_qyyim/common/view_state_model.dart';
+import 'package:flutter_qyyim/common/provider/view_state_model.dart';
 
 /// 列表页（具有下拉刷新和分页加载）的基类的封装
 /// T 就是item 的数据模型

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/common/route.dart';
+import 'package:flutter_qyyim/common/route/route.dart';
 import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/pages/me/list_tile_view.dart';
 import 'package:flutter_qyyim/pages/search/search.dart';

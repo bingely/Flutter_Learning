@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_qyyim/common/route.dart';
+import 'package:flutter_qyyim/common/route/route.dart';
 import 'package:flutter_qyyim/config/t.dart';
 import 'package:flutter_qyyim/pages/chat/camarademo/camera_screen.dart';
 import 'package:flutter_qyyim/pages/chat/video/video_page.dart';
-import 'package:flutter_qyyim/tool/handler_utils.dart';
+import 'package:flutter_qyyim/tool/log_utils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/common/service/wanandroid_service.dart';
 import 'package:flutter_qyyim/testdemo/wann/view_model/login_model.dart';
-import 'package:flutter_qyyim/tool/toast.dart';
+import 'package:flutter_qyyim/ui/toast.dart';
+import 'package:flutter_qyyim/ui/view_state_widget.dart';
 import 'package:provider/provider.dart';
 import 'login_field_widget.dart';
 import 'login_widget.dart';
@@ -60,6 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                             children: <Widget>[
                               LoginTextField(),
                               LoginTextField(),
+
                               RaisedButton(
                                 onPressed: (){
                                   var model = LoginModel(Provider.of(context));
@@ -71,7 +73,10 @@ class _LoginPageState extends State<LoginPage> {
                                   });
                                 },
                                 child: Text('login'),
-                              )
+                              ),
+                              ViewStateButton(onPressed: (){
+
+                              },textData: "exit",)
                             ],
                           ),
                         ),

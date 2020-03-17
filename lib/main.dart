@@ -6,13 +6,13 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import 'common/route.dart';
+import 'common/route/route.dart';
 import 'config/const.dart';
 import 'config/provider_config.dart';
 import 'config/router_manger.dart';
 import 'config/storage_manager.dart';
 import 'generated/l10n.dart';
-import 'provider/global_model.dart';
+import 'common/provider/global_model.dart';
 
 /// 应用入口处
 Future<void> main() async {

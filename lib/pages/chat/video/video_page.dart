@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_qyyim/pages/chat/camarademo/gallery.dart';
 import 'package:flutter_qyyim/pages/chat/camarademo/video_timer.dart';
 import 'package:flutter_qyyim/pages/chat/video/video_demo.dart';
-import 'package:flutter_qyyim/ui/show_toast.dart';
+import 'package:flutter_qyyim/tool/show_toast.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:thumbnails/thumbnails.dart';
 import 'package:path/path.dart' as path;

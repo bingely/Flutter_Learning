@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/testdemo/wann/view_model/structure_model.dart';
+import 'package:flutter_qyyim/ui/view_state_widget.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'article_list_item.dart';
@@ -25,6 +26,9 @@ class _ArticleListPageState extends State<ArticleListPage>
       model: StructureListModel(widget.cid),
       onModelReady: (model) => model.initData(),
       builder: (context, model, child) {
+        if (model.isBusy) {
+          return ViewStateBusyWidget();
+        }
         return SmartRefresher(
           header: WaterDropHeader(),
           footer: ClassicFooter(),

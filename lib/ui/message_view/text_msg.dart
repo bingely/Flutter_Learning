@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/pages/chat/model/chat_data.dart';
-import 'package:flutter_qyyim/provider/global_model.dart';
+import 'package:flutter_qyyim/common/provider/global_model.dart';
 import 'package:flutter_qyyim/ui/message_view/text_item_container.dart';
 import 'package:provider/provider.dart';
 

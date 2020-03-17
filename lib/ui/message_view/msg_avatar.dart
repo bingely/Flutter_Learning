@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/common/route.dart';
+import 'package:flutter_qyyim/common/route/route.dart';
 import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/pages/chat/model/chat_data.dart';
-import 'package:flutter_qyyim/provider/global_model.dart';
+import 'package:flutter_qyyim/common/provider/global_model.dart';
 
 import '../image_view.dart';
 class MsgAvatar extends StatelessWidget {

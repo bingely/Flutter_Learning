@@ -1,7 +1,7 @@
 
 
 
-import 'package:flutter_qyyim/common/view_state_model.dart';
+import 'package:flutter_qyyim/common/provider/view_state_model.dart';
 
 
 /// 主要是处理页面的业务逻辑

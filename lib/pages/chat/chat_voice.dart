@@ -8,7 +8,7 @@ import 'package:flutter_qyyim/testdemo/cross_data/custom_event.dart';
 import 'package:flutter_qyyim/testdemo/cross_data/event_bus.dart';
 import 'package:flutter_qyyim/tool/date.dart';
 import 'package:flutter_qyyim/ui/message_view/voice_dialog.dart';
-import 'package:flutter_qyyim/ui/show_toast.dart';
+import 'package:flutter_qyyim/tool/show_toast.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 
 typedef VoiceFile = void Function(String path);

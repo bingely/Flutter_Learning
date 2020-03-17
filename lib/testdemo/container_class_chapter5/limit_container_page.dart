@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/common/ui.dart';
+import 'package:flutter_qyyim/ui/ui.dart';
 
 class LimitContainerPage extends StatelessWidget {
   @override

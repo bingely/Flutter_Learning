@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/tool/toast.dart';
+import 'package:flutter_qyyim/ui/toast.dart';
 
 /// 目前基于dart写的toastview
 class ToastUtils {

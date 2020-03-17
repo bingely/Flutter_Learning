@@ -5,17 +5,17 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/tool/check.dart';
-import 'package:flutter_qyyim/common/ui.dart';
+import 'package:flutter_qyyim/ui/ui.dart';
 import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/pages/chat/model/chat_data.dart';
 import 'package:flutter_qyyim/pages/chat/model/i_sound_msg_entity.dart';
 import 'package:flutter_qyyim/pages/chat/model/sound_msg_entity.dart';
-import 'package:flutter_qyyim/provider/global_model.dart';
+import 'package:flutter_qyyim/common/provider/global_model.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import '../show_toast.dart';
+import '../../tool/show_toast.dart';
 import 'msg_avatar.dart';
 
 class SoundMsg extends StatefulWidget {

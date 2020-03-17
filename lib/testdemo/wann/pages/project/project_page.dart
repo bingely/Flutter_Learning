@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/provider/provider_widget.dart';
-import 'package:flutter_qyyim/testdemo/trip/widget/loading_container.dart';
 import 'package:flutter_qyyim/testdemo/wann/model/tree.dart';
 import 'package:flutter_qyyim/testdemo/wann/view_model/project_model.dart';
+import 'package:flutter_qyyim/ui/view_state_widget.dart';
 import 'package:provider/provider.dart';
 
 import 'article_list_page.dart';
@@ -38,6 +38,17 @@ class _ProjectPageState extends State<ProjectPage>
       },
       builder: (context, model, child) {
         List<Tree> treeList = model.list;
+
+        if (true) {
+          /*return SkeletonList(
+            builder: (context, index) => ArticleSkeletonItem(),
+          );*/
+         // return ViewStateErrorWidget(error: model.viewStateError, onPressed: model.initData);
+          //return ViewStateEmptyWidget(onPressed: model.initData,);
+        }
+
+
+
 
         return ValueListenableProvider<int>.value(
           value: valueNotifier,

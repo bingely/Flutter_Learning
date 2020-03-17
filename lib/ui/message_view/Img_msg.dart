@@ -3,14 +3,14 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/tool/check.dart';
-import 'package:flutter_qyyim/common/route.dart';
-import 'package:flutter_qyyim/common/ui.dart';
+import 'package:flutter_qyyim/common/route/route.dart';
+import 'package:flutter_qyyim/ui/ui.dart';
 import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/pages/chat/model/chat_data.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 
-import '../../provider/global_model.dart';
+import '../../common/provider/global_model.dart';
 import 'msg_avatar.dart';
 
 class ImgMsg extends StatelessWidget {

@@ -1,4 +1,4 @@
-import 'package:flutter_qyyim/common/view_state_model.dart';
+import 'package:flutter_qyyim/common/provider/view_state_model.dart';
 import 'package:flutter_qyyim/testdemo/provider/change_notifier.dart';
 import 'package:flutter_qyyim/testdemo/wann/model/user.dart';
 

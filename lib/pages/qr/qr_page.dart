@@ -1,7 +1,7 @@
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_qyyim/tool/toast.dart';
+import 'package:flutter_qyyim/ui/toast.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 ///https://blog.csdn.net/weixin_42215775/article/details/101061254

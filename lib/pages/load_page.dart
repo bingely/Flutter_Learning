@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'chat/handle/message_handle.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // 启动页
 class LoadPage extends StatefulWidget {
@@ -14,9 +13,8 @@ class LoadPageState extends State<LoadPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 500), () {
+    Future.delayed(Duration(seconds: 2), () {
       Navigator.pushReplacementNamed(context, 'app');
-      //sendVedioMsg();
     });
   }
 
@@ -25,7 +23,20 @@ class LoadPageState extends State<LoadPage> {
     return Center(
       child: Stack(
         children: <Widget>[
-          Image.asset("images/loading.jpeg", fit: BoxFit.cover)
+          //Image.asset("images/loading.jpeg", fit: BoxFit.cover),
+          Container(
+            color: Colors.white,
+            child: Center(
+              child: Text(
+                'qyyim',
+                style: TextStyle(
+                  color: Colors.blue,
+                  inherit: false, //2.不继承默认样式
+                  fontSize: 32.0
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

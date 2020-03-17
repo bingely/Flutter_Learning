@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:camera/camera.dart';
 import 'package:extended_text_field/extended_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/common/route.dart';
+import 'package:flutter_qyyim/common/route/route.dart';
 import 'package:flutter_qyyim/common/service/wanandroid_service.dart';
 import 'package:flutter_qyyim/tool/win_media.dart';
 import 'package:flutter_qyyim/config/const.dart';

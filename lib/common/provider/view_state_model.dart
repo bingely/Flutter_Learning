@@ -6,7 +6,7 @@ import 'package:flutter_qyyim/common/provider/view_state.dart';
 import 'package:flutter_qyyim/generated/l10n.dart';
 import 'package:flutter_qyyim/tool/toast_util.dart';
 
-import 'net/not_sucess_exception.dart';
+import '../net/not_sucess_exception.dart';
 
 /// ChangeNotifier基类，防止有特殊变化
 class ViewStateModel with ChangeNotifier{
