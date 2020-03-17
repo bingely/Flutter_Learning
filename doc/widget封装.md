@@ -1,5 +1,8 @@
 
 学会ui绘制
+> 每天必写几个item 页面
+
+
 以及别人如何封装项目结构
 
 # 实现单例的模式来管理
@@ -182,6 +185,9 @@ Positioned{
 封装了AppBar
 
 # commom_button.dart
+
+# dialog.dart
+封装dialog
 
 
 # image.dart  和 image_view.dart

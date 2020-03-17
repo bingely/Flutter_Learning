@@ -5,6 +5,7 @@ import 'package:extended_text_field/extended_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/route/route.dart';
 import 'package:flutter_qyyim/common/service/wanandroid_service.dart';
+import 'package:flutter_qyyim/pages/message/message.dart';
 import 'package:flutter_qyyim/tool/win_media.dart';
 import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/config/contacts.dart';
@@ -37,7 +38,9 @@ class ChatPage extends StatefulWidget {
   final int type;
   final String id;
 
-  const ChatPage({Key key, this.title, this.type, this.id}) : super(key: key);
+  final Message message;
+
+  const ChatPage({Key key, this.title, this.type, this.id, this.message}) : super(key: key);
 
   @override
   ChatePageState createState() {
@@ -181,7 +184,7 @@ class ChatePageState extends State<ChatPage> {
     ];
 
     return Scaffold(
-      appBar: new ComMomBar(title: "聊天", rightDMActions: rWidget),
+      appBar: new ComMomBar(title: widget.message.title, rightDMActions: rWidget),
       body: new MainInputBody(
         onTap: () => setState(() => _isMore = false),
         decoration: BoxDecoration(color: chatBg),

@@ -1,19 +1,25 @@
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/config/router_manger.dart';
 import 'package:flutter_qyyim/pages/message/message_model.dart';
+import 'package:flutter_qyyim/testdemo/trip/widget/webview.dart';
 import 'package:flutter_qyyim/tool/check.dart';
+import 'package:flutter_qyyim/tool/navigator_util.dart';
+import 'package:flutter_qyyim/tool/toast_util.dart';
 import 'package:flutter_qyyim/tool/win_media.dart';
 import 'package:flutter_qyyim/pages/message/message.dart';
 import 'package:flutter_qyyim/pages/message/message_item.dart';
 import 'package:flutter_qyyim/ui/pop/w_popup_menu.dart';
+import 'package:flutter_qyyim/ui/toast.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:flutter/services.dart';
 
 final List actions = [
-  {"title": '发起群聊', 'icon': 'assets/images/contacts_add_newmessage.png'},
-  {"title": '添加朋友', 'icon': 'assets/images/ic_add_friend.webp'},
+  {"title": 'trip', 'icon': 'assets/images/contacts_add_newmessage.png'},
+  {"title": 'wanna', 'icon': 'assets/images/ic_add_friend.webp'},
+  {"title": 'Demo3', 'icon': ''},
   {"title": '扫一扫', 'icon': ''},
-  {"title": '收付款', 'icon': ''},
   {"title": '帮助与反馈', 'icon': ''},
 ];
 
@@ -26,7 +32,6 @@ class MessagePage extends StatefulWidget {
 
 class MessagePageState extends State<MessagePage>
     with AutomaticKeepAliveClientMixin {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +53,7 @@ class MessagePageState extends State<MessagePage>
             alignment: Alignment.center,
             onValueChanged: (String value) {
               if (!strNoEmpty(value)) return;
-              // actionsHandle(value);
+              actionsHandle(value);
             },
             actions: actions,
             child: new Container(
@@ -86,4 +91,44 @@ class MessagePageState extends State<MessagePage>
 
   @override
   bool get wantKeepAlive => true;
+
+  void actionsHandle(String value) {
+    switch (value) {
+      case "扫一扫":
+        scan();
+        break;
+      case "帮助与反馈":
+        NavigatorUtil.push(
+            context,
+            WebView(
+                url: "https://www.baidu.com",
+                title: "小鸟云官网",
+                hideAppBar: false));
+        break;
+      case "trip":
+        Navigator.pushNamed(context, RouteName.trip);
+        break;
+      case "wanna":
+        Navigator.pushNamed(context, RouteName.wanna);
+        break;
+    }
+  }
+
+  Future scan() async {
+    try {
+      String barcode = await BarcodeScanner.scan();
+      print('扫码结果：' + barcode);
+      ToastUtils.show('扫码结果：' + barcode, context);
+    } on PlatformException catch (e) {
+      if (e.code == BarcodeScanner.CameraAccessDenied) {
+        print('未授予APP相机权限');
+      } else {
+        print('扫码错误：$e');
+      }
+    } on FormatException {
+      print('进入扫码页面后未扫码就返回');
+    } catch (e) {
+      print('扫码错误：$e');
+    }
+  }
 }

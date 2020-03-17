@@ -3,10 +3,13 @@ import 'package:flutter_qyyim/common/route/route.dart';
 import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/config/resource_mananger.dart';
 import 'package:flutter_qyyim/config/router_manger.dart';
+import 'package:flutter_qyyim/pages/me/label_row.dart';
 import 'package:flutter_qyyim/pages/me/list_tile_view.dart';
 import 'package:flutter_qyyim/pages/search/search.dart';
+import 'package:flutter_qyyim/tool/platform_utils.dart';
 import 'package:flutter_qyyim/tool/screen_utils.dart';
 import 'package:flutter_qyyim/ui/image_view.dart';
+import 'package:flutter_qyyim/ui/label_row.dart';
 
 import 'ImItem.dart';
 
@@ -46,14 +49,6 @@ class BodyView extends StatelessWidget {
     return Column(
       children: <Widget>[
         // 列表项
-        Container(
-          margin: EdgeInsets.only(top: 20.0),
-          color: Colors.white,
-          child: ImItem(
-            title: '好友动态',
-            imagePath: ImageHelper.wrapAssets("mine/ic_setting.png"),
-          ),
-        ),
         ListTileView(
           border: Border(bottom: BorderSide(color: lineColor, width: 0.2)),
           title: '设置',
@@ -66,16 +61,23 @@ class BodyView extends StatelessWidget {
         ),
         ListTileView(
           border: Border(bottom: BorderSide(color: lineColor, width: 0.2)),
-          title: 'wanna',
+          title: '退出',
           isLabel: false,
-          icon: ImageHelper.wrapAssets("mine/ic_setting.png"),
           padding: EdgeInsets.symmetric(vertical: 16.0),
           width: 25.0,
           fit: BoxFit.cover,
           onPressed: () {
-            Navigator.pushNamed(context, RouteName.wanna);
+            exit(0);
           },
-        )
+        ),
+        LabelRow(
+          label: 'hello',
+          isRight: false,
+          isLine: true,
+          rValue: 'hh',
+          value: 'hhh',
+        ),
+        LabelRow2()
       ],
     );
   }

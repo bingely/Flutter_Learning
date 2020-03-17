@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // 启动页
-class LoadPage extends StatefulWidget {
+class SplashPage extends StatefulWidget {
   @override
-  LoadPageState createState() {
-    return LoadPageState();
+  SplashPageState createState() {
+    return SplashPageState();
   }
 }
 
-class LoadPageState extends State<LoadPage> {
+class SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();

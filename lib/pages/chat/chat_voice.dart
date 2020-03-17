@@ -6,7 +6,7 @@ import 'package:flutter_qyyim/tool/win_media.dart';
 import 'package:flutter_qyyim/pages/chat/event/MsgEvent.dart';
 import 'package:flutter_qyyim/testdemo/cross_data/custom_event.dart';
 import 'package:flutter_qyyim/testdemo/cross_data/event_bus.dart';
-import 'package:flutter_qyyim/tool/date.dart';
+import 'package:flutter_qyyim/tool/date_utils.dart';
 import 'package:flutter_qyyim/ui/message_view/voice_dialog.dart';
 import 'package:flutter_qyyim/tool/show_toast.dart';
 import 'package:flutter_sound/flutter_sound.dart';
@@ -98,7 +98,7 @@ class _ChatVoiceWidgetState extends State<ChatVoice> {
       DateTime current = DateTime.fromMillisecondsSinceEpoch(date);
 
       String recordingTime =
-      DateTimeForMater.formatDateV(current, format: "ss:SS");
+      DateUtils.formatDateV(current, format: "ss:SS");
       index = int.parse(recordingTime.toString().substring(3, 5));
     });
 

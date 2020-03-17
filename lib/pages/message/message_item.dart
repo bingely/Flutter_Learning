@@ -1,8 +1,9 @@
-
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/route/route.dart';
 import 'package:flutter_qyyim/common/touch_callback.dart';
+import 'package:flutter_qyyim/config/router_manger.dart';
+import 'package:flutter_qyyim/tool/date_utils.dart';
 import 'package:flutter_qyyim/ui/image_view.dart';
 import 'message.dart';
 import 'package:date_format/date_format.dart';
@@ -28,7 +29,7 @@ class MessageItem extends StatelessWidget {
       child: TouchCallBack(
         onPressed: () {
           // 跳到对应的聊天页面
-          Navigator.pushNamed(context, 'chat');
+          Navigator.pushNamed(context, RouteName.chat, arguments: message);
         },
         //整体水平方向布局
         child: Row(
@@ -89,7 +90,8 @@ class MessageItem extends StatelessWidget {
               margin: const EdgeInsets.only(right: 12.0, top: 12.0),
               child: Text(
                 //格式化时间
-                formatDate(message.time, [HH, ':', nn, ':', 'ss']).toString(),
+                DateUtils.formateTime(message.time,
+                    format: [HH, ':', nn, ':', 'ss']),
                 style: TextStyle(fontSize: 14.0, color: Color(0xFFa9a9a9)),
               ),
             ),

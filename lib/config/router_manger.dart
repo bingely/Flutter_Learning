@@ -3,7 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_qyyim/pages/chat/camarademo/gallery.dart';
 import 'package:flutter_qyyim/pages/chat/chat_page.dart';
 import 'package:flutter_qyyim/pages/chat/video/video_page.dart';
-import 'package:flutter_qyyim/pages/load_page.dart';
+import 'package:flutter_qyyim/pages/message/message.dart';
+import 'package:flutter_qyyim/pages/splash_page.dart';
 import 'package:flutter_qyyim/pages/message/message_page.dart';
 import 'package:flutter_qyyim/pages/tab_navigator_page.dart';
 import 'package:flutter_qyyim/pages/search/search.dart';
@@ -13,6 +14,23 @@ import 'package:flutter_qyyim/testdemo/wann/pages/project/article_list_item.dart
 import 'package:flutter_qyyim/testdemo/wann/pages/project/project_page.dart';
 import 'package:flutter_qyyim/testdemo/wann/tab_navigator_page3.dart';
 import 'package:flutter_qyyim/ui/page_route_anim.dart';
+
+/// how to use? 还可以传递 自定义的对象（arguments）
+//  Navigator.of(context).pushNamed(RouteName.articleDetail,
+//                        arguments: Article()
+//                          ..id = banner.id
+//                          ..title = banner.title
+//                          ..link = banner.url
+//                          ..collect = false);
+
+/// 接收
+//   case RouteName.structureList:
+//        var list = settings.arguments as List;
+//        Tree tree = list[0] as Tree;
+//        int index = list[1];
+//        return CupertinoPageRoute(
+//            builder: (_) => ArticleCategoryTabPage(tree, index));
+//            */
 
 /// 路由名字
 class RouteName {
@@ -28,7 +46,7 @@ class RouteName {
   static const String chat = 'chat';
   static const String app = 'app';
   static const String wanna = 'wanna';
-
+  static const String trip = 'trip';
 }
 
 /// CupertinoPageRoute 是一种具有带有滑动关闭的苹果页面效果
@@ -41,10 +59,9 @@ class Router {
       case RouteName.app:
         return NoAnimRouteBuilder(TabNavigatorPage());
       case RouteName.chat:
+        var message = settings.arguments as Message;
         return CupertinoPageRoute(
-          builder: (context) => ChatPage()
-        );
-        //return NoAnimRouteBuilder(ChatPage());
+            builder: (context) => ChatPage(message: message));
       case RouteName.msglist:
         return NoAnimRouteBuilder(MessagePage());
       case RouteName.search:
@@ -53,34 +70,17 @@ class Router {
         return NoAnimRouteBuilder(VideoPage());
       case RouteName.gallay:
         return NoAnimRouteBuilder(Gallery());
+      case RouteName.trip:
+        return CupertinoPageRoute(builder: (context) => TabNavigatorPage2());
       case RouteName.wanna:
-        return NoAnimRouteBuilder(TabNavigatorPageWana());
+        return CupertinoPageRoute(builder: (context) => TabNavigatorPageWana());
+      default:
+        return CupertinoPageRoute(
+            builder: (_) => Scaffold(
+                  body: Center(
+                    child: Text('No route defined for ${settings.name}'),
+                  ),
+                ));
     }
   }
-}
-
-/// Pop路由
-class PopRoute extends PopupRoute {
-  final Duration _duration = Duration(milliseconds: 300);
-  Widget child;
-
-  PopRoute({@required this.child});
-
-  @override
-  Color get barrierColor => null;
-
-  @override
-  bool get barrierDismissible => true;
-
-  @override
-  String get barrierLabel => null;
-
-  @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
-    return child;
-  }
-
-  @override
-  Duration get transitionDuration => _duration;
 }
