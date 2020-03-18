@@ -9,5 +9,5 @@ class MsgEvent {
 }
 
 enum MsgType{
-  IMG,VIDEO,VOICE
+  TXT,IMG,VIDEO,VOICE
 }

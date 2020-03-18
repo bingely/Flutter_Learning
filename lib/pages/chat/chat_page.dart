@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:camera/camera.dart';
 import 'package:extended_text_field/extended_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/common/route/route.dart';
 import 'package:flutter_qyyim/common/service/wanandroid_service.dart';
-import 'package:flutter_qyyim/pages/message/message.dart';
+import 'package:flutter_qyyim/model/message.dart';
 import 'package:flutter_qyyim/tool/win_media.dart';
 
 import 'package:flutter_qyyim/config/app.dart';
@@ -18,6 +19,7 @@ import 'package:flutter_qyyim/ui/commom_bar.dart';
 import 'package:flutter_qyyim/ui/edit/text_span_builder.dart';
 import 'package:flutter_qyyim/ui/main_input.dart';
 import 'package:flutter_qyyim/ui/special_text/emoji_text.dart';
+import 'package:flutter_qyyim/view_model/chat_view_model.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'chat_details_body.dart';
@@ -63,6 +65,8 @@ class ChatePageState extends State<ChatPage> {
 
   StreamSubscription subscription;
 
+  ChatViewModel chatViewModle;
+
   @override
   void initState() {
     super.initState();
@@ -70,21 +74,11 @@ class ChatePageState extends State<ChatPage> {
     //getChatMsgData();
 
     _sC.addListener(() => FocusScope.of(context).requestFocus(new FocusNode()));
-    //initPlatformState();
-    //Notice.addListener(WeChatActions.msg(), (v) => getChatMsgData());
 
     subscription = eventBus.on<MsgEvent>().listen((event) {
+      _textController.clear();
       // 更新 msg
-      MsgType msgType = event.type;
-      String content = event.content;
-      if (msgType == MsgType.VIDEO) {
-        _handleSubmittedVideoData(content);
-      } else if (msgType == MsgType.IMG) {
-        _handleSubmittedImgData(content);
-      } else {
-        print("声音的路径${event.content}");
-        _handleSubmittedVoiceData(event.content);
-      }
+      chatViewModle.sendMgs(event);
     });
   }
 
@@ -101,99 +95,117 @@ class ChatePageState extends State<ChatPage> {
         child: new Image.asset('assets/images/right_more.png'),
       )
     ];
-
-    var body = [
-      // 聊天list
-      chatData != null
-          ? new ChatDetailsBody(sC: _sC, chatData: chatData)
-          : new Spacer(),
-      // 底部
-      new ChatDetailsRow(
-        voiceOnTap: () => onTapHandle(ButtonType.voice),
-        emojOnTap: () {
-          onTapHandle(ButtonType.emoj);
-        },
-        isVoice: _isVoice,
-        edit: edit,
-        more: new ChatMoreIcon(
-          value: _textController.text,
-          onTap: () => _handleSubmittedData(_textController.text),
-          moreTap: () {
-            onTapHandle(ButtonType.more);
-          },
-        ),
-        id: widget.id,
-        type: widget.type,
-      ),
-      // 底部展开
-      new Container(
-        height:
-            (_isMore || _isEmoj) && !_focusNode.hasFocus ? keyboardHeight : 0.0,
-        width: winWidth(context),
-        color: Color(AppColors.ChatBoxBg),
-        child: _isEmoj
-            ? buildEmojiGird()
-            : new IndicatorPageView(
-                pageC: pageC,
-                pages: List.generate(2, (index) {
-                  return new ChatMorePage(
-                    index: index,
-                    id: widget.id,
-                    type: widget.type,
-                    keyboardHeight: keyboardHeight,
-                    moreTap: (name) {
-                      print(index);
-                      if (name == '相册') {
-                        sendImageMsg(widget.id, widget.type,
-                            source: ImageSource.gallery, callback: (v) {
-                          if (v == null) return;
-                          print(v);
-                          _handleSubmittedImgData(v);
-                          // Notice.send(WeChatActions.msg(), v ?? '');
-                        });
-                      } else if (name == "拍摄") {
-                        sendImageMsg(widget.id, widget.type,
-                            source: ImageSource.camera, callback: (v) {
-                          if (v == null) return;
-                          print(v);
-                          _handleSubmittedImgData(v);
-                          // Notice.send(WeChatActions.msg(), v ?? '');
-                        });
-                      } else if (name == "自定义视频") {
-                        final _cameraKey = GlobalKey<CameraScreenState>();
-                        //routePush(new VideoPage(key: _cameraKey));
-                        Navigator.pushNamed(context, "video_page",
-                                arguments: "url")
-                            .then((url) {
-                          if (url != null) {
-                            print("video_page$url");
-                            // _handleSubmittedVideoData(url);
-                          }
-                        });
-                      } else {
-                        sendVideoMsg(widget.id, widget.type, callback: (v) {
-                          if (v == null) return;
-                          print("视频地址" + v);
-                          _handleSubmittedVideoData(v);
-                        });
-                      }
-                    },
-                  );
-                }),
-              ),
-      ),
-    ];
-
+    // 如果放在外面为啥会慢一拍？？TODO
     return Scaffold(
       appBar: new ComMomBar(
-          title: widget.message != null ? widget.message.title : "",
-          rightDMActions: rWidget),
-      body: new MainInputBody(
-        onTap: () => setState(() => _isMore = false),
-        decoration: BoxDecoration(color: AppColors.chatBg),
-        child: new Column(children: body),
+        title: widget.message != null ? widget.message.title : "",
+        rightDMActions: rWidget,
+      ),
+      body: ProviderWidget<ChatViewModel>(
+        model: ChatViewModel(),
+        onModelReady: (modle) {
+          chatViewModle = modle;
+          modle.iniChatData();
+        },
+        builder: (context, modle, widgetcc) {
+          chatData = modle?.chatData;
+          return new MainInputBody(
+            onTap: () => setState(() => _isMore = false),
+            decoration: BoxDecoration(color: AppColors.chatBg),
+            child: new Column(children: [
+              // 聊天list
+              chatData != null
+                  ? new ChatDetailsBody(sC: _sC, chatData: chatData)
+                  : new Spacer(),
+              // 底部
+              new ChatDetailsRow(
+                voiceOnTap: () => onTapHandle(ButtonType.voice),
+                emojOnTap: () {
+                  onTapHandle(ButtonType.emoj);
+                },
+                isVoice: _isVoice,
+                edit: edit,
+                more: new ChatMoreIcon(
+                  value: _textController.text,
+                  onTap: () {
+                    chatViewModle.sendMgs(
+                        MsgEvent(content: _textController.text, type: MsgType.TXT));
+                    _textController.clear();
+                  },
+                  moreTap: () {
+                    onTapHandle(ButtonType.more);
+                  },
+                ),
+                id: widget.id,
+                type: widget.type,
+              ),
+              // 底部展开
+              new Container(
+                height:
+                (_isMore || _isEmoj) && !_focusNode.hasFocus ? keyboardHeight : 0.0,
+                width: winWidth(context),
+                color: Color(AppColors.ChatBoxBg),
+                child: _isEmoj
+                    ? buildEmojiGird()
+                    : new IndicatorPageView(
+                  pageC: pageC,
+                  pages: List.generate(2, (index) {
+                    return new ChatMorePage(
+                      index: index,
+                      id: widget.id,
+                      type: widget.type,
+                      keyboardHeight: keyboardHeight,
+                      moreTap: (name) {
+                        moreTap(name, context);
+                      },
+                    );
+                  }),
+                ),
+              ),
+            ]),
+          );
+        },
       ),
     );
+  }
+
+  /// 点击底部的按钮事件
+  void moreTap(name, BuildContext context) {
+    if (name == '相册') {
+      sendImageMsg(widget.id, widget.type,
+          source: ImageSource.gallery, callback: (v) {
+            if (v == null) return;
+            print(v);
+            chatViewModle.sendMgs(
+                MsgEvent(content: v, type: MsgType.IMG));
+          });
+    } else if (name == "拍摄") {
+      sendImageMsg(widget.id, widget.type,
+          source: ImageSource.camera, callback: (v) {
+            if (v == null) return;
+            print(v);
+            chatViewModle.sendMgs(
+                MsgEvent(content: v, type: MsgType.VIDEO));
+          });
+    } else if (name == "自定义视频") {
+      final _cameraKey = GlobalKey<CameraScreenState>();
+      //routePush(new VideoPage(key: _cameraKey));
+      Navigator.pushNamed(context, "video_page",
+          arguments: "url")
+          .then((url) {
+        if (url != null) {
+          print("video_page$url");
+          // _handleSubmittedVideoData(url);
+        }
+      });
+    } else {
+      sendVideoMsg(widget.id, widget.type, callback: (v) {
+        if (v == null) return;
+        print("视频地址" + v);
+        chatViewModle.sendMgs(
+            MsgEvent(content: v, type: MsgType.VIDEO));
+      });
+    }
   }
 
   Widget buildEmojiGird() {
@@ -205,7 +217,7 @@ class ChatePageState extends State<ChatPage> {
           child: Image.asset(EmojiUitl.instance.emojiMap["[${index + 1}]"]),
           behavior: HitTestBehavior.translucent,
           onTap: () {
-            insertText("[${index + 1}]");
+            insertEmojText("[${index + 1}]");
           },
         );
       },
@@ -214,7 +226,8 @@ class ChatePageState extends State<ChatPage> {
     );
   }
 
-  void insertText(String text) {
+  /// 插入表情符到文字中
+  void insertEmojText(String text) {
     var value = _textController.value;
     var start = value.selection.baseOffset;
     var end = value.selection.extentOffset;
@@ -241,20 +254,11 @@ class ChatePageState extends State<ChatPage> {
       _textController.value = TextEditingValue(
           text: text,
           selection:
-              TextSelection.fromPosition(TextPosition(offset: text.length)));
+          TextSelection.fromPosition(TextPosition(offset: text.length)));
     }
   }
 
-  Future getChatMsgData() async {
-    final str = await ChatDataRep().repData(widget.id, widget.type);
-    List<ChatData> listChat = str;
-    chatData.clear();
-    chatData..addAll(listChat.reversed);
-
-    // 异步函数setState()导致内存泄漏的错误。
-    if (mounted) setState(() {});
-  }
-
+  /// 切换底部状态
   onTapHandle(ButtonType type) {
     setState(() {
       if (type == ButtonType.voice) {
@@ -284,61 +288,11 @@ class ChatePageState extends State<ChatPage> {
     });
   }
 
-  _handleSubmittedData(String text) async {
-    _textController.clear();
-    chatData.insert(0, new ChatData(msg: {"text": text, "type": "Text"}));
-    // 刷新数据源 TODO
-    //await sendTextMsg('${widget.id}', widget.type, text);
-    setState(() {});
-  }
-
-  _handleSubmittedImgData(String text) async {
-    _textController.clear();
-    chatData.insert(
-        0,
-        new ChatData(msg: {
-          "imageList": [text],
-          "type": "Image"
-        }));
-    // 刷新数据源 TODO
-    //await sendTextMsg('${widget.id}', widget.type, text);
-    setState(() {});
-  }
-
-  _handleSubmittedVideoData(String text) async {
-    _textController.clear();
-    chatData.insert(
-        0,
-        new ChatData(msg: {
-          "videosrc": [text],
-          'urls': [text],
-          "type": "Video",
-          "path": text
-        }));
-    // 刷新数据源 TODO
-    //await sendTextMsg('${widget.id}', widget.type, text);
-    setState(() {});
-  }
-
-  _handleSubmittedVoiceData(String text) async {
-    _textController.clear();
-    chatData.insert(
-        0,
-        new ChatData(msg: {
-          "soundUrls": [text],
-          'urls': [text],
-          "type": "Sound",
-          "path": text
-        }));
-    // 刷新数据源 TODO
-    //await sendTextMsg('${widget.id}', widget.type, text);
-    setState(() {});
-  }
-
+  /// 底部输入框wideget
   Widget edit(context, size) {
     // 计算当前的文本需要占用的行数
     TextSpan _text =
-        TextSpan(text: _textController.text, style: AppStyles.ChatBoxTextStyle);
+    TextSpan(text: _textController.text, style: AppStyles.ChatBoxTextStyle);
 
     TextPainter _tp = TextPainter(
         text: _text,

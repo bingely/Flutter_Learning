@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_qyyim/pages/chat/camarademo/gallery.dart';
 import 'package:flutter_qyyim/pages/chat/chat_page.dart';
 import 'package:flutter_qyyim/pages/chat/video/video_page.dart';
-import 'package:flutter_qyyim/pages/message/message.dart';
+import 'package:flutter_qyyim/model/message.dart';
 import 'package:flutter_qyyim/pages/splash_page.dart';
 import 'package:flutter_qyyim/pages/message/message_page.dart';
 import 'package:flutter_qyyim/pages/tab_navigator_page.dart';

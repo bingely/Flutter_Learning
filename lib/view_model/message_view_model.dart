@@ -7,15 +7,13 @@ import 'package:flutter_qyyim/mock/message_mock.dart';
 import 'package:flutter_qyyim/tool/toast_util.dart';
 import 'package:flutter/services.dart';
 
-import 'message.dart';
+import '../model/message.dart';
 
-
-class MessageModel extends ViewStateRefreshListModel<Message>{
+///
+class MessageViewModel extends ViewStateRefreshListModel<Message>{
   @override
   Future<List<Message>> loadData({int pageNum}) {
     return getMessageData();
   }
-
-
 
 }

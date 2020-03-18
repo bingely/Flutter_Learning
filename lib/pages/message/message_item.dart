@@ -5,7 +5,7 @@ import 'package:flutter_qyyim/common/touch_callback.dart';
 import 'package:flutter_qyyim/config/router_manger.dart';
 import 'package:flutter_qyyim/tool/date_utils.dart';
 import 'package:flutter_qyyim/ui/image_view.dart';
-import 'message.dart';
+import '../../model/message.dart';
 import 'package:date_format/date_format.dart';
 
 //聊天信息项

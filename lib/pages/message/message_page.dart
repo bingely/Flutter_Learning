@@ -2,16 +2,14 @@ import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/config/router_manger.dart';
-import 'package:flutter_qyyim/pages/message/message_model.dart';
+import 'package:flutter_qyyim/view_model/message_view_model.dart';
 import 'package:flutter_qyyim/testdemo/trip/widget/webview.dart';
 import 'package:flutter_qyyim/tool/check.dart';
 import 'package:flutter_qyyim/tool/navigator_util.dart';
 import 'package:flutter_qyyim/tool/toast_util.dart';
 import 'package:flutter_qyyim/tool/win_media.dart';
-import 'package:flutter_qyyim/pages/message/message.dart';
 import 'package:flutter_qyyim/pages/message/message_item.dart';
 import 'package:flutter_qyyim/ui/pop/w_popup_menu.dart';
-import 'package:flutter_qyyim/ui/toast.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter/services.dart';
 
@@ -64,8 +62,8 @@ class MessagePageState extends State<MessagePage>
           )
         ],
       ),
-      body: ProviderWidget<MessageModel>(
-        model: MessageModel(),
+      body: ProviderWidget<MessageViewModel>(
+        model: MessageViewModel(),
         onModelReady: (model) => model.initData(),
         builder: (context, model, widget) {
           return SmartRefresher(

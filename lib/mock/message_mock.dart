@@ -2,7 +2,7 @@
 import 'dart:core';
 import 'dart:core';
 
-import 'package:flutter_qyyim/pages/message/message.dart';
+import 'package:flutter_qyyim/model/message.dart';
 
 Future<List<Message>> getMessageData() async {
   List<Message> messageData = [

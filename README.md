@@ -26,3 +26,8 @@ pages  存放app页面
 (ui)widgets	APP内封装的一些Widget组件都在该目录下
 tool   一些工具类
 provider 存放继承ChangeNotifier
+
+MVVM 架构
+M: modle
+V: pages, ui
+M: view_model
