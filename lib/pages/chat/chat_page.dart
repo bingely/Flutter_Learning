@@ -7,6 +7,8 @@ import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/common/route/route.dart';
 import 'package:flutter_qyyim/common/service/wanandroid_service.dart';
 import 'package:flutter_qyyim/model/message.dart';
+import 'package:flutter_qyyim/pages/qr/qr_page.dart';
+import 'package:flutter_qyyim/tool/navigator_util.dart';
 import 'package:flutter_qyyim/tool/win_media.dart';
 
 import 'package:flutter_qyyim/config/app.dart';
@@ -80,6 +82,13 @@ class ChatePageState extends State<ChatPage> {
       // 更新 msg
       chatViewModle.sendMgs(event);
     });
+
+    _textController.addListener((){
+      if (mounted) {
+        setState(() {
+        });
+      }
+    });
   }
 
   @override
@@ -93,6 +102,7 @@ class ChatePageState extends State<ChatPage> {
     var rWidget = [
       new InkWell(
         child: new Image.asset('assets/images/right_more.png'),
+        onTap: ()=> NavigatorUtil.pushWithCuperino(context, QrPage()),
       )
     ];
     // 如果放在外面为啥会慢一拍？？TODO
@@ -302,8 +312,8 @@ class ChatePageState extends State<ChatPage> {
 
     return ExtendedTextField(
       specialTextSpanBuilder: MySpecialTextSpanBuilder(showAtBackground: true),
-      onTap: () => setState(() {}),
-      onChanged: (v) => setState(() {}),
+      //onTap: () => print('onTap'),
+      //onChanged: (v) => print('onChanged'),
       decoration: InputDecoration(
           border: InputBorder.none,
           contentPadding: const EdgeInsets.only(left: 5.0)),

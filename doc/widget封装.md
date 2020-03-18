@@ -105,9 +105,9 @@ SkeletonBox
 
 
 *******************config********************
-# const.dart  contacts.dar
-存放的是const定义的，比如颜色，样式，资源路径等等
-TODO 可以合并
+# app.dart
+存放的是color  style   constant
+
 
 # dictonnary.dart
 放的是字母索引数组

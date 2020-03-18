@@ -6,7 +6,7 @@ import 'package:flutter_qyyim/pages/chat/send_messageview.dart';
 import 'indicator_page_view.dart';
 import 'model/chat_data.dart';
 
-
+/// 聊天中间的部分
 class ChatDetailsBody extends StatelessWidget {
   final ScrollController sC;
   final List<ChatData> chatData;

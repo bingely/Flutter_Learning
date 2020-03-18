@@ -52,9 +52,10 @@ dependencies:
   barcode_scan: 2.0.1
   # 企业级大型应用 路由管理
   fluro: ^1.6.1
-  # 谁用谁闪亮
+  # 闪亮
   shimmer: ^1.0.0
-
+  # 侧滑删除
+  flutter_slidable: ^0.5.4
 
   # ****************************数据相关******************************************
   shared_preferences: any
