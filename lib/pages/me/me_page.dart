@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/route/route.dart';
-import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/config/resource_mananger.dart';
 import 'package:flutter_qyyim/config/router_manger.dart';
+import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/pages/me/label_row.dart';
 import 'package:flutter_qyyim/pages/me/list_tile_view.dart';
 import 'package:flutter_qyyim/pages/search/search.dart';
+import 'package:flutter_qyyim/testdemo/trip/widget/webview.dart';
+import 'package:flutter_qyyim/tool/navigator_util.dart';
 import 'package:flutter_qyyim/tool/platform_utils.dart';
 import 'package:flutter_qyyim/tool/screen_utils.dart';
 import 'package:flutter_qyyim/ui/image_view.dart';
@@ -50,17 +52,20 @@ class BodyView extends StatelessWidget {
       children: <Widget>[
         // 列表项
         ListTileView(
-          border: Border(bottom: BorderSide(color: lineColor, width: 0.2)),
+          border: Border(bottom: BorderSide(color: AppColors.lineColor, width: 0.2)),
           title: '设置',
           isLabel: false,
           icon: ImageHelper.wrapAssets("mine/ic_setting.png"),
           padding: EdgeInsets.symmetric(vertical: 16.0),
           width: 25.0,
           fit: BoxFit.cover,
-          onPressed: () {},
+          onPressed: () {
+
+            NavigatorUtil.push(context, WebView(url: "https://www.baidu.com",));
+          },
         ),
         ListTileView(
-          border: Border(bottom: BorderSide(color: lineColor, width: 0.2)),
+          border: Border(bottom: BorderSide(color: AppColors.lineColor, width: 0.2)),
           title: '退出',
           isLabel: false,
           padding: EdgeInsets.symmetric(vertical: 16.0),
@@ -77,7 +82,7 @@ class BodyView extends StatelessWidget {
           rValue: 'hh',
           value: 'hhh',
         ),
-        LabelRow2()
+        LabelRow2(text: "hhhh",)
       ],
     );
   }

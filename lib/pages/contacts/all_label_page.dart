@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/config/const.dart';
+import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/ui/commom_bar.dart';
 
 
@@ -16,7 +16,7 @@ class _AllLabelPageState extends State<AllLabelPage> {
       body: new Center(
         child: new Text(
           '您暂时没有标签',
-          style: TextStyle(color: mainTextColor),
+          style: TextStyle(color: AppColors.mainTextColor),
         ),
       ),
     );

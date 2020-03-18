@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_qyyim/config/const.dart';
+import 'package:flutter_qyyim/config/app.dart';
 
 
 class LabelRow extends StatelessWidget {
@@ -29,7 +29,7 @@ class LabelRow extends StatelessWidget {
     this.margin,
     this.padding = const EdgeInsets.only(top: 15.0, bottom: 15.0, right: 5.0),
     this.headW,
-    this.lineWidth = mainLineWidth,
+    this.lineWidth = AppConstants.mainLineWidth,
   });
 
   @override
@@ -44,7 +44,7 @@ class LabelRow extends StatelessWidget {
           margin: EdgeInsets.only(left: 20.0),
           decoration: BoxDecoration(
             border: isLine
-                ? Border(bottom: BorderSide(color: lineColor, width: lineWidth))
+                ? Border(bottom: BorderSide(color: AppColors.lineColor, width: lineWidth))
                 : null,
           ),
           child: new Row(
@@ -60,20 +60,20 @@ class LabelRow extends StatelessWidget {
               value != null
                   ? new Text(value,
                       style: TextStyle(
-                        color: mainTextColor.withOpacity(0.7),
+                        color: AppColors.mainTextColor.withOpacity(0.7),
                       ))
                   : new Container(),
               new Spacer(),
               rValue != null
                   ? new Text(rValue,
                       style: TextStyle(
-                          color: mainTextColor.withOpacity(0.7),
+                          color: AppColors.mainTextColor.withOpacity(0.7),
                           fontWeight: FontWeight.w400))
                   : new Container(),
               rightW != null ? rightW : new Container(),
               isRight
                   ? new Icon(CupertinoIcons.right_chevron,
-                      color: mainTextColor.withOpacity(0.5))
+                      color: AppColors.mainTextColor.withOpacity(0.5))
                   : new Container(width: 10.0)
             ],
           ),

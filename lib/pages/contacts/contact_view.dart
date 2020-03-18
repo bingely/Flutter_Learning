@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
-import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/config/t.dart';
 import 'package:flutter_qyyim/pages/chat/indicator_page_view.dart';
 import 'contact_item.dart';
@@ -82,7 +82,7 @@ class ContactView extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 10.0),
                 child: new Text(
                   '${contacts.length}位联系人',
-                  style: TextStyle(color: mainTextColor, fontSize: 16),
+                  style: TextStyle(color: AppColors.mainTextColor, fontSize: 16),
                 ),
               )
             ]);

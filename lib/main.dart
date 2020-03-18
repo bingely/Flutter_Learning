@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_qyyim/config/app.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'common/route/route.dart';
-import 'config/const.dart';
 import 'config/provider_config.dart';
 import 'config/router_manger.dart';
 import 'config/storage_manager.dart';
@@ -47,7 +47,7 @@ class App extends StatelessWidget {
               title: model.appName,
               /// 主题
               theme: ThemeData(
-                scaffoldBackgroundColor: bgColor,
+                scaffoldBackgroundColor: AppColors.bgColor,
                 //hintColor: Colors.grey.withOpacity(0.3),
                 //splashColor: Colors.transparent,
                 //canvasColor: Colors.transparent,

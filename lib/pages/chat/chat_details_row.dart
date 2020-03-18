@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/config/const.dart';
-import 'package:flutter_qyyim/config/contacts.dart';
+
+import 'package:flutter_qyyim/config/app.dart';
 
 import 'chat_voice.dart';
 
@@ -55,8 +55,8 @@ class ChatDetailsRowState extends State<ChatDetailsRow> {
         decoration: BoxDecoration(
           color: Color(AppColors.ChatBoxBg),
           border: Border(
-            top: BorderSide(color: lineColor, width: Constants.DividerWidth),
-            bottom: BorderSide(color: lineColor, width: Constants.DividerWidth),
+            top: BorderSide(color: AppColors.lineColor, width: AppConstants.DividerWidth),
+            bottom: BorderSide(color: AppColors.lineColor, width: AppConstants.DividerWidth),
           ),
         ),
         child: new Row(

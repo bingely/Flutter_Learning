@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/config/resource_mananger.dart';
+import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/tool/check.dart';
-import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/config/t.dart';
 
 
@@ -59,7 +59,7 @@ class ImageView extends StatelessWidget {
           border: Border.all(color: Colors.black.withOpacity(0.2),width: 0.3)
         ),
         child: new Image.asset(
-          defIcon,
+          AppConstants.defIcon,
           width: width-1,
           height: height-1,
           fit: width != null && height != null ? BoxFit.fill : fit,

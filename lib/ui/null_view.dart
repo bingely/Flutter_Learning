@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/config/const.dart';
+import 'package:flutter_qyyim/config/app.dart';
 
 
 class HomeNullView extends StatelessWidget {
@@ -13,7 +13,7 @@ class HomeNullView extends StatelessWidget {
       child: new InkWell(
         child: new Text(
           str ?? '',
-          style: TextStyle(color: mainTextColor),
+          style: TextStyle(color: AppColors.mainTextColor),
         ),
         onTap: () {
           ///routePush(new UserPage()),

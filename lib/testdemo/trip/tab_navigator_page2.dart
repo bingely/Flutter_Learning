@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/pages/me/me_page.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter_qyyim/testdemo/trip/view/travel_home_page.dart';
+import 'package:flutter_qyyim/testdemo/trip/view/travel_home_page_demo.dart';
 import 'package:flutter_qyyim/testdemo/trip/view/travel_tab_page.dart';
 
 List<Widget> widegets = <Widget>[
-  new TravelHomePage(),
+  new TravelHomePageDemo(),
   new TravelTabPage(),
   new MePage(),
 ];

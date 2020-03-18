@@ -4,8 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
 import 'package:flutter_qyyim/tool/win_media.dart';
-import 'package:flutter_qyyim/config/const.dart';
-import 'package:flutter_qyyim/config/contacts.dart';
+import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/config/dictionary.dart';
 import 'package:flutter_qyyim/ui/null_view.dart';
 
@@ -29,10 +28,10 @@ class _ContactsPageState extends State<ContactsPage>
 
   List<ContactItem> _functionButtons = [
     new ContactItem(
-        avatar: contactAssets + 'ic_new_friend.webp', title: '新的朋友'),
-    new ContactItem(avatar: contactAssets + 'ic_group.webp', title: '群聊'),
-    new ContactItem(avatar: contactAssets + 'ic_tag.webp', title: '标签'),
-    new ContactItem(avatar: contactAssets + 'ic_no_public.webp', title: '公众号'),
+        avatar: AppConstants.contactAssets + 'ic_new_friend.webp', title: '新的朋友'),
+    new ContactItem(avatar: AppConstants.contactAssets + 'ic_group.webp', title: '群聊'),
+    new ContactItem(avatar: AppConstants.contactAssets + 'ic_tag.webp', title: '标签'),
+    new ContactItem(avatar: AppConstants.contactAssets + 'ic_no_public.webp', title: '公众号'),
   ];
   final Map _letterPosMap = {INDEX_BAR_WORDS[0]: 0.0};
 
@@ -146,7 +145,7 @@ class _ContactsPageState extends State<ContactsPage>
       new ContactView(
           sC: sC, functionButtons: _functionButtons, contacts: _contacts),
       new Positioned(
-        width: Constants.IndexBarWidth,
+        width: AppConstants.IndexBarWidth,
         right: 0.0,
         top: 120.0,
         bottom: 120.0,
@@ -162,18 +161,18 @@ class _ContactsPageState extends State<ContactsPage>
     if (currentLetter != null && currentLetter.isNotEmpty) {
       var row = [
         new Container(
-            width: Constants.IndexLetterBoxSize,
-            height: Constants.IndexLetterBoxSize,
+            width: AppConstants.IndexLetterBoxSize,
+            height: AppConstants.IndexLetterBoxSize,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: AppColors.IndexLetterBoxBg,
               borderRadius: BorderRadius.all(
-                  Radius.circular(Constants.IndexLetterBoxSize / 2)),
+                  Radius.circular(AppConstants.IndexLetterBoxSize / 2)),
             ),
             child: new Text(currentLetter,
                 style: AppStyles.IndexLetterBoxTextStyle)),
         new Icon(Icons.arrow_right),
-        new Space(width: mainSpace * 5),
+        new Space(width: AppConstants.mainSpace * 5),
       ];
       body.add(
         new Container(

@@ -4,9 +4,9 @@ import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/tool/check.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
-import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/pages/chat/model/chat_data.dart';
 import 'package:flutter_qyyim/pages/chat/model/i_sound_msg_entity.dart';
 import 'package:flutter_qyyim/pages/chat/model/sound_msg_entity.dart';
@@ -166,7 +166,7 @@ class _SoundMsgState extends State<SoundMsg> with TickerProviderStateMixin {
                 isSelf ? MainAxisAlignment.end : MainAxisAlignment.start,
             children: [
               new Text("0\"", textAlign: TextAlign.start, maxLines: 1),
-              new Space(width: mainSpace / 2),
+              new Space(width: AppConstants.mainSpace / 2),
               new Image.asset(
                   animation != null
                       ? soundImg[animation.value % 3]
@@ -174,7 +174,7 @@ class _SoundMsgState extends State<SoundMsg> with TickerProviderStateMixin {
                   height: 20.0,
                   color: Colors.black,
                   fit: BoxFit.cover),
-              new Space(width: mainSpace)
+              new Space(width: AppConstants.mainSpace)
             ],
           ),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),

@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_qyyim/config/const.dart';
+import 'package:flutter_qyyim/config/app.dart';
+
 class ComMomBar extends StatelessWidget implements PreferredSizeWidget {
   const ComMomBar(
-      {this.title = '',
-        this.showShadow = false,
-        this.rightDMActions,
-        this.backgroundColor = appBarColor,
-        this.mainColor = Colors.black,
-        this.titleW,
-        this.bottom,
-        this.leadingImg = '',
-        this.leadingW});
+      {this.title = "",
+      this.showShadow = false,
+      this.rightDMActions,
+      this.backgroundColor = AppColors.appBarColor,
+      this.mainColor = Colors.black,
+      this.titleW,
+      this.bottom,
+      this.leadingImg = '',
+      this.leadingW});
 
   final String title;
   final bool showShadow;
@@ -53,46 +54,46 @@ class ComMomBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return showShadow
         ? new Container(
-      decoration: BoxDecoration(
-          border: Border(
-              bottom: new BorderSide(
-                  color: Colors.grey, width: showShadow ? 0.5 : 0.0))),
-      child: new AppBar(
-        title: titleW == null
-            ? new Text(
-          title,
-          style: new TextStyle(
-              color: mainColor,
-              fontSize: 17.0,
-              fontWeight: FontWeight.w500),
-        )
-            : titleW,
-        backgroundColor: mainColor,
-        elevation: 0.0,
-        brightness: Brightness.light,
-        leading: leadingW ?? leading(context),
-        centerTitle: true,
-        actions: rightDMActions ?? [new Center()],
-        bottom: bottom != null ? bottom : null,
-      ),
-    )
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: new BorderSide(
+                        color: Colors.grey, width: showShadow ? 0.5 : 0.0))),
+            child: new AppBar(
+              title: titleW == null
+                  ? new Text(
+                      title,
+                      style: new TextStyle(
+                          color: mainColor,
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.w500),
+                    )
+                  : titleW,
+              backgroundColor: mainColor,
+              elevation: 0.0,
+              brightness: Brightness.light,
+              leading: leadingW ?? leading(context),
+              centerTitle: true,
+              actions: rightDMActions ?? [new Center()],
+              bottom: bottom != null ? bottom : null,
+            ),
+          )
         : new AppBar(
-      title: titleW == null
-          ? new Text(
-        title,
-        style: new TextStyle(
-            color: mainColor,
-            fontSize: 17.0,
-            fontWeight: FontWeight.w500),
-      )
-          : titleW,
-      backgroundColor: backgroundColor,
-      elevation: 0.0,
-      brightness: Brightness.light,
-      leading: leadingW ?? leading(context),
-      centerTitle: false,
-      bottom: bottom != null ? bottom : null,
-      actions: rightDMActions ?? [new Center()],
-    );
+            title: titleW == null
+                ? new Text(
+                    title,
+                    style: new TextStyle(
+                        color: mainColor,
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.w500),
+                  )
+                : titleW,
+            backgroundColor: backgroundColor,
+            elevation: 0.0,
+            brightness: Brightness.light,
+            leading: leadingW ?? leading(context),
+            centerTitle: false,
+            bottom: bottom != null ? bottom : null,
+            actions: rightDMActions ?? [new Center()],
+          );
   }
 }

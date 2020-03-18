@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/tool/check.dart';
 import 'package:flutter_qyyim/common/route/route.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
-import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/pages/chat/model/chat_data.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
@@ -52,7 +52,7 @@ class ImgMsg extends StatelessWidget {
     final globalModel = Provider.of<GlobalModel>(context);
     var body = [
       new MsgAvatar(model: model, globalModel: globalModel),
-      new Space(width: mainSpace),
+      new Space(width: AppConstants.mainSpace),
       new Expanded(
         child: new GestureDetector(
           child: new Container(

@@ -7,8 +7,8 @@ import 'package:flutter_qyyim/common/route/route.dart';
 import 'package:flutter_qyyim/common/service/wanandroid_service.dart';
 import 'package:flutter_qyyim/pages/message/message.dart';
 import 'package:flutter_qyyim/tool/win_media.dart';
-import 'package:flutter_qyyim/config/const.dart';
-import 'package:flutter_qyyim/config/contacts.dart';
+
+import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/pages/chat/camarademo/camera_screen.dart';
 import 'package:flutter_qyyim/pages/chat/shoot_page.dart';
 import 'package:flutter_qyyim/pages/chat/video/video_page.dart';
@@ -40,7 +40,8 @@ class ChatPage extends StatefulWidget {
 
   final Message message;
 
-  const ChatPage({Key key, this.title, this.type, this.id, this.message}) : super(key: key);
+  const ChatPage({Key key, this.title, this.type, this.id, this.message})
+      : super(key: key);
 
   @override
   ChatePageState createState() {
@@ -166,7 +167,7 @@ class ChatePageState extends State<ChatPage> {
                             .then((url) {
                           if (url != null) {
                             print("video_page$url");
-                           // _handleSubmittedVideoData(url);
+                            // _handleSubmittedVideoData(url);
                           }
                         });
                       } else {
@@ -184,10 +185,12 @@ class ChatePageState extends State<ChatPage> {
     ];
 
     return Scaffold(
-      appBar: new ComMomBar(title: widget.message.title, rightDMActions: rWidget),
+      appBar: new ComMomBar(
+          title: widget.message != null ? widget.message.title : "",
+          rightDMActions: rWidget),
       body: new MainInputBody(
         onTap: () => setState(() => _isMore = false),
-        decoration: BoxDecoration(color: chatBg),
+        decoration: BoxDecoration(color: AppColors.chatBg),
         child: new Column(children: body),
       ),
     );

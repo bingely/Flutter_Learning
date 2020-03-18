@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/tool/check.dart';
-import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/ui/pop/popup_menu_route_layout.dart';
 import 'triangle_painter.dart';
 
@@ -39,7 +39,7 @@ class _MenuPopWidgetState extends State<MenuPopWidget> {
   final double _triangleHeight = 10;
   bool isShow = true;
 
-  Color itemColor = itemBgColor;
+  Color itemColor = AppColors.itemBgColor;
 
   RenderBox button;
   RenderBox overlay;
@@ -90,7 +90,7 @@ class _MenuPopWidgetState extends State<MenuPopWidget> {
         child: new CustomPaint(
           size: Size(width, _triangleHeight),
           painter: new TrianglePainter(
-            color: itemBgColor,
+            color: AppColors.itemBgColor,
             position: position,
             isInverted: true,
             size: button.size,
@@ -104,7 +104,7 @@ class _MenuPopWidgetState extends State<MenuPopWidget> {
           child: Stack(children: <Widget>[
             new ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(5)),
-              child: Container(color: itemBgColor, height: widget.menuHeight),
+              child: Container(color: AppColors.itemBgColor, height: widget.menuHeight),
             ),
             new Column(
               children: widget.actions.map(itemBuild).toList(),

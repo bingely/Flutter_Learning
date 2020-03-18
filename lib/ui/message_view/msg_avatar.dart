@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/route/route.dart';
-import 'package:flutter_qyyim/config/const.dart';
+import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/pages/chat/model/chat_data.dart';
 import 'package:flutter_qyyim/common/provider/global_model.dart';
 
@@ -21,7 +21,7 @@ class MsgAvatar extends StatelessWidget {
         ),
         margin: EdgeInsets.only(right: 10.0),
         child: new ImageView(
-          img: defIcon,
+          img: AppConstants.defIcon,
           height: 50,
           width: 50,
           fit: BoxFit.cover,

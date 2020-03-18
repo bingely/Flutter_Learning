@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
 import 'package:flutter_qyyim/tool/win_media.dart';
-import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/ui/image_view.dart';
 
 
@@ -44,7 +44,7 @@ class ListTileView extends StatelessWidget {
         new Text(title ?? '', style: titleStyle ?? null),
         new Text(
           label ?? '',
-          style: TextStyle(color: mainTextColor, fontSize: 12),
+          style: TextStyle(color: AppColors.mainTextColor, fontSize: 12),
         ),
       ],
     );
@@ -56,7 +56,7 @@ class ListTileView extends StatelessWidget {
         width: 7.0,
         child: new Image.asset(
           'assets/images/ic_right_arrow_grey.webp',
-          color: mainTextColor.withOpacity(0.5),
+          color: AppColors.mainTextColor.withOpacity(0.5),
           fit: BoxFit.cover,
         ),
       ),

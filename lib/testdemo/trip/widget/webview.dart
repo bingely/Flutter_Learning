@@ -99,7 +99,7 @@ class _WebViewState extends State<WebView> {
               Color(int.parse('0xff' + statusBarColorStr)), backButtonColor),
           Expanded(
               child: WebviewScaffold(
-            userAgent: 'null',//防止携程H5页面重定向到打开携程APP ctrip://wireless/xxx的网址
+           // userAgent: 'null',//防止携程H5页面重定向到打开携程APP ctrip://wireless/xxx的网址
             url: widget.url,
             withZoom: true,
             withLocalStorage: true,

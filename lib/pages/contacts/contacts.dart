@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/tool/check.dart';
 import 'package:flutter_qyyim/common/pinyin/pinyin_helper.dart';
-import 'package:flutter_qyyim/config/const.dart';
 import 'package:flutter_qyyim/config/keys.dart';
 import 'package:flutter_qyyim/config/t.dart';
 import 'package:flutter_qyyim/pages/contacts/person_info_entity.dart';
@@ -61,7 +61,7 @@ class ContactsPageData {
           contacts.insert(
             0,
             new Contact(
-              avatar: !strNoEmpty(avatar) ? defIcon : avatar,
+              avatar: !strNoEmpty(avatar) ? AppConstants.defIcon : avatar,
               name: !strNoEmpty(remark) ? nickName : remark,
               nameIndex:
                   PinyinHelper.getFirstWordPinyin(nickName)[0].toUpperCase(),
@@ -78,7 +78,7 @@ class ContactsPageData {
           contacts.insert(
             0,
             new Contact(
-              avatar: !strNoEmpty(avatar) ? defIcon : avatar,
+              avatar: !strNoEmpty(avatar) ? AppConstants.defIcon : avatar,
               name: !strNoEmpty(remark) ? nickName : remark,
               nameIndex:
                   PinyinHelper.getFirstWordPinyin(nickName)[0].toUpperCase(),

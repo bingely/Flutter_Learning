@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
-import 'package:flutter_qyyim/config/const.dart';
-import 'package:flutter_qyyim/config/contacts.dart';
+import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/ui/image_view.dart';
 
 import 'contact_view.dart';
@@ -45,8 +44,8 @@ class ContactItemState extends State<ContactItem> {
   // items的高度 纵向高度*2+头像高度+分割线高度
   static double heightItem(bool hasGroupTitle) {
     final _buttonHeight = MARGIN_VERTICAL * 2 +
-        Constants.ContactAvatarSize +
-        Constants.DividerWidth;
+        AppConstants.ContactAvatarSize +
+        AppConstants.DividerWidth;
     if (hasGroupTitle) return _buttonHeight + GROUP_TITLE_HEIGHT;
 
     return _buttonHeight;
@@ -73,8 +72,8 @@ class ContactItemState extends State<ContactItem> {
     /// 定义左边图标Widget
     Widget _avatarIcon = new ImageView(
       img: widget.avatar,
-      width: Constants.ContactAvatarSize,
-      height: Constants.ContactAvatarSize,
+      width: AppConstants.ContactAvatarSize,
+      height: AppConstants.ContactAvatarSize,
       fit: BoxFit.cover,
     );
 
@@ -100,8 +99,8 @@ class ContactItemState extends State<ContactItem> {
                     bottom: BorderSide(
 
                         /// 下划线粗细及颜色
-                        width: Constants.DividerWidth,
-                        color: lineColor),
+                        width: AppConstants.DividerWidth,
+                        color: AppColors.lineColor),
                   ),
           ),
 
@@ -167,8 +166,8 @@ class ContactItemState extends State<ContactItem> {
             decoration: BoxDecoration(
               color: const Color(AppColors.ContactGroupTitleBg),
               border: Border(
-                top: BorderSide(color: lineColor, width: 0.2),
-                bottom: BorderSide(color: lineColor, width: 0.2),
+                top: BorderSide(color: AppColors.lineColor, width: 0.2),
+                bottom: BorderSide(color: AppColors.lineColor, width: 0.2),
               ),
             ),
             alignment: Alignment.centerLeft,

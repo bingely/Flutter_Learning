@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
 import 'package:flutter_qyyim/tool/win_media.dart';
-import 'package:flutter_qyyim/config/const.dart';
+
 
 
 class MoreItemCard extends StatelessWidget {
@@ -48,10 +49,10 @@ class MoreItemCard extends StatelessWidget {
               ),
             ),
           ),
-          new Space(height: mainSpace / 2),
+          new Space(height: AppConstants.mainSpace / 2),
           new Text(
             name ?? '',
-            style: TextStyle(color: mainTextColor, fontSize: 11),
+            style: TextStyle(color: AppColors.mainTextColor, fontSize: 11),
           ),
         ],
       ),

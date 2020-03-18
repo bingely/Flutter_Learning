@@ -55,7 +55,7 @@ class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RouteName.splash:
-        return NoAnimRouteBuilder(TabNavigatorPage());
+        return NoAnimRouteBuilder(ChatPage());
       case RouteName.app:
         return NoAnimRouteBuilder(TabNavigatorPage());
       case RouteName.chat:

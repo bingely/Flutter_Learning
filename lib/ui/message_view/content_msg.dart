@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/config/const.dart';
+import 'package:flutter_qyyim/config/app.dart';
 
 
 class ContentMsg extends StatefulWidget {
@@ -42,7 +42,7 @@ class _ContentMsgState extends State<ContentMsg> {
       str,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
-      style: TextStyle(color: mainTextColor, fontSize: 14.0),
+      style: TextStyle(color: AppColors.mainTextColor, fontSize: 14.0),
     );
   }
 }
