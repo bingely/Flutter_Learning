@@ -1,14 +1,16 @@
-import 'package:flutter_qyyim/common/provider/view_state_model.dart';
+import 'package:flutter_qyyim/common/provider/view_state_refresh_list_model.dart';
+import 'package:flutter_qyyim/mock/chat_mock.dart';
 import 'package:flutter_qyyim/pages/chat/event/MsgEvent.dart';
 import 'package:flutter_qyyim/pages/chat/model/chat_data.dart';
 
-class ChatViewModel extends ViewStateModel {
-  List<ChatData> chatData = [];
+class ChatViewModel extends ViewStateRefreshListModel<ChatData> {
 
 
   /// 初始化聊天数据
-  iniChatData() {}
-
+  @override
+  Future<List<ChatData>> loadData({int pageNum}) {
+    return getChatData();
+  }
 
   /// 发送消息
   void sendMgs(MsgEvent event) {
@@ -28,11 +30,12 @@ class ChatViewModel extends ViewStateModel {
   }
 
   _handleSubmittedData(String text) async {
-    chatData.insert(0, new ChatData(msg: {"text": text, "type": "Text"}));
+    list.add(new ChatData(msg: {"text": text, "type": "Text"}));
+
+    // 模拟数据库插入
   }
   _handleSubmittedImgData(String text) async {
-    chatData.insert(
-        0,
+    list.add(
         new ChatData(msg: {
           "imageList": [text],
           "type": "Image"
@@ -40,8 +43,7 @@ class ChatViewModel extends ViewStateModel {
   }
 
   _handleSubmittedVideoData(String text) async {
-    chatData.insert(
-        0,
+    list.add(
         new ChatData(msg: {
           "videosrc": [text],
           'urls': [text],
@@ -51,8 +53,7 @@ class ChatViewModel extends ViewStateModel {
   }
 
   _handleSubmittedVoiceData(String text) async {
-    chatData.insert(
-        0,
+    list.add(
         new ChatData(msg: {
           "soundUrls": [text],
           'urls': [text],
@@ -60,6 +61,8 @@ class ChatViewModel extends ViewStateModel {
           "path": text
         }));
   }
+
+
   /*Future getChatMsgData() async {
     final str = await ChatDataRep().repData(widget.id, widget.type);
     List<ChatData> listChat = str;

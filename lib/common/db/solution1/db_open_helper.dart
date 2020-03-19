@@ -6,10 +6,12 @@ class DbOpenHelper{
 
   /// 表语句
    static void creteTables(Database db) async {
-
+    String chatsql =  'CREATE TABLE Student (id TEXT PRIMARY KEY, name TEXT, score INTEGER)';
     // 学生
     await db.execute(
-        'CREATE TABLE Student (id TEXT PRIMARY KEY, name TEXT, score INTEGER)');
+        'CREATE TABLE ChatMessage (id TEXT PRIMARY KEY, msg TEXT, score INTEGER)');
+
+    await db.execute(chatsql);
   }
 
   /// 升级表  -- 当修改了数据库版本号会粗发这个方法

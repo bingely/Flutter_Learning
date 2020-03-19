@@ -114,18 +114,18 @@ class ChatePageState extends State<ChatPage> {
       body: ProviderWidget<ChatViewModel>(
         model: ChatViewModel(),
         onModelReady: (modle) {
+          modle.initData();
           chatViewModle = modle;
-          modle.iniChatData();
         },
         builder: (context, modle, widgetcc) {
-          chatData = modle?.chatData;
+          chatData = modle?.list;
           return new MainInputBody(
             onTap: () => setState(() => _isMore = false),
             decoration: BoxDecoration(color: AppColors.chatBg),
             child: new Column(children: [
               // 聊天list
               chatData != null
-                  ? new ChatDetailsBody(sC: _sC, chatData: chatData)
+                  ? new ChatDetailsBody(sC: _sC, chatData: chatData, chatViewModel: modle,)
                   : new Spacer(),
               // 底部
               new ChatDetailsRow(

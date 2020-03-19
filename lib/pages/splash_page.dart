@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/config/router_manger.dart';
+import 'package:flutter_qyyim/tool/navigator_util.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // 启动页
@@ -14,7 +16,7 @@ class SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, 'app');
+      NavigatorUtil.pushReplacementNamed(context, RouteName.app);
     });
   }
 

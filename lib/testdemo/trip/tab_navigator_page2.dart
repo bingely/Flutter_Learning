@@ -8,7 +8,7 @@ import 'package:flutter_qyyim/testdemo/trip/view/travel_home_page_demo.dart';
 import 'package:flutter_qyyim/testdemo/trip/view/travel_tab_page.dart';
 
 List<Widget> widegets = <Widget>[
-  new TravelHomePageDemo(),
+  new TravelHomePage(),
   new TravelTabPage(),
   new MePage(),
 ];

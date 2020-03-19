@@ -161,8 +161,7 @@ class AppConstants {
 
   static const myCode = 'http://flutterj.com/c.jpg';
 
-  static const helpUrl =
-      'https://kf.qq.com/touch/product/wechat_app.html?scene_id=kf338';
+
 
   static const defContentImg =
       'https://www.runoob.com/wp-content/uploads/2015/06/image_1c58e950q14da167k1nqpu2hn5e9.png';

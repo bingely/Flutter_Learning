@@ -16,9 +16,3 @@ class ChatData {
   });
 }
 
-class ChatDataRep {
-  repData(String id, int type) async {
-    List<ChatData> chatData = new List<ChatData>();
-    return chatData;
-  }
-}
