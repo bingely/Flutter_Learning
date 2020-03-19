@@ -17,18 +17,9 @@ class ListViewPageState extends State<ListViewPage> {
   }
 }
 
-class InfiniteListView extends State<ListViewPage> {
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return null;
-  }
-}
-
 /// 怎么
 Widget getList() {
   return ListView(
-
       /// 该属性表示是否根据子组件的总长度来设置ListView的长度，默认值为false
       shrinkWrap: true,
       padding: EdgeInsets.all(10.0),
@@ -45,7 +36,7 @@ Widget getListBuilder() {
       itemCount: 100,
       itemExtent: 50.0,
       itemBuilder: (BuildContext context, int index) {
-        ListTile(title: Text("$index"));
+        return ListTile(title: Text("$index"));
       });
 }
 
