@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -22,14 +23,19 @@ class ImgMsg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!listNoEmpty(msg['imageList'])) return Text('发送中');
+
+    Map<String, dynamic> msg = json.decode(model?.msg);
+
+
+
+    if (!strNoEmpty(msg['imageList'])) return Text('发送中');
    /* var msgInfo = msg['imageList'][1];
     var _height = msgInfo['height'].toDouble();
     var resultH = _height > 200.0 ? 200.0 : _height;
     var url = msgInfo['url'];*/
 
 
-   var url = msg['imageList'][0];
+   var url = msg['imageList'];
 
     var _height;
     var resultH=200.0;

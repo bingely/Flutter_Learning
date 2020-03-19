@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -33,7 +34,10 @@ class _VidoMsgState extends State<VideoMsg> {
   @override
   void initState() {
     super.initState();
-    var url = widget.msg['videosrc'][0];
+
+    Map<String, dynamic> msg = json.decode(widget.model?.msg);
+
+    var url = msg['videosrc'];
 
 
 
@@ -50,8 +54,10 @@ class _VidoMsgState extends State<VideoMsg> {
 
   @override
   Widget build(BuildContext context) {
-    if (!listNoEmpty(widget.msg['videosrc'])) return Text('发送中');
-    var url = widget.msg['videosrc'][0];
+    Map<String, dynamic> msg = json.decode(widget.model?.msg);
+
+    if (!strNoEmpty(msg['videosrc'])) return Text('发送中');
+    var url = msg['videosrc'];
    // _controller = VideoPlayerController.file(File(url));
    // _initializeVideoPlayerFuture = _controller.initialize();
 

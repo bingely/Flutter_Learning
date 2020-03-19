@@ -9,7 +9,10 @@ class DbOpenHelper{
     String chatsql =  'CREATE TABLE Student (id TEXT PRIMARY KEY, name TEXT, score INTEGER)';
     // 学生
     await db.execute(
-        'CREATE TABLE ChatMessage (id TEXT PRIMARY KEY, msg TEXT, score INTEGER)');
+        'CREATE TABLE ChatData (id TEXT PRIMARY KEY, msg TEXT, score INTEGER, time INTEGER, nickName TEXT,avatar TEXT)');
+
+    await db.execute(
+        'CREATE TABLE ChatData2 (id TEXT PRIMARY KEY, msg TEXT, nickName TEXT)');
 
     await db.execute(chatsql);
   }

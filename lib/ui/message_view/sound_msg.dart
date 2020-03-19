@@ -1,5 +1,6 @@
 
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
@@ -147,7 +148,9 @@ class _SoundMsgState extends State<SoundMsg> with TickerProviderStateMixin {
 
     //SoundMsgEntity model = SoundMsgEntity.fromJson(widget.model.msg);
     //ISoundMsgEntity iModel = ISoundMsgEntity.fromJson(widget.model.msg);
-    String voidpath = widget.model.msg['path'];
+    Map<String, dynamic> msg = json.decode(widget.model.msg);
+
+    String voidpath = msg['path'];
 
     bool isIos = Platform.isIOS;
    // if (!listNoEmpty(isIos ? iModel.soundUrls : model.urls)) return Container();

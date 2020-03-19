@@ -12,10 +12,9 @@ import 'model/chat_data.dart';
 /// 按照时间的格式排序
 class ChatDetailsBody extends StatelessWidget {
   final ScrollController sC;
-  final List<ChatData> chatData;
   final ChatViewModel chatViewModel;
 
-  ChatDetailsBody({this.sC,this.chatData,this.chatViewModel});
+  ChatDetailsBody({this.sC,this.chatViewModel});
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +33,10 @@ class ChatDetailsBody extends StatelessWidget {
             padding: EdgeInsets.all(8.0),
             reverse: false,
             itemBuilder: (context, int index) {
-              ChatData model = chatData[index];
+              ChatData model = chatViewModel.list[index];
               return new SendMessageView(model);
             },
-            itemCount: chatData.length,
+            itemCount: chatViewModel.list?.length,
           ),
         ),
       ),

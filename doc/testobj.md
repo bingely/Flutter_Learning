@@ -10,7 +10,7 @@ how to designer
 
 
 一般会出现android 配置信息错误
-1 要记住好的build 版本，这个可能会报错点
+1 要记住好的build 版本，这个可能会报错点（修改三处build的配置）---一般能解决大部分运行问题了
 2
 
 # how to test

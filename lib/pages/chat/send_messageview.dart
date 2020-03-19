@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -20,7 +21,15 @@ class SendMessageView extends StatefulWidget {
 class _SendMessageViewState extends State<SendMessageView> {
   @override
   Widget build(BuildContext context) {
-    Map msg = widget.model.msg;
+    //Map msg = widget.model.msg;
+
+    if (widget.model == null) {
+      return new Text('未知消息');
+    }
+
+    Map<String, dynamic> msg = json.decode(widget.model?.msg);
+
+
     String msgType = msg['type'];
     String msgStr = msg.toString();
 

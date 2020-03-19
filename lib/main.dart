@@ -65,7 +65,7 @@ class App extends StatelessWidget {
               debugShowCheckedModeBanner: true,
               /// 路由管理注入
               onGenerateRoute: Router.generateRoute,
-              initialRoute: RouteName.chat,//RouterTestRoute
+              initialRoute: RouteName.app,//RouterTestRoute
             ));
       },
     );

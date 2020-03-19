@@ -9,6 +9,7 @@ import 'package:flutter_qyyim/pages/message/message_page.dart';
 import 'package:flutter_qyyim/pages/tab_navigator_page.dart';
 import 'package:flutter_qyyim/pages/search/search.dart';
 import 'package:flutter_qyyim/testdemo/contacts/contacts_page.dart';
+import 'package:flutter_qyyim/testdemo/file_data_page.dart';
 import 'package:flutter_qyyim/testdemo/scrcole_chapter6/custom_scrollview.dart';
 import 'package:flutter_qyyim/testdemo/scrcole_chapter6/listview/list_demo.dart';
 import 'package:flutter_qyyim/testdemo/scrcole_chapter6/listview/listview_head.dart';
@@ -58,7 +59,7 @@ class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RouteName.splash:
-        return NoAnimRouteBuilder(SplashPage());
+        return NoAnimRouteBuilder(CustomScrollViewTestRoute());
       case RouteName.app:
         return NoAnimRouteBuilder(TabNavigatorPage());
       case RouteName.chat:

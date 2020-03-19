@@ -24,8 +24,8 @@ class StudentDao extends DbBaseBean {
   //JSON 解析工厂类，使用字典数据为对象初始化赋值
   factory StudentDao.fromJson(Map<String, dynamic> parsedJson) {
     return StudentDao(
-      id: parsedJson['id'],
       name: parsedJson['name'],
+      id: parsedJson['id'],
       score: parsedJson['score'],
       // 增加映射规则
       // teacher: Teacher.fromJson(parsedJson ['teacher'])
@@ -35,8 +35,8 @@ class StudentDao extends DbBaseBean {
   @override
   StudentDao fromJson(Map<String, dynamic> parsedJson) {
     return StudentDao(
-      id: parsedJson['id'],
       name: parsedJson['name'],
+      id: parsedJson['id'],
       score: parsedJson['score'],
       // 增加映射规则
       // teacher: Teacher.fromJson(parsedJson ['teacher'])

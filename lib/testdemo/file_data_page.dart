@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_orm_plugin/flutter_orm_plugin.dart';
 import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
 import 'package:flutter_qyyim/common/db/student_dao.dart';
+import 'package:flutter_qyyim/pages/chat/model/chat_data.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
@@ -23,7 +24,7 @@ class _FileDataPageState extends State<FileDataPage> {
     _localFile;
 
 
-    DbUtils.getInstance().openDb("qqyim");
+  //  DbUtils.getInstance().openDb("qqyim");
 
 
     Map<String , Field> fields = new Map<String , Field>();
@@ -78,6 +79,8 @@ class _FileDataPageState extends State<FileDataPage> {
               var student2 = StudentDao(id: '4563', name: '李四2', score: 80);
               var student3 = StudentDao(id: '7894', name: '王五3', score: 85);
 
+              String json1 = '{"text": "hello", "type": "Text"}';
+              var stdent3 = StudentDao(id: '111',name: json1);
 
               // 插入 3 个 Student 对象
 
@@ -86,7 +89,9 @@ class _FileDataPageState extends State<FileDataPage> {
               DbUtils.getInstance().insertItem(student1);
               DbUtils.getInstance().insertItem(student2);
               DbUtils.getInstance().insertItem(student3);
+              DbUtils.getInstance().insertItem(stdent3);
 
+              DbUtils.getInstance().insertItem(ChatData(msg:json1,nickName: "bingley",id: '11'));
 
 
               Map m = {"name":"william", "class":"class1", "score":96.5};
@@ -99,9 +104,14 @@ class _FileDataPageState extends State<FileDataPage> {
             onPressed: () {
               // 读取出数据库中插入的 Student 对象集合
               //students().then((list)=>list.forEach((s)=>print(s.name)));
-              DbUtils.getInstance().queryItems(StudentDao())
+             /* DbUtils.getInstance().queryItems(StudentDao())
               .then((list)=>list.forEach((StudentDao student){
                 print(student.name);
+              }));*/
+
+              DbUtils.getInstance().queryItems(ChatData())
+                  .then((list)=>list.forEach((ChatData student){
+                print(student.nickName);
               }));
 
 

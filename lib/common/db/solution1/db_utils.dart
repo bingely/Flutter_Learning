@@ -112,6 +112,7 @@ class DbUtils {
 
     // map转换为List集合
     return List.generate(maps.length, (i) {
+      log("queryItems：${maps[i]}");
       return t.fromJson(maps[i]);
     });
   }

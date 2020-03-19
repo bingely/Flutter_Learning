@@ -125,7 +125,7 @@ class ChatePageState extends State<ChatPage> {
             child: new Column(children: [
               // 聊天list
               chatData != null
-                  ? new ChatDetailsBody(sC: _sC, chatData: chatData, chatViewModel: modle,)
+                  ? new ChatDetailsBody(sC: _sC,  chatViewModel: modle,)
                   : new Spacer(),
               // 底部
               new ChatDetailsRow(
