@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/pages/chat/send_messageview.dart';
@@ -18,6 +20,7 @@ class ChatDetailsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return new Flexible(
       child: new ScrollConfiguration(
         behavior: MyBehavior(),
@@ -25,7 +28,7 @@ class ChatDetailsBody extends StatelessWidget {
           header: WaterDropHeader(),
           footer: ClassicFooter(),
           controller: chatViewModel.refreshController,
-          onRefresh: chatViewModel.refresh,
+          onRefresh: chatViewModel.loadMorePageReverse,
           onLoading: chatViewModel.loadMore,
           enablePullUp: false,
           child: new ListView.builder(

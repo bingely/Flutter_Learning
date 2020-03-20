@@ -20,7 +20,7 @@ class DbUtils {
   Database database;
 
   // 数据库版本
-  int dbVersion = 8;
+  int dbVersion = 1;
 
   static DbUtils dbUtils;
 
@@ -109,6 +109,29 @@ class DbUtils {
         whereArgs: [value],
       );
     }
+
+    // map转换为List集合
+    return List.generate(maps.length, (i) {
+      log("queryItems：${maps[i]}");
+      return t.fromJson(maps[i]);
+    });
+  }
+
+  // 查询数据 -- 分页  orderBy: "id Asc  Desc
+  Future<List<T>> queryItemsLimit<T extends DbBaseBean>(T t,
+      {int limit = 0,int offset = 0,orderBy = "",String key = "", String value = ""}) async {
+    if (null == database || !database.isOpen) return null;
+
+    List<Map<String, dynamic>> maps = List();
+
+    // 列表数据
+
+    maps = await database.query(
+      t.getTableName(),
+      limit: limit,
+      offset: offset,
+      orderBy: orderBy,
+    );
 
     // map转换为List集合
     return List.generate(maps.length, (i) {

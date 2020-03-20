@@ -1,11 +1,8 @@
 import 'dart:async';
 
-import 'package:camera/camera.dart';
 import 'package:extended_text_field/extended_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/provider/provider_widget.dart';
-import 'package:flutter_qyyim/common/route/route.dart';
-import 'package:flutter_qyyim/common/service/wanandroid_service.dart';
 import 'package:flutter_qyyim/model/message.dart';
 import 'package:flutter_qyyim/pages/qr/qr_page.dart';
 import 'package:flutter_qyyim/tool/navigator_util.dart';
@@ -13,9 +10,6 @@ import 'package:flutter_qyyim/tool/win_media.dart';
 
 import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/pages/chat/camarademo/camera_screen.dart';
-import 'package:flutter_qyyim/pages/chat/shoot_page.dart';
-import 'package:flutter_qyyim/pages/chat/video/video_page.dart';
-import 'package:flutter_qyyim/testdemo/cross_data/custom_event.dart';
 import 'package:flutter_qyyim/testdemo/cross_data/event_bus.dart';
 import 'package:flutter_qyyim/ui/commom_bar.dart';
 import 'package:flutter_qyyim/ui/edit/text_span_builder.dart';
@@ -72,10 +66,8 @@ class ChatePageState extends State<ChatPage> {
   @override
   void initState() {
     super.initState();
-    // 模拟保存在数据库中的聊天数据
-    //getChatMsgData();
-
     _sC.addListener(() => FocusScope.of(context).requestFocus(new FocusNode()));
+    Timer(Duration(milliseconds: 1000), () => _sC.jumpTo(_sC.position.maxScrollExtent));
 
     subscription = eventBus.on<MsgEvent>().listen((event) {
       _textController.clear();
@@ -125,7 +117,7 @@ class ChatePageState extends State<ChatPage> {
             child: new Column(children: [
               // 聊天list
               chatData != null
-                  ? new ChatDetailsBody(sC: _sC,  chatViewModel: modle,)
+                  ? new ChatDetailsBody(sC: _sC,  chatViewModel: modle)
                   : new Spacer(),
               // 底部
               new ChatDetailsRow(

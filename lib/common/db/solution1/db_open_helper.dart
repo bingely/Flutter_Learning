@@ -12,7 +12,7 @@ class DbOpenHelper{
         'CREATE TABLE ChatData (id TEXT PRIMARY KEY, msg TEXT, score INTEGER, time INTEGER, nickName TEXT,avatar TEXT)');
 
     await db.execute(
-        'CREATE TABLE MessageData (id TEXT PRIMARY KEY, msg TEXT, nickName TEXT)');
+        'CREATE TABLE MessageData (id TEXT PRIMARY KEY, msg TEXT, nickName TEXT, time INTEGER, avatar TEXT)');
 
     await db.execute(chatsql);
   }
@@ -27,12 +27,14 @@ class DbOpenHelper{
 
         break;
       case 2: //
-        db.execute(
-            'CREATE TABLE MessageData (id TEXT PRIMARY KEY, msg TEXT, nickName TEXT)');
 
         String chatsql =  'CREATE TABLE TestDao (id TEXT PRIMARY KEY, name TEXT, score INTEGER)';
         db.execute(chatsql);
 
+        break;
+      case 9:
+        db.execute(
+            'CREATE TABLE MessageData (id TEXT PRIMARY KEY, msg TEXT, nickName TEXT, time INTEGER, avatar TEXT)');
         break;
     }
   }

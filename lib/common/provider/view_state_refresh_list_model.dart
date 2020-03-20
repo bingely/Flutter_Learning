@@ -4,10 +4,10 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 abstract class ViewStateRefreshListModel<T> extends ViewStateListModel<T> {
   /// 分页第一页页码
-  static const int pageNumFirst = 0;
+  static const int pageNumFirst = 1;
 
   /// 分页条目数量
-  static const int pageSize = 20;
+  int pageSize = 5;
 
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
@@ -15,7 +15,7 @@ abstract class ViewStateRefreshListModel<T> extends ViewStateListModel<T> {
   RefreshController get refreshController => _refreshController;
 
   /// 当前页码
-  int _currentPageNum = pageNumFirst;
+  int currentPageNum = 1;
 
   /// 下拉刷新
   ///
@@ -24,10 +24,10 @@ abstract class ViewStateRefreshListModel<T> extends ViewStateListModel<T> {
   /// false: Error时,不需要跳转页面,直接给出提示
   Future<List<T>> refresh({bool init = false}) async {
     try {
-      _currentPageNum = pageNumFirst;
+      currentPageNum = pageNumFirst;
       var data = await loadData(pageNum: pageNumFirst);
       if (data.isEmpty) {
-        refreshController.refreshCompleted(resetFooterState: true);
+        refreshController.refreshCompleted();
         list.clear();
         setEmpty();
       } else {
@@ -58,9 +58,9 @@ abstract class ViewStateRefreshListModel<T> extends ViewStateListModel<T> {
   /// 上拉加载更多
   Future<List<T>> loadMore() async {
     try {
-      var data = await loadData(pageNum: ++_currentPageNum);
+      var data = await loadData(pageNum: ++currentPageNum);
       if (data.isEmpty) {
-        _currentPageNum--;
+        currentPageNum--;
         refreshController.loadNoData();
       } else {
         onCompleted(data);
@@ -74,7 +74,37 @@ abstract class ViewStateRefreshListModel<T> extends ViewStateListModel<T> {
       }
       return data;
     } catch (e, s) {
-      _currentPageNum--;
+      currentPageNum--;
+      refreshController.loadFailed();
+      debugPrint('error--->\n' + e.toString());
+      debugPrint('statck--->\n' + s.toString());
+      return null;
+    }
+  }
+
+
+  /// 上拉加载更多
+  Future<List<T>> loadMorePageReverse() async {
+    try {
+      var data = await loadData(pageNum: ++currentPageNum);
+      if (data.isEmpty) {
+        currentPageNum--;
+        refreshController.refreshCompleted();
+      } else {
+        onCompleted(data);
+        //list.addAll(data);
+        list.insertAll(0, data);
+        if (data.length < pageSize) {
+         // refreshController.loadNoData();
+        } else {
+         // refreshController.loadComplete();
+        }
+        refreshController.refreshCompleted();
+        notifyListeners();
+      }
+      return data;
+    } catch (e, s) {
+      currentPageNum--;
       refreshController.loadFailed();
       debugPrint('error--->\n' + e.toString());
       debugPrint('statck--->\n' + s.toString());

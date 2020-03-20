@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
 import 'package:flutter_qyyim/common/provider/view_state_refresh_list_model.dart';
 import 'package:flutter_qyyim/mock/chat_mock.dart';
@@ -11,9 +12,9 @@ class ChatViewModel extends ViewStateRefreshListModel<ChatData> {
 
   /// 初始化聊天数据
   @override
-  Future<List<ChatData>> loadData({int pageNum}) {
-    //
-    return DbUtils.getInstance().queryItems(ChatData());
+  Future<List<ChatData>> loadData({int pageNum}) async {
+    //debugPrint('查询到的结果数量**************${queryItemsLimit.length}---$currentPageNum');
+    return DbUtils.getInstance().queryItemsLimit(ChatData(),limit: pageSize,offset: (currentPageNum - 1) * pageSize,orderBy: "id Desc");
   }
 
   /// 发送消息
@@ -41,14 +42,4 @@ class ChatViewModel extends ViewStateRefreshListModel<ChatData> {
     setIdle();
   }
 
-
-/*Future getChatMsgData() async {
-    final str = await ChatDataRep().repData(widget.id, widget.type);
-    List<ChatData> listChat = str;
-    chatData.clear();
-    chatData..addAll(listChat.reversed);
-
-    // 异步函数setState()导致内存泄漏的错误。
-    if (mounted) setState(() {});
-  }*/
 }
