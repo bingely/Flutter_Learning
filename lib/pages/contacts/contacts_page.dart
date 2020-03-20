@@ -2,11 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
+import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
 import 'package:flutter_qyyim/tool/win_media.dart';
 import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/config/dictionary.dart';
 import 'package:flutter_qyyim/ui/null_view.dart';
+import 'package:flutter_qyyim/view_model/contact_view_model.dart';
 
 import 'contact_item.dart';
 import 'contact_view.dart';
@@ -46,17 +48,26 @@ class _ContactsPageState extends State<ContactsPage>
   @override
   void initState() {
     super.initState();
-    getContacts();
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    sC = new ScrollController();
 
     List<Widget> body = [
       /// 联系人视图
-      new ContactView(
-          sC: sC, functionButtons: _functionButtons, contacts: _contacts),
+      ProviderWidget<ContactViewModel>(
+          model:ContactViewModel(),
+        onModelReady: (modlue) {
+          modlue.getContacts(_functionButtons, _contacts, _letterPosMap);
+        },
+        builder: (context, modlue, widget) {
+          _contacts = modlue.contacts;
+          return new ContactView(
+              sC: sC, functionButtons: _functionButtons, contacts: _contacts);
+        },
+      ),
 
       /// 右侧的字母视图
       new Positioned(
@@ -147,31 +158,6 @@ class _ContactsPageState extends State<ContactsPage>
       onVerticalDragUpdate: (DragUpdateDetails details) => jumpTo(details),
       child: new Column(children: _letters),
     );
-  }
-
-  Future getContacts() async {
-    List<Contact> listContact = await ContactsPageData().listFriend();
-
-    _contacts.clear();
-    _contacts..addAll(listContact);
-    _contacts
-        .sort((Contact a, Contact b) => a.nameIndex.compareTo(b.nameIndex));
-    sC = new ScrollController();
-
-    /// 计算用于 IndexBar 进行定位的关键通讯录列表项的位置
-    var _totalPos =
-        _functionButtons.length * ContactItemState.heightItem(false);
-    for (int i = 0; i < _contacts.length; i++) {
-      bool _hasGroupTitle = true;
-      if (i > 0 &&
-          _contacts[i].nameIndex.compareTo(_contacts[i - 1].nameIndex) == 0)
-        _hasGroupTitle = false;
-
-      if (_hasGroupTitle) _letterPosMap[_contacts[i].nameIndex] = _totalPos;
-
-      _totalPos += ContactItemState.heightItem(_hasGroupTitle);
-    }
-    if (mounted) setState(() {});
   }
 
   @override
