@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_orm_plugin/flutter_orm_plugin.dart';
 import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
 import 'package:flutter_qyyim/common/db/student_dao.dart';
+import 'package:flutter_qyyim/common/db/test_dao.dart';
 import 'package:flutter_qyyim/pages/chat/model/chat_data.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -91,11 +92,16 @@ class _FileDataPageState extends State<FileDataPage> {
               DbUtils.getInstance().insertItem(student3);
               DbUtils.getInstance().insertItem(stdent3);
 
-              DbUtils.getInstance().insertItem(ChatData(msg:json1,nickName: "bingley",id: '11'));
+              DbUtils.getInstance().insertItem(ChatData(msg:json1,nickName: "fffffffffffff",id: '13'));
 
 
-              Map m = {"name":"william", "class":"class1", "score":96.5};
-              FlutterOrmPlugin.saveOrm("Student1", m);
+              var testd = TestDao(id: '1232', name: '张三1', score: 90);
+              DbUtils.getInstance().insertItem(testd);
+
+
+
+              //Map m = {"name":"william", "class":"class1", "score":96.5};
+              //FlutterOrmPlugin.saveOrm("Student1", m);
 
             },
             child: Text("写"),
@@ -104,7 +110,7 @@ class _FileDataPageState extends State<FileDataPage> {
             onPressed: () {
               // 读取出数据库中插入的 Student 对象集合
               //students().then((list)=>list.forEach((s)=>print(s.name)));
-             /* DbUtils.getInstance().queryItems(StudentDao())
+              /*DbUtils.getInstance().queryItems(StudentDao())
               .then((list)=>list.forEach((StudentDao student){
                 print(student.name);
               }));*/
@@ -114,10 +120,15 @@ class _FileDataPageState extends State<FileDataPage> {
                 print(student.nickName);
               }));
 
+              DbUtils.getInstance().queryItems(TestDao())
+                  .then((list)=>list.forEach((TestDao student){
+                print(student.name);
+              }));
 
-              Query("Student1").all().then((List l) {
+
+             /* Query("Student1").all().then((List l) {
                 print(l[0]['name']);
-              });
+              });*/
 
             },
             child: Text("读"),

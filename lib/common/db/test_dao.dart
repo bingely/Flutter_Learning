@@ -1,7 +1,6 @@
 import 'package:flutter_qyyim/common/db/solution1/db_base_bean.dart';
-import 'package:flutter_qyyim/testdemo/bean/teacher.dart';
 
-class StudentDao extends DbBaseBean {
+class TestDao extends DbBaseBean {
   String id;
   String name;
   int score;
@@ -9,7 +8,7 @@ class StudentDao extends DbBaseBean {
   // 增加 teacher 属性
   //Teacher teacher;
 
-  StudentDao({this.id, this.name, this.score});
+  TestDao({this.id, this.name, this.score});
 
   // 将类对象转换成 JSON 字典，方便插入数据库
   Map<String, dynamic> toJson() {
@@ -25,8 +24,8 @@ class StudentDao extends DbBaseBean {
 
 
   @override
-  StudentDao fromJson(Map<String, dynamic> parsedJson) {
-    return StudentDao(
+  TestDao fromJson(Map<String, dynamic> parsedJson) {
+    return TestDao(
       name: parsedJson['name'],
       id: parsedJson['id'],
       score: parsedJson['score'],
@@ -37,7 +36,7 @@ class StudentDao extends DbBaseBean {
 
   @override
   String getTableName() {
-    return "Student";
+    return "TestDao";
   }
 //  factory Student.fromJson(Map<String, dynamic> map) {
 //    return new Student(

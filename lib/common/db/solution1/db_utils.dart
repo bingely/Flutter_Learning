@@ -20,7 +20,7 @@ class DbUtils {
   Database database;
 
   // 数据库版本
-  int dbVersion = 1;
+  int dbVersion = 8;
 
   static DbUtils dbUtils;
 

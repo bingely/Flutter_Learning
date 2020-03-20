@@ -1,50 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/db/solution1/db_base_bean.dart';
 
-class ChatData extends DbBaseBean{
-  final String msg;
-  final String id;
- // final int time;
-  final String nickName;
- // final String avatar;
+class ChatData extends DbBaseBean {
+  String id;
+  String msg;
+  String nickName;
 
 
+  ChatData({this.id, this.msg, this.nickName});
 
-  ChatData({
-    @required this.msg,
-  //  this.avatar,
-   // this.time,
-    this.nickName,
-    this.id,
-  });
+  // 将类对象转换成 JSON 字典，方便插入数据库
+  Map<String, dynamic> toJson() {
+    return {
+      'id': this.id,
+      'msg': this.msg,
+      'nickName': this.nickName,
+      // 'teacher': this.teacher,
+    };
+  }
+
 
   @override
-  DbBaseBean fromJson(Map<String, dynamic> map) {
-    new ChatData(
-      msg: map['msg'] as String,
-      id: map['id'] as String,
-    //  time: map['time'] as int,
-      nickName: map['nickName'] as String,
-    //  avatar: map['avatar'] as String,
+  ChatData fromJson(Map<String, dynamic> parsedJson) {
+    return ChatData(
+      msg: parsedJson['msg'],
+      id: parsedJson['id'],
+      nickName: parsedJson['nickName'],
+      // 增加映射规则
+      // teacher: Teacher.fromJson(parsedJson ['teacher'])
     );
   }
 
   @override
   String getTableName() {
-    return "ChatData2";
+    return "MessageData";
   }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      'msg': this.msg,
-      'id': this.id,
-     // 'time': this.time,
-      'nickName': this.nickName,
-     // 'avatar': this.avatar,
-    };
-  }
-
 
 }
-
