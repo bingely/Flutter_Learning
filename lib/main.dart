@@ -62,7 +62,8 @@ class App extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate
               ],
               supportedLocales: S.delegate.supportedLocales,
-              debugShowCheckedModeBanner: true,
+              /// 是否显示debug标志
+              debugShowCheckedModeBanner: false,
               /// 路由管理注入
               onGenerateRoute: Router.generateRoute,
               initialRoute: RouteName.app,//RouterTestRoute

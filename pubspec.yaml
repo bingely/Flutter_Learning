@@ -17,7 +17,7 @@ dependencies:
   # iOS style icons
   cupertino_icons: ^0.1.2
   toast: any
-  cached_network_image: any
+  cached_network_image: ^2.0.0-rc
   pull_to_refresh: ^1.5.6
   flutter_swiper: ^1.1.4
   #富文本

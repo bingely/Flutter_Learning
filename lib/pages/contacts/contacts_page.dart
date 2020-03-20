@@ -37,7 +37,7 @@ class _ContactsPageState extends State<ContactsPage>
 
   Future getContacts() async {
     final str = await ContactsPageData().listFriend();
-    isNull = await ContactsPageData().contactIsNull();
+    //isNull = await ContactsPageData().contactIsNull();
 
     List<Contact> listContact = str;
     _contacts.clear();

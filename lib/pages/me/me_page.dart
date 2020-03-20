@@ -19,28 +19,76 @@ class MePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("我的")),
-      body: Column(
-        children: <Widget>[HeadView(), BodyView()],
-      ),
+      backgroundColor: Colors.white,
+      body: SafeArea(
+          child: Padding(
+        padding: EdgeInsets.only(top: 10.0),
+        child: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          shrinkWrap: false,
+          slivers: <Widget>[
+            SliverAppBar(
+              backgroundColor: Colors.transparent,
+              flexibleSpace: ImageView(
+                img: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2458696988,2288615185&fm=26&gp=0.jpg',
+              ),
+              expandedHeight: 200.0,
+            ),
+            _divider(),
+            BodyView(),
+            BodyView(),
+            BodyView(),
+            BodyView(),
+            BodyView(),
+            BodyView(),
+            BodyView(),
+            BodyView(),
+            BodyView(),
+            BodyView(),
+            BodyView(),
+            BodyView(),
+            BodyView(),
+            BodyView(),
+            BodyView(),
+            BodyView(),
+            BodyView(),
+            BodyView(),
+            BodyView(),
+            BodyView(),
+            BodyView(),
+            BodyView()
+          ],
+        ),
+      )),
     );
   }
+}
+
+SliverToBoxAdapter _divider() {
+  return SliverToBoxAdapter(
+    child: Container(
+      height: 10.0,
+      color: const Color.fromARGB(255, 247, 247, 247),
+    ),
+  );
 }
 
 class HeadView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        ImageView(
-          img: ImageHelper.wrapAssets("mine/ic_setting.png"),
-          width: 12,
-          isRadius: true,
-        ),
-        Column(
-          children: <Widget>[Text('hello'), Text('微信号')],
-        )
-      ],
+    return SliverToBoxAdapter(
+      child: Row(
+        children: <Widget>[
+          ImageView(
+            img: ImageHelper.wrapAssets("mine/ic_setting.png"),
+            width: 12,
+            isRadius: true,
+          ),
+          Column(
+            children: <Widget>[Text('hello'), Text('微信号')],
+          )
+        ],
+      ),
     );
   }
 }
@@ -48,42 +96,41 @@ class HeadView extends StatelessWidget {
 class BodyView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        // 列表项
-        ListTileView(
-          border: Border(bottom: BorderSide(color: AppColors.lineColor, width: 0.2)),
-          title: '设置',
-          isLabel: false,
-          icon: ImageHelper.wrapAssets("mine/ic_setting.png"),
-          padding: EdgeInsets.symmetric(vertical: 16.0),
-          width: 25.0,
-          fit: BoxFit.cover,
-          onPressed: () {
-
-            NavigatorUtil.push(context, WebView(url: "https://www.baidu.com",));
-          },
-        ),
-        ListTileView(
-          border: Border(bottom: BorderSide(color: AppColors.lineColor, width: 0.2)),
-          title: '退出',
-          isLabel: false,
-          padding: EdgeInsets.symmetric(vertical: 16.0),
-          width: 25.0,
-          fit: BoxFit.cover,
-          onPressed: () {
-            exit(0);
-          },
-        ),
-        LabelRow(
-          label: 'hello',
-          isRight: false,
-          isLine: true,
-          rValue: 'hh',
-          value: 'hhh',
-        ),
-        LabelRow2(text: "hhhh",)
-      ],
+    return SliverToBoxAdapter(
+      child: Column(
+        children: <Widget>[
+          // 列表项
+          ListTileView(
+            border: Border(
+                bottom: BorderSide(color: AppColors.lineColor, width: 0.2)),
+            title: '设置',
+            isLabel: false,
+            icon: ImageHelper.wrapAssets("mine/ic_setting.png"),
+            padding: EdgeInsets.symmetric(vertical: 16.0),
+            width: 25.0,
+            fit: BoxFit.cover,
+            onPressed: () {
+              NavigatorUtil.push(
+                  context,
+                  WebView(
+                    url: "https://www.baidu.com",
+                  ));
+            },
+          ),
+          ListTileView(
+            border: Border(
+                bottom: BorderSide(color: AppColors.lineColor, width: 0.2)),
+            title: '退出',
+            isLabel: false,
+            padding: EdgeInsets.symmetric(vertical: 16.0),
+            width: 25.0,
+            fit: BoxFit.cover,
+            onPressed: () {
+              exit(0);
+            },
+          ),
+        ],
+      ),
     );
   }
 }

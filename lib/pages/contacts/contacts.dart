@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/config/app.dart';
+import 'package:flutter_qyyim/mock/contacts_mock.dart';
 import 'package:flutter_qyyim/tool/check.dart';
 import 'package:flutter_qyyim/common/pinyin/pinyin_helper.dart';
 import 'package:flutter_qyyim/config/keys.dart';
@@ -18,25 +19,31 @@ class Contact {
     @required this.avatar,
     @required this.name,
     @required this.nameIndex,
-    @required this.identifier,
+    this.identifier,
   });
 
   final String avatar;
   final String name;
-  final String nameIndex;
-  final String identifier;
+  final String nameIndex; // 名字首字母所在的index
+  final String identifier; // 唯一标识
 }
 
 class ContactsPageData {
+  // 如何读取资源文件的json
+
   Future<bool> contactIsNull() async {
     final user = await SharedUtil.instance.getString(Keys.account);
     final result = await getContactsFriends(user);
     List<dynamic> data = json.decode(result);
-    return !listNoEmpty(data);
+    return true;
   }
 
   listFriend() async {
     List<Contact> contacts = new List<Contact>();
+
+    contacts.addAll(mock_contacts);
+    return contacts;
+
     String avatar;
     String nickName;
     String identifier;
@@ -47,7 +54,6 @@ class ContactsPageData {
     final result = await getContactsFriends(user);
 
     getMethod(result) async {
-
       List<dynamic> dataMap = json.decode(result);
       int dLength = dataMap.length;
       for (int i = 0; i < dLength; i++) {
@@ -90,7 +96,6 @@ class ContactsPageData {
       return contacts;
     }
 
-
     if (strNoEmpty(contactsData) || contactsData != '[]') {
       if (result != contactsData) {
         await SharedUtil.instance.saveString(Keys.contacts, result);
@@ -105,10 +110,6 @@ class ContactsPageData {
   }
 }
 
-getContactsFriends(String user) {
+getContactsFriends(String user) {}
 
-}
-
-Future<dynamic> getRemarkMethod(String id, {Callback callback}) async {
-
-}
+Future<dynamic> getRemarkMethod(String id, {Callback callback}) async {}

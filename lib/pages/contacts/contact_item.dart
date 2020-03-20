@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/config/router_manger.dart';
+import 'package:flutter_qyyim/pages/chat/chat_page.dart';
+import 'package:flutter_qyyim/tool/navigator_util.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
 import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/ui/image_view.dart';
 
 import 'contact_view.dart';
-
 
 typedef OnAdd = void Function(String v);
 typedef OnCancel = void Function(String v);
@@ -150,6 +152,8 @@ class ContactItemState extends State<ContactItem> {
               id: widget.identifier,
               avatar: widget.avatar,
               title: widget.title));*/
+          NavigatorUtil.pushWithCuperino(
+              context, ChatPage(id: widget.identifier));
         }
       },
       child: new Row(children: content),
