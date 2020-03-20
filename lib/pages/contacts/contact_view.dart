@@ -46,7 +46,7 @@ class ContactView extends StatelessWidget {
             return new ContactItem(
               avatar: _contact.avatar,
               title: _contact.name,
-              identifier: _contact.identifier,
+              identifier: _contact.id,
               groupTitle: _isGroupTitle ? _contact.nameIndex : null,
               isLine: _isBorder,
               type: type,
@@ -64,7 +64,7 @@ class ContactView extends StatelessWidget {
               new ContactItem(
                 avatar: _contact.avatar,
                 title: _contact.name,
-                identifier: _contact.identifier,
+                identifier: _contact.id,
                 groupTitle: _isGroupTitle ? _contact.nameIndex : null,
                 isLine: false,
                 type: type,

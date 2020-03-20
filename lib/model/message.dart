@@ -14,6 +14,8 @@ class Message{
   //消息类型
   MessageType type;
 
-  Message(this.avatar,this.title,this.subTitle,this.time,this.type);
+  String userId;
+
+  Message({this.avatar,this.title,this.subTitle,this.time,this.type,this.userId});
 }
 

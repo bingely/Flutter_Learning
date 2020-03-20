@@ -57,7 +57,6 @@ class DbUtils {
       t.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-
   }
 
   /// 删除数据

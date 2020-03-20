@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/common/db/solution1/db_base_bean.dart';
+import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
 import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/mock/contacts_mock.dart';
 import 'package:flutter_qyyim/tool/check.dart';
@@ -14,102 +16,56 @@ import 'package:flutter_qyyim/tool/shared_util.dart';
 
 import 'i_contact_info_entity.dart';
 
-class Contact {
+class Contact extends DbBaseBean {
   Contact({
+    @required this.id,
     @required this.avatar,
     @required this.name,
     @required this.nameIndex,
-    this.identifier,
   });
 
+  final String id; // 唯一标识
   final String avatar;
   final String name;
   final String nameIndex; // 名字首字母所在的index
-  final String identifier; // 唯一标识
+
+  @override
+  DbBaseBean fromJson(Map<String, dynamic> map) {
+    return new Contact(
+      id: map['id'] as String,
+      avatar: map['avatar'] as String,
+      name: map['name'] as String,
+      nameIndex: map['nameIndex'] as String,
+    );
+  }
+
+  @override
+  String getTableName() {
+    return "Contact";
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'id': this.id,
+      'avatar': this.avatar,
+      'name': this.name,
+      'nameIndex': this.nameIndex,
+    };
+  }
 }
 
 class ContactsPageData {
   // 如何读取资源文件的json
 
-  Future<bool> contactIsNull() async {
-    final user = await SharedUtil.instance.getString(Keys.account);
-    final result = await getContactsFriends(user);
-    List<dynamic> data = json.decode(result);
-    return true;
-  }
-
   listFriend() async {
     List<Contact> contacts = new List<Contact>();
 
     contacts.addAll(mock_contacts);
+
+    contacts.forEach((contact)=>{
+      DbUtils.getInstance().insertItem(contact )
+    });
     return contacts;
-
-    String avatar;
-    String nickName;
-    String identifier;
-    String remark;
-
-    final contactsData = await SharedUtil.instance.getString(Keys.contacts);
-    final user = await SharedUtil.instance.getString(Keys.account);
-    final result = await getContactsFriends(user);
-
-    getMethod(result) async {
-      List<dynamic> dataMap = json.decode(result);
-      int dLength = dataMap.length;
-      for (int i = 0; i < dLength; i++) {
-        if (Platform.isIOS) {
-          IContactInfoEntity model = IContactInfoEntity.fromJson(dataMap[i]);
-          avatar = model.profile.faceURL;
-          identifier = model.identifier;
-          remark = await getRemarkMethod(model.identifier, callback: (_) {});
-          nickName = model.profile.nickname;
-          nickName = !strNoEmpty(nickName) ? model.identifier : nickName;
-          contacts.insert(
-            0,
-            new Contact(
-              avatar: !strNoEmpty(avatar) ? AppConstants.defIcon : avatar,
-              name: !strNoEmpty(remark) ? nickName : remark,
-              nameIndex:
-                  PinyinHelper.getFirstWordPinyin(nickName)[0].toUpperCase(),
-              identifier: identifier,
-            ),
-          );
-        } else {
-          PersonInfoEntity model = PersonInfoEntity.fromJson(dataMap[i]);
-          avatar = model.faceUrl;
-          identifier = model.identifier;
-          remark = await getRemarkMethod(model.identifier, callback: (_) {});
-          nickName = model.nickName;
-          nickName = !strNoEmpty(nickName) ? model.identifier : nickName;
-          contacts.insert(
-            0,
-            new Contact(
-              avatar: !strNoEmpty(avatar) ? AppConstants.defIcon : avatar,
-              name: !strNoEmpty(remark) ? nickName : remark,
-              nameIndex:
-                  PinyinHelper.getFirstWordPinyin(nickName)[0].toUpperCase(),
-              identifier: identifier,
-            ),
-          );
-        }
-      }
-      return contacts;
-    }
-
-    if (strNoEmpty(contactsData) || contactsData != '[]') {
-      if (result != contactsData) {
-        await SharedUtil.instance.saveString(Keys.contacts, result);
-        return await getMethod(result);
-      } else {
-        return await getMethod(contactsData);
-      }
-    } else {
-      await SharedUtil.instance.saveString(Keys.contacts, result);
-      return await getMethod(result);
-    }
   }
 }
-
-getContactsFriends(String user) {}
-
-Future<dynamic> getRemarkMethod(String id, {Callback callback}) async {}

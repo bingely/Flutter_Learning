@@ -2,6 +2,7 @@ import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/config/router_manger.dart';
+import 'package:flutter_qyyim/ui/dialog_utils.dart';
 import 'package:flutter_qyyim/view_model/message_view_model.dart';
 import 'package:flutter_qyyim/testdemo/trip/widget/webview.dart';
 import 'package:flutter_qyyim/tool/check.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_qyyim/pages/message/message_item.dart';
 import 'package:flutter_qyyim/ui/pop/w_popup_menu.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 final List actions = [
   {"title": 'trip', 'icon': 'assets/images/contacts_add_newmessage.png'},
@@ -79,7 +81,31 @@ class MessagePageState extends State<MessagePage>
                 //构造列表项
                 itemBuilder: (BuildContext context, int index) {
                   //传入messageData返回列表项
-                  return MessageItem(model.list[index]);
+                  return Slidable(
+                    actionPane: SlidableScrollActionPane(),
+                    //滑出选项的面板 动画
+                    actionExtentRatio: 0.25,
+                    child: MessageItem(model.list[index]),
+                    secondaryActions: <Widget>[
+                      IconSlideAction(
+                        caption: '标志已读',
+                        color: Colors.black45,
+                        icon: Icons.more_horiz,
+                        onTap: () => {
+                          DialogUtils.showAlert(context,"fdsf",dialogType: 2)
+                        },
+                      ),
+                      IconSlideAction(
+                        caption: '删除',
+                        color: Colors.red,
+                        icon: Icons.delete,
+                        closeOnTap: false,
+                        onTap: () {
+                          DialogUtils.showLoadingDialog(context);
+                        },
+                      ),
+                    ],
+                  );
                 }),
           );
         },

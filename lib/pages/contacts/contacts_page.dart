@@ -1,7 +1,7 @@
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
 import 'package:flutter_qyyim/tool/win_media.dart';
 import 'package:flutter_qyyim/config/app.dart';
@@ -12,6 +12,7 @@ import 'contact_item.dart';
 import 'contact_view.dart';
 import 'contacts.dart';
 
+/// 联系人
 class ContactsPage extends StatefulWidget {
   _ContactsPageState createState() => _ContactsPageState();
 }
@@ -28,48 +29,78 @@ class _ContactsPageState extends State<ContactsPage>
 
   List<ContactItem> _functionButtons = [
     new ContactItem(
-        avatar: AppConstants.contactAssets + 'ic_new_friend.webp', title: '新的朋友'),
-    new ContactItem(avatar: AppConstants.contactAssets + 'ic_group.webp', title: '群聊'),
-    new ContactItem(avatar: AppConstants.contactAssets + 'ic_tag.webp', title: '标签'),
-    new ContactItem(avatar: AppConstants.contactAssets + 'ic_no_public.webp', title: '公众号'),
+        avatar: AppConstants.contactAssets + 'ic_new_friend.webp',
+        title: '新的朋友'),
+    new ContactItem(
+        avatar: AppConstants.contactAssets + 'ic_group.webp', title: '群聊'),
+    new ContactItem(
+        avatar: AppConstants.contactAssets + 'ic_tag.webp', title: '标签'),
+    new ContactItem(
+        avatar: AppConstants.contactAssets + 'ic_no_public.webp', title: '公众号'),
   ];
   final Map _letterPosMap = {INDEX_BAR_WORDS[0]: 0.0};
-
-  Future getContacts() async {
-    final str = await ContactsPageData().listFriend();
-    //isNull = await ContactsPageData().contactIsNull();
-
-    List<Contact> listContact = str;
-    _contacts.clear();
-    _contacts..addAll(listContact);
-    _contacts
-        .sort((Contact a, Contact b) => a.nameIndex.compareTo(b.nameIndex));
-    sC = new ScrollController();
-
-    /// 计算用于 IndexBar 进行定位的关键通讯录列表项的位置
-    var _totalPos =
-        _functionButtons.length * ContactItemState.heightItem(false);
-    for (int i = 0; i < _contacts.length; i++) {
-      bool _hasGroupTitle = true;
-      if (i > 0 &&
-          _contacts[i].nameIndex.compareTo(_contacts[i - 1].nameIndex) == 0)
-        _hasGroupTitle = false;
-
-      if (_hasGroupTitle) _letterPosMap[_contacts[i].nameIndex] = _totalPos;
-
-      _totalPos += ContactItemState.heightItem(_hasGroupTitle);
-    }
-    if (mounted) setState(() {});
-  }
 
   @override
   bool get wantKeepAlive => true;
 
   @override
-  void dispose() {
-    super.dispose();
-    if (sC != null) sC.dispose();
-    canCelListener();
+  void initState() {
+    super.initState();
+    getContacts();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+
+    List<Widget> body = [
+      /// 联系人视图
+      new ContactView(
+          sC: sC, functionButtons: _functionButtons, contacts: _contacts),
+
+      /// 右侧的字母视图
+      new Positioned(
+        width: AppConstants.IndexBarWidth,
+        right: 0.0,
+        top: 120.0,
+        bottom: 120.0,
+        child: new Container(
+          color: indexBarBg,
+          child: new LayoutBuilder(builder: _buildIndexBar),
+        ),
+      ),
+    ];
+
+    if (isNull) body.add(new HomeNullView(str: '无联系人'));
+
+    /// 点击字母视图，浮起的弹框
+    if (currentLetter != null && currentLetter.isNotEmpty) {
+      var row = [
+        new Container(
+            width: AppConstants.IndexLetterBoxSize,
+            height: AppConstants.IndexLetterBoxSize,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: AppColors.IndexLetterBoxBg,
+              borderRadius: BorderRadius.all(
+                  Radius.circular(AppConstants.IndexLetterBoxSize / 2)),
+            ),
+            child: new Text(currentLetter,
+                style: AppStyles.IndexLetterBoxTextStyle)),
+        new Icon(Icons.arrow_right),
+        new Space(width: AppConstants.mainSpace * 5),
+      ];
+      body.add(
+        new Container(
+          width: winWidth(context),
+          height: winHeight(context),
+          child:
+              new Row(mainAxisAlignment: MainAxisAlignment.end, children: row),
+        ),
+      );
+    }
+    return new Scaffold(
+        appBar: AppBar(title: Text("联系人")), body: new Stack(children: body));
   }
 
   String _getLetter(BuildContext context, double tileHeight, Offset globalPos) {
@@ -118,73 +149,35 @@ class _ContactsPageState extends State<ContactsPage>
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    getContacts();
-    ///initPlatformState();
-  }
+  Future getContacts() async {
+    List<Contact> listContact = await ContactsPageData().listFriend();
 
-  void canCelListener() {
-    if (_messageStreamSubscription != null) _messageStreamSubscription.cancel();
-  }
+    _contacts.clear();
+    _contacts..addAll(listContact);
+    _contacts
+        .sort((Contact a, Contact b) => a.nameIndex.compareTo(b.nameIndex));
+    sC = new ScrollController();
 
-  Future<void> initPlatformState() async {
-    /*if (!mounted) return;
-    if (_messageStreamSubscription == null) {
-      _messageStreamSubscription =
-          im.onMessage.listen((dynamic onData) => getContacts());
-    }*/
-  }
+    /// 计算用于 IndexBar 进行定位的关键通讯录列表项的位置
+    var _totalPos =
+        _functionButtons.length * ContactItemState.heightItem(false);
+    for (int i = 0; i < _contacts.length; i++) {
+      bool _hasGroupTitle = true;
+      if (i > 0 &&
+          _contacts[i].nameIndex.compareTo(_contacts[i - 1].nameIndex) == 0)
+        _hasGroupTitle = false;
 
-  @override
-  Widget build(BuildContext context) {
-    super.build(context);
+      if (_hasGroupTitle) _letterPosMap[_contacts[i].nameIndex] = _totalPos;
 
-    List<Widget> body = [
-      new ContactView(
-          sC: sC, functionButtons: _functionButtons, contacts: _contacts),
-      new Positioned(
-        width: AppConstants.IndexBarWidth,
-        right: 0.0,
-        top: 120.0,
-        bottom: 120.0,
-        child: new Container(
-          color: indexBarBg,
-          child: new LayoutBuilder(builder: _buildIndexBar),
-        ),
-      ),
-    ];
-
-    if (isNull) body.add(new HomeNullView(str: '无联系人'));
-
-    if (currentLetter != null && currentLetter.isNotEmpty) {
-      var row = [
-        new Container(
-            width: AppConstants.IndexLetterBoxSize,
-            height: AppConstants.IndexLetterBoxSize,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: AppColors.IndexLetterBoxBg,
-              borderRadius: BorderRadius.all(
-                  Radius.circular(AppConstants.IndexLetterBoxSize / 2)),
-            ),
-            child: new Text(currentLetter,
-                style: AppStyles.IndexLetterBoxTextStyle)),
-        new Icon(Icons.arrow_right),
-        new Space(width: AppConstants.mainSpace * 5),
-      ];
-      body.add(
-        new Container(
-          width: winWidth(context),
-          height: winHeight(context),
-          child:
-              new Row(mainAxisAlignment: MainAxisAlignment.end, children: row),
-        ),
-      );
+      _totalPos += ContactItemState.heightItem(_hasGroupTitle);
     }
-    return new Scaffold(
-        appBar: AppBar(title: Text("联系人")),
-        body: new Stack(children: body));
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (sC != null) sC.dispose();
+    if (_messageStreamSubscription != null) _messageStreamSubscription.cancel();
   }
 }

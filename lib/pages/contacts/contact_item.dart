@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/config/router_manger.dart';
+import 'package:flutter_qyyim/model/message.dart';
 import 'package:flutter_qyyim/pages/chat/chat_page.dart';
 import 'package:flutter_qyyim/tool/navigator_util.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
@@ -153,7 +154,7 @@ class ContactItemState extends State<ContactItem> {
               avatar: widget.avatar,
               title: widget.title));*/
           NavigatorUtil.pushWithCuperino(
-              context, ChatPage(id: widget.identifier));
+              context, ChatPage(message: Message(title:'${widget.title}',userId: '${widget.identifier}')));
         }
       },
       child: new Row(children: content),

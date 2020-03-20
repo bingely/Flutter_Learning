@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:extended_text_field/extended_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
 import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/model/message.dart';
+import 'package:flutter_qyyim/pages/contacts/contacts.dart';
 import 'package:flutter_qyyim/pages/qr/qr_page.dart';
 import 'package:flutter_qyyim/tool/navigator_util.dart';
 import 'package:flutter_qyyim/tool/win_media.dart';
@@ -64,7 +66,7 @@ class ChatePageState extends State<ChatPage> {
   ChatViewModel chatViewModle;
 
   @override
-  void initState() {
+  Future<void> initState()  {
     super.initState();
     _sC.addListener(() => FocusScope.of(context).requestFocus(new FocusNode()));
     Timer(Duration(milliseconds: 1000), () => _sC.jumpTo(_sC.position.maxScrollExtent));

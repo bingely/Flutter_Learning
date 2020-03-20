@@ -12,6 +12,37 @@
 
 还需要定制扫描二维码布局
 
+
+https://kdocs.cn/el/e42fvap?f=501
+邀请你一起编辑「3月考勤.xlsx」
+
+# 3/20
+@override
+  DbBaseBean fromJson(Map<String, dynamic> map) {
+     new ChatData(
+      msg: map['msg'] as String,
+      id: map['id'] as String,
+      time: map['time'] as int,
+      nickName: map['nickName'] as String,
+      avatar: map['avatar'] as String,
+    );
+  }
+
+昨晚因为这个语句纠结了很久，报错提示没生成该对象。
+ide不报错，但是有预警，所以预警信息也很重要。
+
+今日完成：
+1 加入联系人列表模拟数据
+2 调节聊天页面细节数据处理问题
+
+下周一准备完成：
+1 调整聊天页面滑动（交互）细节处理,
+2 解决部分开源插件兼容问题
+3 编写多选的图片相册组件
+
+
+
+
 # 3/19
 今日完成：
 1 聊天数据缓存，模拟简单离线消息场景。

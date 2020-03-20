@@ -42,4 +42,9 @@ class ChatViewModel extends ViewStateRefreshListModel<ChatData> {
     setIdle();
   }
 
+
+/* DbUtils.getInstance().queryItems(Contact(),key: 'id',value: '${widget.id}');
+if (contacts != null) {
+      print("result=====》${contacts[0].name}");
+    }*/
 }
