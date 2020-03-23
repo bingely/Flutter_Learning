@@ -36,6 +36,7 @@ class ChatDetailsBody extends StatelessWidget {
             padding: EdgeInsets.all(8.0),
             reverse: false,
             itemBuilder: (context, int index) {
+              chatViewModel.list.sort((a,b)=>(a.id).compareTo(b.id));
               ChatData model = chatViewModel.list[index];
               return new SendMessageView(model);
             },

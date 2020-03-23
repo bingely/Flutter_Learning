@@ -8,7 +8,7 @@ import 'package:flutter_qyyim/model/message.dart';
 import 'package:flutter_qyyim/pages/contacts/contacts.dart';
 import 'package:flutter_qyyim/pages/qr/qr_page.dart';
 import 'package:flutter_qyyim/tool/navigator_util.dart';
-import 'package:flutter_qyyim/tool/win_media.dart';
+import 'package:flutter_qyyim/tool/device_utils.dart';
 
 import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/pages/chat/camarademo/camera_screen.dart';
@@ -72,6 +72,8 @@ class ChatePageState extends State<ChatPage> {
     Timer(Duration(milliseconds: 1000), () => _sC.jumpTo(_sC.position.maxScrollExtent));
 
     subscription = eventBus.on<MsgEvent>().listen((event) {
+     // _sC.jumpTo(_sC.position.maxScrollExtent);
+
       _textController.clear();
       // 更新 msg
       chatViewModle.sendMgs(event);
@@ -147,7 +149,7 @@ class ChatePageState extends State<ChatPage> {
               new Container(
                 height:
                 (_isMore || _isEmoj) && !_focusNode.hasFocus ? keyboardHeight : 0.0,
-                width: winWidth(context),
+                width: DeviceUtils.winWidth(context),
                 color: Color(AppColors.ChatBoxBg),
                 child: _isEmoj
                     ? buildEmojiGird()

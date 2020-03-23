@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
-import 'package:flutter_qyyim/tool/win_media.dart';
+import 'package:flutter_qyyim/tool/device_utils.dart';
 import 'package:flutter_qyyim/ui/image_view.dart';
 
 
@@ -72,7 +72,7 @@ class ListTileView extends StatelessWidget {
               new ImageView(img: icon, width: width, fit: fit),
         ),
         new Container(
-          width: winWidth(context) - 60,
+          width: DeviceUtils.winWidth(context) - 60,
           padding: padding,
           decoration: BoxDecoration(border: border),
           child: new Row(children: view),

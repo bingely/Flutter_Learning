@@ -1,6 +1,5 @@
 import 'package:date_format/date_format.dart';
 
-
 /// https://blog.csdn.net/ruoshui_t/article/details/93072017
 //命名构造，获取当前时间
 //millisecondsSinceEpoch
@@ -57,7 +56,6 @@ import 'package:date_format/date_format.dart';
 //返回星期几
 //————————————————
 
-
 class DateUtils {
   static String full = "yyyy-MM-dd HH:mm:ss";
 
@@ -97,7 +95,6 @@ class DateUtils {
     return format;
   }
 
-
   /// 时间格式化
   //// formatDate(message.time, [HH, ':', nn, ':', 'ss'])
   static String formateTime(DateTime dateTime, {List<String> format}) {
@@ -105,16 +102,25 @@ class DateUtils {
   }
 
   /// 获取当前时间戳
-  static int getCurrentStamp(){
+  static int getCurrentStamp() {
     return DateTime.now().millisecondsSinceEpoch;
   }
 
   /// 将时间戳转换为时间
-  static DateTime stampToDate(int millisecondsSinceEpoch){
+  static DateTime stampToDate(int millisecondsSinceEpoch) {
     return DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);
+  }
+
+  static List<String> fomateHHNNSS = [HH, ':', nn, ':', 'ss'];
+  static List<String> fomateYYMMDDHHNNSS = [yyyy,'年',mm,'月',dd,'日',HH, ':', nn, ':', 'ss'];
+
+
+  static String stampToDateStr(int millisecondsSinceEpoch,
+      {List<String> format}) {
+    return formateTime(stampToDate(millisecondsSinceEpoch), format: format);
   }
 
   /// //拼接成date  DateTime(2019, 6, 20, 17, 30,20)
   /// // 字符串转date  DateTime.parse("2019-06-20 15:32:41");
-/// // 时间比较
+  /// // 时间比较
 }

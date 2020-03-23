@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
-import 'package:flutter_qyyim/tool/win_media.dart';
+import 'package:flutter_qyyim/tool/device_utils.dart';
 
 
 
@@ -20,7 +20,7 @@ class MoreItemCard extends StatelessWidget {
 
     return new Container(
       padding: EdgeInsets.only(top: _top, bottom: 5.0),
-      width: (winWidth(context) - 70) / 4,
+      width: (DeviceUtils.winWidth(context) - 70) / 4,
       child: new Column(
         children: <Widget>[
           new Container(

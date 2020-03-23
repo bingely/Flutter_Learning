@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_qyyim/tool/win_media.dart';
+import 'package:flutter_qyyim/tool/device_utils.dart';
 import 'package:flutter_qyyim/pages/chat/event/MsgEvent.dart';
 import 'package:flutter_qyyim/testdemo/cross_data/custom_event.dart';
 import 'package:flutter_qyyim/testdemo/cross_data/event_bus.dart';
@@ -164,7 +164,7 @@ class _ChatVoiceWidgetState extends State<ChatVoice> {
       child: new Container(
         height: 50.0,
         alignment: Alignment.center,
-        width: winWidth(context),
+        width: DeviceUtils.winWidth(context),
         color: Colors.white,
         child: Text(textShow),
       ),

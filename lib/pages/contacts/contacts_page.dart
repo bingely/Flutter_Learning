@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
 import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
-import 'package:flutter_qyyim/tool/win_media.dart';
+import 'package:flutter_qyyim/tool/device_utils.dart';
 import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/config/dictionary.dart';
 import 'package:flutter_qyyim/ui/null_view.dart';
@@ -103,8 +103,8 @@ class _ContactsPageState extends State<ContactsPage>
       ];
       body.add(
         new Container(
-          width: winWidth(context),
-          height: winHeight(context),
+          width: DeviceUtils.winWidth(context),
+          height: DeviceUtils.winHeight(context),
           child:
               new Row(mainAxisAlignment: MainAxisAlignment.end, children: row),
         ),

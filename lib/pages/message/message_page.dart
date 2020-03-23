@@ -8,7 +8,7 @@ import 'package:flutter_qyyim/testdemo/trip/widget/webview.dart';
 import 'package:flutter_qyyim/tool/check.dart';
 import 'package:flutter_qyyim/tool/navigator_util.dart';
 import 'package:flutter_qyyim/tool/toast_util.dart';
-import 'package:flutter_qyyim/tool/win_media.dart';
+import 'package:flutter_qyyim/tool/device_utils.dart';
 import 'package:flutter_qyyim/pages/message/message_item.dart';
 import 'package:flutter_qyyim/ui/pop/w_popup_menu.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -49,7 +49,7 @@ class MessagePageState extends State<MessagePage>
             ),
           ),
           new WPopupMenu(
-            menuWidth: winWidth(context) / 2.5,
+            menuWidth: DeviceUtils.winWidth(context) / 2.5,
             alignment: Alignment.center,
             onValueChanged: (String value) {
               if (!strNoEmpty(value)) return;
