@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
+import 'package:flutter_qyyim/tool/log_utils.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,5 +24,8 @@ class StorageManager {
     temporaryDirectory = await getTemporaryDirectory();
 
     DbUtils.getInstance().openDb("qqyim");
+
+    LogUtil.init();
+
   }
 }

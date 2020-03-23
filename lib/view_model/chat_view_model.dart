@@ -10,6 +10,8 @@ import 'package:flutter_qyyim/tool/date_utils.dart';
 
 class ChatViewModel extends ViewStateRefreshListModel<ChatData> {
 
+  bool isBottom = false;
+
   /// 初始化聊天数据
   @override
   Future<List<ChatData>> loadData({int pageNum}) async {
@@ -19,6 +21,8 @@ class ChatViewModel extends ViewStateRefreshListModel<ChatData> {
       debugPrint(DateUtils.stampToDateStr(int.parse(chatdata.id),
           format: DateUtils.fomateYYMMDDHHNNSS));
     });
+    isBottom = false;
+
     return DbUtils.getInstance().queryItemsLimit(ChatData(),limit: pageSize,offset: (currentPageNum - 1) * pageSize,orderBy: "id Desc");
   }
 
@@ -44,7 +48,10 @@ class ChatViewModel extends ViewStateRefreshListModel<ChatData> {
     list.add(chatData);
     DbUtils.getInstance().insertItem(chatData);
 
+    isBottom = true;
     setIdle();
+
+
   }
 
 

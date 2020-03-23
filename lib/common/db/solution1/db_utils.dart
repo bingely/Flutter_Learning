@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_qyyim/tool/log_utils.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
@@ -111,7 +112,7 @@ class DbUtils {
 
     // map转换为List集合
     return List.generate(maps.length, (i) {
-      log("queryItems：${maps[i]}");
+      LogUtil.d("queryItems：${maps[i]}");
       return t.fromJson(maps[i]);
     });
   }
