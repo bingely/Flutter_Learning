@@ -7,6 +7,7 @@ import 'package:flutter_qyyim/pages/chat/event/MsgEvent.dart';
 import 'package:flutter_qyyim/testdemo/cross_data/custom_event.dart';
 import 'package:flutter_qyyim/testdemo/cross_data/event_bus.dart';
 import 'package:flutter_qyyim/tool/date_utils.dart';
+import 'package:flutter_qyyim/tool/log_utils.dart';
 import 'package:flutter_qyyim/ui/message_view/voice_dialog.dart';
 import 'package:flutter_qyyim/tool/show_toast.dart';
 import 'package:flutter_sound/flutter_sound.dart';
@@ -54,17 +55,19 @@ class _ChatVoiceWidgetState extends State<ChatVoice> {
   }
 
   void start() async {
-    print('开始拉。当前路径');
+    LogUtil.d('开始录音---》');
     try {
+      var currentStamp = DateUtils.getCurrentStamp();
       String path = await flutterSound
-          .startRecorder(Platform.isIOS ? 'ios.m4a' : 'android.mp4'); // android.mp4
-      print('startRecorder-----$path');
+          .startRecorder(Platform.isIOS ? '${currentStamp}ios.m4a' : '${currentStamp}android.mp4'); // android.mp4
+      LogUtil.d('startRecorder录制结果路径-----$path');
       voicepath = path;
       widget.voiceFile(path);
       _recorderSubscription =
           flutterSound.onRecorderStateChanged.listen((e) {});
     } catch (err) {
       RecorderRunningException e = err;
+      LogUtil.d('开始录音异常---》${e.message}');
       showToast(context, 'startRecorder error: ${e.message}');
     }
   }
@@ -72,7 +75,7 @@ class _ChatVoiceWidgetState extends State<ChatVoice> {
   void stop() async {
     try {
       String result = await flutterSound.stopRecorder();
-      print('stopRecorder: $result');
+      LogUtil.d('stopRecorder: $result');
 
       if (_recorderSubscription != null) {
         _recorderSubscription.cancel();
@@ -85,6 +88,7 @@ class _ChatVoiceWidgetState extends State<ChatVoice> {
     } catch (err) {
       RecorderStoppedException e = err;
       showToast(context, 'stopRecorder error: ${e.message}');
+      LogUtil.d('结束录音异常---》${e.message}');
     }
   }
 

@@ -7,6 +7,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/tool/check.dart';
+import 'package:flutter_qyyim/tool/log_utils.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
 import 'package:flutter_qyyim/pages/chat/model/chat_data.dart';
 import 'package:flutter_qyyim/pages/chat/model/i_sound_msg_entity.dart';
@@ -44,6 +45,8 @@ class _SoundMsgState extends State<SoundMsg> with TickerProviderStateMixin {
   double sliderCurrentPosition = 0.0;
   double maxDuration = 1.0;
 
+  String durationStr = "3";
+
   @override
   void initState() {
     super.initState();
@@ -70,22 +73,7 @@ class _SoundMsgState extends State<SoundMsg> with TickerProviderStateMixin {
           controller.forward();
         }
       });
-//
-//    _audioPlayerStateSubscription =
-//        flutterSound.onPlayerStateChanged.listen((s) {
-//      if (s != null) {
-//      } else {
-//        controller.reset();
-//        setState(() {
-//          position = duration;
-//        });
-//      }
-//    }, onError: (msg) {
-//      setState(() {
-//        duration = new Duration(seconds: 0);
-//        position = new Duration(seconds: 0);
-//      });
-//    });
+
   }
 
   void start(String path) async {
@@ -93,7 +81,8 @@ class _SoundMsgState extends State<SoundMsg> with TickerProviderStateMixin {
       controller.forward();
       await flutterSound.startPlayer(path);
       await flutterSound.setVolume(1.0);
-      debugPrint('startPlayer: $path');
+      LogUtil.d('startPlayer: $path');
+
 
       _playerSubscription = flutterSound.onPlayerStateChanged.listen((e) {
         if (e != null) {
@@ -105,11 +94,14 @@ class _SoundMsgState extends State<SoundMsg> with TickerProviderStateMixin {
               isUtc: true);
           String txt = DateFormat('mm:ss:SS', 'en_GB').format(date);
 
-          print(txt.substring(0, 8).toString());
+          LogUtil.d(txt.substring(0, 8).toString());
+          setState(() {
+            durationStr = txt.substring(3, 5).toString();
+          });
         }
       });
     } catch (err) {
-      print('error: $err');
+      LogUtil.d('error: $err');
     }
   }
 
@@ -168,7 +160,7 @@ class _SoundMsgState extends State<SoundMsg> with TickerProviderStateMixin {
             mainAxisAlignment:
                 isSelf ? MainAxisAlignment.end : MainAxisAlignment.start,
             children: [
-              new Text("0\"", textAlign: TextAlign.start, maxLines: 1),
+              new Text("$durationStr\"", textAlign: TextAlign.start, maxLines: 1),
               new Space(width: AppConstants.mainSpace / 2),
               new Image.asset(
                   animation != null
@@ -186,7 +178,8 @@ class _SoundMsgState extends State<SoundMsg> with TickerProviderStateMixin {
               : Colors.white,
           onPressed: () {
             if (strNoEmpty(urls)) {
-              playNew(urls);
+              //playNew(urls);
+              start(urls);
             } else {
               showToast(context, '未知错误');
             }
