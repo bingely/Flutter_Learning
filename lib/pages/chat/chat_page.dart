@@ -128,7 +128,7 @@ class ChatePageState extends State<ChatPage> {
           chatData = modle?.list;
           // 并且不是下拉刷新的 TODO
           if (modle.isBottom) {
-            animaTo();
+          //  animaTo();
           }
           return new MainInputBody(
             onTap: () => setState(() {
@@ -355,11 +355,14 @@ class ChatePageState extends State<ChatPage> {
 
     Timer(Duration(milliseconds: 400), () {
       //_sC.jumpTo(_sC.position.maxScrollExtent);
-      _sC.animateTo(
-        _sC.position.maxScrollExtent,
+      /*_sC.animateTo(
+        0,
         curve: Curves.easeOut,
         duration: const Duration(milliseconds: 300),
-      );
+      );*/
+
+      _sC.jumpTo(0.0);
+
     });
   }
 }

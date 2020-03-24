@@ -16,13 +16,7 @@ class ChatViewModel extends ViewStateRefreshListModel<ChatData> {
   @override
   Future<List<ChatData>> loadData({int pageNum}) async {
     //debugPrint('查询到的结果数量**************${queryItemsLimit.length}---$currentPageNum');
-    List<ChatData> chatadatas = await DbUtils.getInstance().queryItemsLimit(ChatData(),limit: pageSize,offset: (currentPageNum - 1) * pageSize,orderBy: "id Desc");
-    chatadatas.forEach((chatdata){
-      debugPrint(DateUtils.stampToDateStr(int.parse(chatdata.id),
-          format: DateUtils.fomateYYMMDDHHNNSS));
-    });
     isBottom = false;
-
     return DbUtils.getInstance().queryItemsLimit(ChatData(),limit: pageSize,offset: (currentPageNum - 1) * pageSize,orderBy: "id Desc");
   }
 
@@ -45,7 +39,7 @@ class ChatViewModel extends ViewStateRefreshListModel<ChatData> {
     var currentStamp = DateUtils.getCurrentStamp();
     // 模拟存到服务器中，数据库插入
     var chatData = ChatData(msg: sqljson, id: '$currentStamp', nickName: 'bingley',time: currentStamp);
-    list.add(chatData);
+    list.insert(0,chatData);
     DbUtils.getInstance().insertItem(chatData);
 
     isBottom = true;

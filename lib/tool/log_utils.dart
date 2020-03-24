@@ -23,11 +23,9 @@ class LogUtil {
     }
   }
 
+  /// 通过调用log来输出
   static void d(String object, {String tag}) {
-    if (debuggable) {
-      //_printLog(tag, '  v  ', object);
-      log(object);
-    }
+    log(object);
   }
 
   static void _printLog(String tag, String stag, Object object) {

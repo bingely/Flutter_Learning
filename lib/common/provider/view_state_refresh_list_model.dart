@@ -7,7 +7,7 @@ abstract class ViewStateRefreshListModel<T> extends ViewStateListModel<T> {
   static const int pageNumFirst = 1;
 
   /// 分页条目数量
-  int pageSize = 10;
+  int pageSize = 12;
 
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
@@ -92,15 +92,15 @@ abstract class ViewStateRefreshListModel<T> extends ViewStateListModel<T> {
         refreshController.refreshCompleted();
       } else {
         onCompleted(data);
-        //list.addAll(data);
-        list.insertAll(0, data);
+        list.addAll(data);
+        //list.insertAll(0, data);
         if (data.length < pageSize) {
          // refreshController.loadNoData();
         } else {
          // refreshController.loadComplete();
         }
-        refreshController.refreshCompleted();
         notifyListeners();
+        refreshController.refreshCompleted();
       }
       return data;
     } catch (e, s) {
