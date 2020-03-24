@@ -24,6 +24,8 @@ class ChatDetailsBody extends StatelessWidget {
 
     return Expanded(
       child: SmartRefresher(
+        enablePullDown: false,
+        onLoading: chatViewModel.loadMore,
         footer: CustomFooter(
           loadStyle: LoadStyle.ShowAlways,
           builder: (context, mode) {
@@ -41,12 +43,10 @@ class ChatDetailsBody extends StatelessWidget {
           },
         ),
         controller: chatViewModel.refreshController,
-        //onRefresh: chatViewModel.loadMore,
-        onLoading: chatViewModel.loadMore,
         enablePullUp: true,
-        //enablePullDown: false,
         child: Scrollable(
           controller: sC,
+          physics: BouncingScrollPhysics(),
           axisDirection: AxisDirection.up,
           viewportBuilder: (context, offset) {
             return ExpandedViewport(

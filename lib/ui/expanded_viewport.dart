@@ -4,6 +4,7 @@
  * Time:  2019-07-11 12:23
  */
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'dart:math' as math;
@@ -141,7 +142,7 @@ class _RenderExpandedViewport extends RenderViewport {
 
 //tag
 class SliverExpanded extends SingleChildRenderObjectWidget {
-  SliverExpanded() : super(child: Container());
+  SliverExpanded() : super(child: Container(color: Colors.blue,));
 
   @override
   RenderSliver createRenderObject(BuildContext context) {

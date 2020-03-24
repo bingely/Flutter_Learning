@@ -7,7 +7,7 @@ abstract class ViewStateRefreshListModel<T> extends ViewStateListModel<T> {
   static const int pageNumFirst = 1;
 
   /// 分页条目数量
-  int pageSize = 12;
+  int pageSize = 15;
 
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
@@ -82,35 +82,6 @@ abstract class ViewStateRefreshListModel<T> extends ViewStateListModel<T> {
     }
   }
 
-
-  /// 上拉加载更多
-  Future<List<T>> loadMorePageReverse() async {
-    try {
-      var data = await loadData(pageNum: ++currentPageNum);
-      if (data.isEmpty) {
-        currentPageNum--;
-        refreshController.refreshCompleted();
-      } else {
-        onCompleted(data);
-        list.addAll(data);
-        //list.insertAll(0, data);
-        if (data.length < pageSize) {
-         // refreshController.loadNoData();
-        } else {
-         // refreshController.loadComplete();
-        }
-        notifyListeners();
-        refreshController.refreshCompleted();
-      }
-      return data;
-    } catch (e, s) {
-      currentPageNum--;
-      refreshController.loadFailed();
-      debugPrint('error--->\n' + e.toString());
-      debugPrint('statck--->\n' + s.toString());
-      return null;
-    }
-  }
 
   // 加载数据
   Future<List<T>> loadData({int pageNum});

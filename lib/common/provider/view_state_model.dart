@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/provider/view_state.dart';
 import 'package:flutter_qyyim/generated/l10n.dart';
+import 'package:flutter_qyyim/tool/log_utils.dart';
 import 'package:flutter_qyyim/tool/toast_util.dart';
 
 import '../net/not_sucess_exception.dart';
@@ -23,7 +24,7 @@ class ViewStateModel with ChangeNotifier{
   /// FooModel():super(viewState:ViewState.busy);
   ViewStateModel({ViewState viewState})
       : _viewState = viewState ?? ViewState.busy {
-    debugPrint('ViewStateModel---constructor--->$runtimeType');
+    LogUtil.d('ViewStateModel---constructor--->$runtimeType');
   }
 
   /// ViewState

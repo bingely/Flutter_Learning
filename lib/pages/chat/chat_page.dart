@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:extended_text_field/extended_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
 import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/model/message.dart';
@@ -55,7 +57,7 @@ class ChatePageState extends State<ChatPage> {
   bool _isVoice = false;
   bool _isMore = false;
   bool _isEmoj = false;
-  double keyboardHeight = 270.0;
+  double keyboardHeight = 267.0;
 
   TextEditingController _textController = TextEditingController();
   FocusNode _focusNode = new FocusNode();
@@ -70,8 +72,6 @@ class ChatePageState extends State<ChatPage> {
   Future<void> initState() {
     super.initState();
     subscription = eventBus.on<MsgEvent>().listen((event) {
-      // _sC.jumpTo(_sC.position.maxScrollExtent);
-
       _textController.clear();
       // 更新 msg
       chatViewModle.sendMgs(event);
@@ -90,11 +90,7 @@ class ChatePageState extends State<ChatPage> {
 
 
     _textController.addListener(() {
-      /*if (mounted) {
-        setState(() {});
-      }*/
       LogUtil.v('textController.addListener');
-      //animaTo();
     });
   }
 
@@ -106,6 +102,9 @@ class ChatePageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    var keyboardHeightMd = MediaQuery.of(context).viewInsets.bottom;
+    keyboardHeight = max(keyboardHeight, keyboardHeightMd);
+
     var rWidget = [
       new InkWell(
         child: new Image.asset('assets/images/right_more.png'),
@@ -126,12 +125,9 @@ class ChatePageState extends State<ChatPage> {
         },
         builder: (context, modle, widgetcc) {
           chatData = modle?.list;
-          // 并且不是下拉刷新的 TODO
-          if (modle.isBottom) {
-          //  animaTo();
-          }
           return new MainInputBody(
             onTap: () => setState(() {
+              LogUtil.d("MainInputBody--onTap()");
               _isMore = false;
               _isEmoj = false;
             }),
@@ -249,9 +245,10 @@ class ChatePageState extends State<ChatPage> {
   /// 插入表情符到文字中
   void insertEmojText(String text) {
     var value = _textController.value;
+    var text2 = _textController.text;
     var start = value.selection.baseOffset;
-    var end = value.selection.extentOffset;
-    if (value.selection.isValid) {
+    var end = text2.length;
+    if (end>0) {
       String newText = '';
       if (value.selection.isCollapsed) {
         if (end > 0) {
@@ -276,37 +273,44 @@ class ChatePageState extends State<ChatPage> {
           selection:
               TextSelection.fromPosition(TextPosition(offset: text.length)));
     }
+
     setState(() {
+      LogUtil.d('插入表情符到文字中');
     });
   }
 
   /// 切换底部状态
   onTapHandle(ButtonType type) {
-    setState(() {
-      if (type == ButtonType.voice) {
-        _focusNode.unfocus();
-        _isMore = false;
-        _isEmoj = false;
-        _isVoice = !_isVoice;
-      } else if (type == ButtonType.more) {
-        _isVoice = false;
-        _isEmoj = false;
-        if (_focusNode.hasFocus) {
-          _focusNode.unfocus();
-          _isMore = true;
-        } else {
-          _isMore = !_isMore;
-        }
-      } else if (type == ButtonType.emoj) {
-        _isVoice = false;
-        _isMore = false;
-        if (_focusNode.hasFocus) {
-          _focusNode.unfocus();
-          _isEmoj = true;
-        } else {
-          _isEmoj = !_isEmoj;
-        }
-      }
+    LogUtil.d('onTapHandle切换底部状态');
+    SystemChannels.textInput.invokeMethod('TextInput.hide').whenComplete(() {
+      Future.delayed(Duration(milliseconds: 200)).whenComplete(() {
+        setState(() {
+          if (type == ButtonType.voice) {
+            _focusNode.unfocus();
+            _isMore = false;
+            _isEmoj = false;
+            _isVoice = !_isVoice;
+          } else if (type == ButtonType.more) {
+            _isVoice = false;
+            _isEmoj = false;
+            if (_focusNode.hasFocus) {
+              _focusNode.unfocus();
+              _isMore = true;
+            } else {
+              _isMore = !_isMore;
+            }
+          } else if (type == ButtonType.emoj) {
+            _isVoice = false;
+            _isMore = false;
+            if (_focusNode.hasFocus) {
+              _focusNode.unfocus();
+              _isEmoj = true;
+            } else {
+              _isEmoj = !_isEmoj;
+            }
+          }
+        });
+      });
     });
   }
 
@@ -325,7 +329,6 @@ class ChatePageState extends State<ChatPage> {
     return ExtendedTextField(
       specialTextSpanBuilder: MySpecialTextSpanBuilder(showAtBackground: true),
       onTap: () {
-        print('onTap');
         LogUtil.d('ExtendedTextField---onTap');
         animaTo();
         setState(() {});
@@ -347,22 +350,13 @@ class ChatePageState extends State<ChatPage> {
   }
 
   animaTo() {
-   /* _sC.animateTo(
-      _sC.position.maxScrollExtent,
-      curve: Curves.easeOut,
-      duration: const Duration(milliseconds: 300),
-    );*/
-
     Timer(Duration(milliseconds: 400), () {
       //_sC.jumpTo(_sC.position.maxScrollExtent);
-      /*_sC.animateTo(
+      _sC.animateTo(
         0,
         curve: Curves.easeOut,
         duration: const Duration(milliseconds: 300),
-      );*/
-
-      _sC.jumpTo(0.0);
-
+      );
     });
   }
 }

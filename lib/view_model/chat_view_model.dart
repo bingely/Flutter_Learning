@@ -17,6 +17,7 @@ class ChatViewModel extends ViewStateRefreshListModel<ChatData> {
   Future<List<ChatData>> loadData({int pageNum}) async {
     //debugPrint('查询到的结果数量**************${queryItemsLimit.length}---$currentPageNum');
     isBottom = false;
+    //await Future.delayed(Duration(seconds: 1));
     return DbUtils.getInstance().queryItemsLimit(ChatData(),limit: pageSize,offset: (currentPageNum - 1) * pageSize,orderBy: "id Desc");
   }
 
