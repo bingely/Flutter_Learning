@@ -1,7 +1,7 @@
-
-
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
+/// 日志工具类
 class LogUtil {
   static const String _TAG_DEF = "###common_utils###";
 
@@ -26,6 +26,7 @@ class LogUtil {
   /// 通过调用log来输出
   static void d(String object, {String tag}) {
     log(object);
+    e(object);
   }
 
   static void _printLog(String tag, String stag, Object object) {
@@ -35,6 +36,19 @@ class LogUtil {
     sb.write(object);
     print(sb.toString());
   }
+
+  /// [e]为错误类型 :可能为 Error , Exception ,String
+  /// [s]为堆栈信息
+  static printErrorStack(e, s) {
+    debugPrint('''
+<-----↓↓↓↓↓↓↓↓↓↓-----error-----↓↓↓↓↓↓↓↓↓↓----->
+$e
+<-----↑↑↑↑↑↑↑↑↑↑-----error-----↑↑↑↑↑↑↑↑↑↑----->''');
+    if (s != null) debugPrint('''
+<-----↓↓↓↓↓↓↓↓↓↓-----trace-----↓↓↓↓↓↓↓↓↓↓----->
+$s
+<-----↑↑↑↑↑↑↑↑↑↑-----trace-----↑↑↑↑↑↑↑↑↑↑----->
+    ''');
+  }
 }
-void logError(String code, String message) =>
-    print('Error: $code\nError Message: $message');
+

@@ -36,13 +36,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.4.0"
-  audioplayers:
-    dependency: "direct main"
-    description:
-      name: audioplayers
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.14.0"
   badges:
     dependency: "direct main"
     description:
@@ -354,6 +347,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.5"
+  flutter_plugin_record:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "9fb8a6ee712772fb6ced6d5b36c96276e87a544c"
+      url: "https://github.com/yxwandroid/flutter_plugin_record.git"
+    source: git
+    version: "0.1.3"
   flutter_screenutil:
     dependency: "direct main"
     description:
@@ -374,7 +376,7 @@ packages:
       name: flutter_sound
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.7.0"
+    version: "2.1.1"
   flutter_staggered_grid_view:
     dependency: "direct main"
     description:

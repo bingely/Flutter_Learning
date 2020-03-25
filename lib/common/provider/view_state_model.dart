@@ -106,7 +106,7 @@ class ViewStateModel with ChangeNotifier{
       message: message,
       errorMessage: e.toString(),
     );
-    printErrorStack(e, stackTrace);
+    LogUtil.printErrorStack(e, stackTrace);
     onError(viewStateError);
   }
 
@@ -146,16 +146,4 @@ class ViewStateModel with ChangeNotifier{
   }
 }
 
-/// [e]为错误类型 :可能为 Error , Exception ,String
-/// [s]为堆栈信息
-printErrorStack(e, s) {
-  debugPrint('''
-<-----↓↓↓↓↓↓↓↓↓↓-----error-----↓↓↓↓↓↓↓↓↓↓----->
-$e
-<-----↑↑↑↑↑↑↑↑↑↑-----error-----↑↑↑↑↑↑↑↑↑↑----->''');
-  if (s != null) debugPrint('''
-<-----↓↓↓↓↓↓↓↓↓↓-----trace-----↓↓↓↓↓↓↓↓↓↓----->
-$s
-<-----↑↑↑↑↑↑↑↑↑↑-----trace-----↑↑↑↑↑↑↑↑↑↑----->
-    ''');
-}
+

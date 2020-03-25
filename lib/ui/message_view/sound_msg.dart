@@ -3,7 +3,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/tool/check.dart';
@@ -36,7 +35,6 @@ class _SoundMsgState extends State<SoundMsg> with TickerProviderStateMixin {
   AnimationController controller;
   Animation animation;
   FlutterSound flutterSound;
-  AudioPlayer audioPlayer = AudioPlayer();
 
   StreamSubscription _positionSubscription;
   StreamSubscription _audioPlayerStateSubscription;
@@ -105,14 +103,6 @@ class _SoundMsgState extends State<SoundMsg> with TickerProviderStateMixin {
     }
   }
 
-  playNew(url) async {
-    int result = await audioPlayer.play(url);
-    if (result == 1) {
-      showToast(context, '播放中');
-    } else {
-      showToast(context, '播放出问题了');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +133,7 @@ class _SoundMsgState extends State<SoundMsg> with TickerProviderStateMixin {
     Map<String, dynamic> msg = json.decode(widget.model.msg);
 
     String voidpath = msg['path'];
-
+    durationStr = msg['recordTime'];
     bool isIos = Platform.isIOS;
    // if (!listNoEmpty(isIos ? iModel.soundUrls : model.urls)) return Container();
 

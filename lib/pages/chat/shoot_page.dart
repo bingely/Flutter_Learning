@@ -528,7 +528,7 @@ class _ShootPageState extends State<ShootPage> with WidgetsBindingObserver {
   }
 
   void _showCameraException(CameraException e) {
-    logError(e.code, e.description);
+    LogUtil.e(e.description);
     showToast(context, 'Error: ${e.code}\n${e.description}');
   }
 

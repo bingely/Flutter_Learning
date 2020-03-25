@@ -1,5 +1,5 @@
 import 'package:date_format/date_format.dart';
-
+import 'package:intl/intl.dart' show DateFormat;
 /// https://blog.csdn.net/ruoshui_t/article/details/93072017
 //命名构造，获取当前时间
 //millisecondsSinceEpoch
@@ -95,10 +95,19 @@ class DateUtils {
     return format;
   }
 
-  /// 时间格式化
-  //// formatDate(message.time, [HH, ':', nn, ':', 'ss'])
+
+  //************************************************//
+
+  /// 时间格式化 借助于date_format
+  //// eg:formatDate(message.time, [HH, ':', nn, ':', 'ss'])
   static String formateTime(DateTime dateTime, {List<String> format}) {
     return formatDate(dateTime, format);
+  }
+
+  /// 时间格式化 借助于 import 'package:intl/intl.dart' show DateFormat;
+  //// eg:DateFormat('mm:ss:SS', 'en_GB').format(date);
+  static String intlFormateTime( String format,DateTime dateTime) {
+    return DateFormat(format, 'en_GB').format(dateTime);
   }
 
   /// 获取当前时间戳

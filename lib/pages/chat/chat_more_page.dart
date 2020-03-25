@@ -52,7 +52,7 @@ class _ChatMorePageState extends State<ChatMorePage> {
 
         routePush(new ShootPage(cameras));
       } on CameraException catch (e) {
-       logError(e.code, e.description);
+       LogUtil.e(e.description);
       }
 
     } else {

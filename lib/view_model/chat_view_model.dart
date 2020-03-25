@@ -32,7 +32,8 @@ class ChatViewModel extends ViewStateRefreshListModel<ChatData> {
     } else if (msgType == MsgType.IMG) {
       sqljson = '{"imageList": "$content","type": "Image"}';
     } else if (msgType == MsgType.VOICE) {
-      sqljson = '{"soundUrls": "$content","urls": "$content","type": "Sound","path": "$content"}';
+      var recordTime = event.recordTime;
+      sqljson = '{"soundUrls": "$content","urls": "$content","recordTime":"$recordTime","type": "Sound","path": "$content"}';
     } else if (msgType == MsgType.TXT) {
       sqljson = '{"text": "$content", "type": "Text"}';
     }
