@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_plugin_record/flutter_plugin_record.dart';
 import 'package:flutter_qyyim/tool/device_utils.dart';
 import 'package:flutter_qyyim/pages/chat/event/MsgEvent.dart';
 import 'package:flutter_qyyim/testdemo/cross_data/custom_event.dart';
@@ -10,10 +11,6 @@ import 'package:flutter_qyyim/tool/date_utils.dart';
 import 'package:flutter_qyyim/tool/log_utils.dart';
 import 'package:flutter_qyyim/tool/toast_util.dart';
 import 'package:flutter_qyyim/ui/dialog/voice_dialog.dart';
-import 'package:flutter_qyyim/tool/show_toast.dart';
-import 'package:flutter_sound/flutter_sound.dart';
-import 'package:intl/intl.dart' show DateFormat;
-import 'package:path_provider/path_provider.dart';
 typedef VoiceFile = void Function(String path);
 
 class ChatVoice extends StatefulWidget {
@@ -35,73 +32,145 @@ class _ChatVoiceWidgetState extends State<ChatVoice> {
   String toastShow = "手指上滑,取消发送";
   String voiceIco = "images/voice_volume_1.png";
 
-  StreamSubscription _recorderSubscription;
 
   ///默认隐藏状态
   bool voiceState = true;
   OverlayEntry overlayEntry;
-  FlutterSound flutterSound;
-
 
   String voicepath;
   String recordTime;
+  FlutterPluginRecord recordPlugin = new FlutterPluginRecord();
+
 
   @override
   void initState() {
     super.initState();
-    flutterSound = new FlutterSound();
-    flutterSound.setSubscriptionDuration(0.01);
-    flutterSound.setDbPeakLevelUpdate(0.8);
-    flutterSound.setDbLevelEnabled(true);
-    //initializeDateFormatting();
-  }
 
-  t_CODEC _codec = t_CODEC.CODEC_AAC;
-  void start() async {
-    LogUtil.d('开始录音---》');
-    try {
-      var currentStamp = DateUtils.getCurrentStamp();
-      Directory tempDir = await getTemporaryDirectory();
-      String path = await flutterSound
-          .startRecorder(uri:'${tempDir.path}/${currentStamp}sound.aac',codec: _codec); // android.mp4
-      LogUtil.d('startRecorder录制结果路径-----$path');
-      voicepath = path;
-      widget.voiceFile(path);
-      _recorderSubscription =
-          flutterSound.onRecorderStateChanged.listen((e) {
-            DateTime date = new DateTime.fromMillisecondsSinceEpoch(
-                e.currentPosition.toInt(),
-                isUtc: true);
-            recordTime = DateUtils.intlFormateTime('mm:ss:SS', date).substring(3, 5);
-            //LogUtil.d('开始录音RecordTime---》${DateUtils.intlFormateTime('mm:ss:SS', date)}');
-            this.setState(() {
-              //this._recorderTxt = txt.substring(0, 8);
-            });
-          });
-    } catch (err) {
-      RecorderRunningException e = err;
-      LogUtil.d('开始录音异常---》${e.message}');
-      showToast(context, 'startRecorder error: ${e.message}');
-
-
-    }
-
-  }
-
-  void stop() async {
-    try {
-      String result = await flutterSound.stopRecorder();
-      LogUtil.d('stopRecorder: $result');
-
-      if (_recorderSubscription != null) {
-        _recorderSubscription.cancel();
-        _recorderSubscription = null;
+    _init();
+    ///初始化方法的监听
+    recordPlugin.responseFromInit.listen((data) {
+      if (data) {
+        LogUtil.e("recordPlugin初始化成功");
+      } else {
+        LogUtil.e("recordPlugin初始化失败");
       }
+    });
 
-    } catch (err) {
-      RecorderStoppedException e = err;
-      showToast(context, 'stopRecorder error: ${e.message}');
-      LogUtil.d('结束录音异常---》${e.message}');
+    /// 开始录制或结束录制的监听
+    recordPlugin.response.listen((data) {
+      if (data.msg == "onStop") {
+        ///结束录制时会返回录制文件的地址方便上传服务器
+        LogUtil.e("onStop  文件路径" + data.path);
+        voicepath = data.path;
+        LogUtil.e("onStop  时长 " + data.audioTimeLength.toString());
+        recordTime = data.audioTimeLength.toString();
+
+
+        if (isUp) {
+          LogUtil.e("取消发送");
+        } else {
+          LogUtil.e("进行发送");
+          // Notice.send(WeChatActions.voiceImg(), true);
+          if (data.audioTimeLength<=1.0) {
+            ToastUtils.show("录制时间太短了", context);
+            return;
+          }
+          eventBus.fire(MsgEvent(content: voicepath,recordTime: recordTime,type: MsgType.VOICE));
+
+        }
+      } else if (data.msg == "onStart") {
+        LogUtil.e("onStart --");
+      }else{
+        LogUtil.e("--"+data.msg);
+      }
+    });
+
+    ///录制过程监听录制的声音的大小 方便做语音动画显示图片的样式
+    recordPlugin.responseFromAmplitude.listen((data) {
+      var voiceData = double.parse(data.msg);
+      setState(() {
+        if (voiceData > 0 && voiceData < 0.1) {
+          voiceIco = "images/voice_volume_2.png";
+        } else if (voiceData > 0.2 && voiceData < 0.3) {
+          voiceIco = "images/voice_volume_3.png";
+        } else if (voiceData > 0.3 && voiceData < 0.4) {
+          voiceIco = "images/voice_volume_4.png";
+        } else if (voiceData > 0.4 && voiceData < 0.5) {
+          voiceIco = "images/voice_volume_5.png";
+        } else if (voiceData > 0.5 && voiceData < 0.6) {
+          voiceIco = "images/voice_volume_6.png";
+        } else if (voiceData > 0.6 && voiceData < 0.7) {
+          voiceIco = "images/voice_volume_7.png";
+        } else if (voiceData > 0.7 && voiceData < 1) {
+          voiceIco = "images/voice_volume_7.png";
+        } else {
+          voiceIco = "images/voice_volume_1.png";
+        }
+        if (overlayEntry != null) {
+          overlayEntry.markNeedsBuild();
+        }
+      });
+
+      LogUtil.e("振幅大小   " + voiceData.toString() + "  " + voiceIco);
+    });
+
+
+    recordPlugin.responsePlayStateController.listen((data){
+      LogUtil.e("播放路径   " + data.playPath );
+      LogUtil.e("播放状态   " + data.playState );
+    });
+  }
+
+  ///显示录音悬浮布局
+  buildOverLayView(BuildContext context) {
+    if (overlayEntry == null) {
+      overlayEntry = new OverlayEntry(builder: (content) {
+        return Positioned(
+          top: MediaQuery.of(context).size.height * 0.5 - 80,
+          left: MediaQuery.of(context).size.width * 0.5 - 80,
+          child: Material(
+            type: MaterialType.transparency,
+            child: Center(
+              child: Opacity(
+                opacity: 0.8,
+                child: Container(
+                  width: 160,
+                  height: 160,
+                  decoration: BoxDecoration(
+                    color: Color(0xff77797A),
+                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: new Image.asset(
+                          voiceIco,
+                          width: 100,
+                          height: 100,
+                          package: 'flutter_plugin_record',
+                        ),
+                      ),
+                      Container(
+//                      padding: EdgeInsets.only(right: 20, left: 20, top: 0),
+                        child: Text(
+                          toastShow,
+                          style: TextStyle(
+                            fontStyle: FontStyle.normal,
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      });
+      Overlay.of(context).insert(overlayEntry);
     }
   }
 
@@ -111,20 +180,10 @@ class _ChatVoiceWidgetState extends State<ChatVoice> {
     setState(() {
       textShow = "松开结束";
       voiceState = false;
-      DateTime now = new DateTime.now();
-      int date = now.millisecondsSinceEpoch;
-      DateTime current = DateTime.fromMillisecondsSinceEpoch(date);
-
-      String recordingTime =
-      DateUtils.formatDateV(current, format: "ss:SS");
-      index = int.parse(recordingTime.toString().substring(3, 5));
     });
+    buildOverLayView(context);
+    startRecorder();
 
-    onStartRecorderPressed();
-
-    if (overlayEntry == null) {
-      overlayEntry = showVoiceDialog(context, index: index);
-    }
   }
 
   hideVoiceView() {
@@ -132,25 +191,11 @@ class _ChatVoiceWidgetState extends State<ChatVoice> {
       textShow = "按住说话";
       voiceState = true;
     });
-    onStartRecorderPressed();
+    stopRecorder();
     if (overlayEntry != null) {
       overlayEntry.remove();
       overlayEntry = null;
     }
-
-    if (isUp) {
-      LogUtil.e("取消发送");
-    } else {
-      LogUtil.e("进行发送");
-      // Notice.send(WeChatActions.voiceImg(), true);
-      if (int.parse(recordTime)<1) {
-        ToastUtils.show("录制时间太短了", context);
-        return;
-      }
-      eventBus.fire(MsgEvent(content: voicepath,recordTime: recordTime,type: MsgType.VOICE));
-
-    }
-
   }
 
   moveVoiceView() {
@@ -194,12 +239,25 @@ class _ChatVoiceWidgetState extends State<ChatVoice> {
   }
 
 
-  onStartRecorderPressed() {
-    if (flutterSound.audioState == t_AUDIO_STATE.IS_RECORDING)
-      return stop();
+  ///初始化语音录制的方法
+  void _init() async {
+    recordPlugin.init();
+  }
 
-    return flutterSound.audioState == t_AUDIO_STATE.IS_STOPPED
-        ? start()
-        : null;
+  ///开始语音录制的方法
+  void startRecorder() async {
+    recordPlugin.start();
+  }
+
+  ///停止语音录制的方法
+  void stopRecorder() {
+    recordPlugin.stop();
+  }
+
+  @override
+  void dispose() {
+    /// 当界面退出的时候是释放录音资源
+    recordPlugin.dispose();
+    super.dispose();
   }
 }
