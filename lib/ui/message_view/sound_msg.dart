@@ -128,8 +128,6 @@ class _SoundMsgState extends State<SoundMsg> with TickerProviderStateMixin {
       soundImg = leftSoundNames;
     }
 
-    //SoundMsgEntity model = SoundMsgEntity.fromJson(widget.model.msg);
-    //ISoundMsgEntity iModel = ISoundMsgEntity.fromJson(widget.model.msg);
     Map<String, dynamic> msg = json.decode(widget.model.msg);
 
     String voidpath = msg['path'];
