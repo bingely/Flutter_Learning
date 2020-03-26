@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
 import 'package:flutter_qyyim/common/route/route.dart';
 import 'package:flutter_qyyim/config/resource_mananger.dart';
 import 'package:flutter_qyyim/config/router_manger.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_qyyim/testdemo/trip/widget/webview.dart';
 import 'package:flutter_qyyim/tool/navigator_util.dart';
 import 'package:flutter_qyyim/tool/platform_utils.dart';
 import 'package:flutter_qyyim/tool/screen_utils.dart';
+import 'package:flutter_qyyim/tool/toast_util.dart';
 import 'package:flutter_qyyim/ui/image_view.dart';
 import 'package:flutter_qyyim/ui/label_row.dart';
 
@@ -29,8 +31,8 @@ class MePage extends StatelessWidget {
           slivers: <Widget>[
             SliverAppBar(
               backgroundColor: Colors.transparent,
-              flexibleSpace: ImageView(
-                img: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2458696988,2288615185&fm=26&gp=0.jpg',
+              flexibleSpace: Image.network(
+                'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2458696988,2288615185&fm=26&gp=0.jpg',
               ),
               expandedHeight: 200.0,
             ),
@@ -127,6 +129,24 @@ class BodyView extends StatelessWidget {
             fit: BoxFit.cover,
             onPressed: () {
               exit(0);
+            },
+          ),
+          ListTileView(
+            border: Border(
+                bottom: BorderSide(color: AppColors.lineColor, width: 0.2)),
+            title: '删除数据',
+            isLabel: false,
+            padding: EdgeInsets.symmetric(vertical: 16.0),
+            width: 25.0,
+            fit: BoxFit.cover,
+            onPressed: () {
+              DbUtils.getInstance().deleteDb("qqyim");
+              ToastUtils.show("success", context);
+
+              // 创建新的数据库
+              Future.delayed(Duration(seconds: 2),(){
+                DbUtils.getInstance().openDb("qqyim");
+              });
             },
           ),
         ],

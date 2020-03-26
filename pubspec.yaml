@@ -39,6 +39,7 @@ dependencies:
     git:
       url: https://github.com/yxwandroid/flutter_plugin_record.git
   flutter_sound: ^2.1.1
+  flutter_audio_recorder: ^0.5.5
   #audioplayers: ^0.14.0
   #拍照 用于自定义录像功能
   camera: ^0.5.7+4
