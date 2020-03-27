@@ -10,6 +10,6 @@ class ToastUtils {
       Color backgroundColor = const Color(0xAA000000),
       Color textColor = Colors.white,
       double backgroundRadius = 5.0}) {
-    Toast.show(msg, context);
+    Toast.show(msg, context,type: type);
   }
 }

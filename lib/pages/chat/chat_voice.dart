@@ -3,6 +3,7 @@ import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
 import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/tool/device_utils.dart';
 import 'package:flutter_qyyim/tool/log_utils.dart';
+import 'package:flutter_qyyim/ui/dialog/voice_dialog.dart';
 import 'package:flutter_qyyim/view_model/voice_view_model.dart';
 typedef VoiceFile = void Function(String path);
 
@@ -23,7 +24,7 @@ class _ChatVoiceWidgetState extends State<ChatVoice> {
   bool isUp = false;
   String textShow = "按住说话";
   String toastShow = "手指上滑,取消发送";
-  String voiceIco = "images/voice_volume_1.png";
+  String voiceIco = "assets/images/chat/voice_volume_4.webp";
 
   ///默认隐藏状态
   bool voiceState = true;
@@ -41,27 +42,36 @@ class _ChatVoiceWidgetState extends State<ChatVoice> {
     return ProviderWidget<VoiceViewModel>(
       model: VoiceViewModel(),
       builder: (context, voiceModel, child){
-        return new GestureDetector(
-          onVerticalDragStart: (details) {
-            startY = details.globalPosition.dy;
+        return Listener(
+          onPointerDown: (details) {
             showVoiceView(voiceModel);
           },
-          onVerticalDragDown: (details) {
-            startY = details.globalPosition.dy;
-            showVoiceView(voiceModel);
+          onPointerUp: (details) {
+            //会触发
+            hideVoiceView(voiceModel);
           },
-          onVerticalDragCancel: () => hideVoiceView(voiceModel),
-          onVerticalDragEnd: (details) => hideVoiceView(voiceModel),
-          onVerticalDragUpdate: (details) {
-            offset = details.globalPosition.dy;
-            moveVoiceView();
-          },
-          child: new Container(
-            height: 50.0,
-            alignment: Alignment.center,
-            width: DeviceUtils.winWidth(context),
-            color: Colors.white,
-            child: Text(textShow),
+          child: new GestureDetector(
+            onVerticalDragStart: (details) {
+              startY = details.globalPosition.dy;
+              //showVoiceView(voiceModel);
+            },
+            onVerticalDragDown: (details) {
+              startY = details.globalPosition.dy;
+              //showVoiceView(voiceModel);
+            },
+            /* onVerticalDragCancel: () => hideVoiceView(voiceModel),
+            onVerticalDragEnd: (details) => hideVoiceView(voiceModel),*/
+            onVerticalDragUpdate: (details) {
+              offset = details.globalPosition.dy;
+              moveVoiceView();
+            },
+            child: new Container(
+              height: 50.0,
+              alignment: Alignment.center,
+              width: DeviceUtils.winWidth(context),
+              color: Colors.white,
+              child: Text(textShow),
+            ),
           ),
         );
       },
@@ -95,7 +105,6 @@ class _ChatVoiceWidgetState extends State<ChatVoice> {
                           voiceIco,
                           width: 100,
                           height: 100,
-                          package: 'flutter_plugin_record',
                         ),
                       ),
                       Container(
@@ -130,6 +139,7 @@ class _ChatVoiceWidgetState extends State<ChatVoice> {
     });
     buildOverLayView(context);
     voiceModel.startRecorder(context);
+    isUp = false;
   }
 
   hideVoiceView(VoiceViewModel voiceModel) {

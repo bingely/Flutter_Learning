@@ -7,6 +7,7 @@ import 'package:flutter_qyyim/pages/chat/event/MsgEvent.dart';
 import 'package:flutter_qyyim/testdemo/cross_data/event_bus.dart';
 import 'package:flutter_qyyim/tool/log_utils.dart';
 import 'package:flutter_qyyim/tool/toast_util.dart';
+import 'package:flutter_qyyim/ui/toast.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io' as io;
 class VoiceViewModel extends ViewStateModel{
@@ -80,6 +81,7 @@ class VoiceViewModel extends ViewStateModel{
 
         var current = await _recorder.current(channel: 0);
         // print(current.status);
+        LogUtil.e('currentStatus$_currentStatus'+'----$current');
         _current = current;
         _currentStatus = current.status;
         print(_currentStatus);
@@ -97,7 +99,7 @@ class VoiceViewModel extends ViewStateModel{
     print("Stop recording: ${result.duration}时间为${result.duration.inSeconds}");
 
 
-    String recordTime = result.duration.inSeconds.toString();
+    String recordTime = (result.duration.inSeconds).toString();
     String voicepath = result.path;
     if (isUp) {
       LogUtil.e("取消发送");
@@ -105,7 +107,7 @@ class VoiceViewModel extends ViewStateModel{
       LogUtil.e("进行发送");
       // Notice.send(WeChatActions.voiceImg(), true);
       if (result.duration.inSeconds < 1) {
-        ToastUtils.show("录制时间太短了", context);
+        ToastUtils.show("录制时间太短了", context,type: ERROR);
         return;
       }
       eventBus.fire(MsgEvent(content: voicepath,recordTime: recordTime,type: MsgType.VOICE));
