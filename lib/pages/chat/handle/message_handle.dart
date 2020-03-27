@@ -9,6 +9,7 @@ import 'package:flutter_qyyim/pages/chat/camarademo/camera_screen.dart';
 import 'package:flutter_qyyim/pages/chat/video/video_page.dart';
 import 'package:flutter_qyyim/tool/log_utils.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../shoot_page.dart';
@@ -28,7 +29,6 @@ Future<void> sendImageMsg(String userName, int type,
     {Callback callback, ImageSource source}) async {
   File image = await ImagePicker.pickImage(source: source);
   if (image == null) return;
- // File compressImg = await singleCompressFile(image);
 
   try {
    // await im.sendImageMessages(userName, compressImg.path, type: type);
@@ -36,6 +36,27 @@ Future<void> sendImageMsg(String userName, int type,
   } on PlatformException {
     debugPrint("发送图片消息失败");
   }
+
+  /*try {
+    var resultList = await MultiImagePicker.pickImages(
+      // 选择图片的最大数量
+      maxImages: 9,
+      // 是否支持拍照
+      enableCamera: true,
+      materialOptions: MaterialOptions(
+        // 显示所有照片，值为 false 时显示相册
+          startInAllView: true,
+          allViewTitle: '所有照片',
+          actionBarColor: '#2196F3',
+          textOnNothingSelected: '没有选择照片'
+      ),
+    );
+
+    callback("");
+  } on Exception catch (e) {
+    e.toString();
+  }*/
+
 }
 
 

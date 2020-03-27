@@ -32,7 +32,7 @@ import 'handle/message_handle.dart';
 import 'indicator_page_view.dart';
 import 'model/chat_data.dart';
 
-// 底部按钮有两种状态
+// 底部按钮有3种状态
 enum ButtonType { voice, emoj, more }
 
 // 聊天page
@@ -84,6 +84,7 @@ class ChatePageState extends State<ChatPage> {
       if (_focusNode.hasFocus){
 
       }
+      LogUtil.e('sC.addListener${_sC.offset}');
      // _focusNode.unfocus();
     });
     animaTo();
@@ -350,13 +351,14 @@ class ChatePageState extends State<ChatPage> {
   }
 
   animaTo() {
-    Timer(Duration(milliseconds: 400), () {
+    /*Timer(Duration(milliseconds: 1400), () {
+      LogUtil.d('animaTo---onChanged');
       //_sC.jumpTo(_sC.position.maxScrollExtent);
       _sC.animateTo(
         0,
         curve: Curves.easeOut,
         duration: const Duration(milliseconds: 300),
       );
-    });
+    });*/
   }
 }

@@ -96,18 +96,23 @@ class VoiceViewModel extends ViewStateModel{
   stopRecorder(bool isUp,BuildContext context) async {
     var result = await _recorder.stop();
     print("Stop recording: ${result.path}");
-    print("Stop recording: ${result.duration}时间为${result.duration.inSeconds}");
+    var inSeconds = result.duration.inSeconds;
+    print("Stop recording: ${result.duration}时间为${inSeconds}");
 
 
-    String recordTime = (result.duration.inSeconds).toString();
+    String recordTime = inSeconds.toString();
     String voicepath = result.path;
     if (isUp) {
       LogUtil.e("取消发送");
     } else {
       LogUtil.e("进行发送");
       // Notice.send(WeChatActions.voiceImg(), true);
-      if (result.duration.inSeconds < 1) {
+      if (inSeconds < 1) {
         ToastUtils.show("录制时间太短了", context,type: ERROR);
+        return;
+      }
+      if (inSeconds > 20) {
+        ToastUtils.show("录制时间太长,最大录制时间20s", context,type: ERROR);
         return;
       }
       eventBus.fire(MsgEvent(content: voicepath,recordTime: recordTime,type: MsgType.VOICE));

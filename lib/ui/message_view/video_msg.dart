@@ -39,8 +39,6 @@ class _VidoMsgState extends State<VideoMsg> {
 
     var url = msg['videosrc'];
 
-
-
     _controller = VideoPlayerController.file(File(url));
     _controller.setLooping(true);
     _initializeVideoPlayerFuture = _controller.initialize();
@@ -58,8 +56,8 @@ class _VidoMsgState extends State<VideoMsg> {
 
     if (!strNoEmpty(msg['videosrc'])) return Text('发送中');
     var url = msg['videosrc'];
-   // _controller = VideoPlayerController.file(File(url));
-   // _initializeVideoPlayerFuture = _controller.initialize();
+    // _controller = VideoPlayerController.file(File(url));
+    // _initializeVideoPlayerFuture = _controller.initialize();
 
     var _height;
     var resultH = 200.0;
@@ -87,12 +85,29 @@ class _VidoMsgState extends State<VideoMsg> {
                   print(snapshot.connectionState);
                   if (snapshot.hasError) print(snapshot.error);
                   if (snapshot.connectionState == ConnectionState.done) {
-                    return AspectRatio(
-                      // aspectRatio: 16 / 9,
-                      aspectRatio: _controller.value.aspectRatio,
-                      child: VideoPlayer(_controller),
-                    );
+                    return _controller.value.isPlaying
+                        ? AspectRatio(
+                            // aspectRatio: 16 / 9,
+                            aspectRatio: _controller.value.aspectRatio,
+                            child: VideoPlayer(_controller),
+                          )
+                        : AspectRatio(
+                            // aspectRatio: 16 / 9,
+                            aspectRatio: _controller.value.aspectRatio,
+                            child: Stack(
+                              children: <Widget>[
+                                VideoPlayer(_controller),
+                                //_controller.value.isPlaying?null:
+                                Positioned(
+                                  top: 100,
+                                  left: 70,
+                                    child: Icon(Icons.videocam,color: Colors.white,size: 40,),
+                                )
+                              ],
+                            ),
+                          );
                   } else {
+
                     return Center(
                       child: CircularProgressIndicator(),
                     );
@@ -101,7 +116,7 @@ class _VidoMsgState extends State<VideoMsg> {
               ),
             ),
           ),
-          onTap: ()  {
+          onTap: () {
             setState(() {
               if (_controller.value.isPlaying) {
                 _controller.pause();
@@ -109,7 +124,6 @@ class _VidoMsgState extends State<VideoMsg> {
                 // If the video is paused, play it.
                 _controller.play();
               }
-              _controller.play();
             });
           },
         ),
