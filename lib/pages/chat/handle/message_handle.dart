@@ -61,7 +61,7 @@ Future<void> sendImageMsg(String userName, int type,
 Future<void> openCamera(
     {Callback callback}) async {
   try {
-    ImagePickers.openCamera(cameraMimeType: CameraMimeType.video).then((media){
+    ImagePickers.openCamera(cameraMimeType: CameraMimeType.photo).then((media){
       callback(media.path);
     });
   } on PlatformException {

@@ -210,7 +210,7 @@ class ChatePageState extends State<ChatPage> {
       openCamera(callback: (v) {
         if (v == null) return;
         print(v);
-        chatViewModle.sendMgs(MsgEvent(content: v, type: MsgType.VIDEO));
+        chatViewModle.sendMgs(MsgEvent(content: v, type: MsgType.IMG));
       });
     } else if (name == "自定义视频") {
       final _cameraKey = GlobalKey<CameraScreenState>();

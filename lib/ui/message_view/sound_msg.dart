@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/tool/check.dart';
 import 'package:flutter_qyyim/tool/log_utils.dart';
+import 'package:flutter_qyyim/ui/bubble/bublewidget.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
 import 'package:flutter_qyyim/pages/chat/model/chat_data.dart';
 import 'package:flutter_qyyim/pages/chat/model/i_sound_msg_entity.dart';
@@ -139,39 +140,42 @@ class _SoundMsgState extends State<SoundMsg> with TickerProviderStateMixin {
     var urls = voidpath;
     var body = [
       new MsgAvatar(model: widget.model, globalModel: globalModel),
-      new Container(
-        width: 100.0,
-        padding: EdgeInsets.only(right: 10.0),
-        child: new FlatButton(
-          padding: EdgeInsets.only(left: 18.0, right: 4.0),
-          child: new Row(
-            mainAxisAlignment:
-                isSelf ? MainAxisAlignment.end : MainAxisAlignment.start,
-            children: [
-              new Text("$durationStr\"", textAlign: TextAlign.start, maxLines: 1),
-              new Space(width: AppConstants.mainSpace / 2),
-              new Image.asset(
-                  animation != null
-                      ? soundImg[animation.value % 3]
-                      : soundImg[3],
-                  height: 20.0,
-                  color: Colors.black,
-                  fit: BoxFit.cover),
-              new Space(width: AppConstants.mainSpace)
-            ],
+      FLBubble(
+        from: FLBubbleFrom.left,
+        backgroundColor: Colors.white,
+        child: new Container(
+          width: 100.0,
+          height: 28,
+          child: new FlatButton(
+            padding: EdgeInsets.symmetric(horizontal: 0,vertical: 0),
+            child: new Row(
+              mainAxisAlignment:
+                  isSelf ? MainAxisAlignment.end : MainAxisAlignment.start,
+              children: [
+                new Text("$durationStr\"", textAlign: TextAlign.start, maxLines: 1),
+                new Space(width: AppConstants.mainSpace / 2),
+                new Image.asset(
+                    animation != null
+                        ? soundImg[animation.value % 3]
+                        : soundImg[3],
+                    height: 20.0,
+                    color: Colors.black,
+                    fit: BoxFit.cover),
+                new Space(width: AppConstants.mainSpace)
+              ],
+            ),
+            color: widget.model.id == globalModel.account
+                ? Color(0xff98E165)
+                : Colors.white,
+            onPressed: () {
+              if (strNoEmpty(urls)) {
+                //playNew(urls);
+                start(urls);
+              } else {
+                showToast(context, '未知错误');
+              }
+            },
           ),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-          color: widget.model.id == globalModel.account
-              ? Color(0xff98E165)
-              : Colors.white,
-          onPressed: () {
-            if (strNoEmpty(urls)) {
-              //playNew(urls);
-              start(urls);
-            } else {
-              showToast(context, '未知错误');
-            }
-          },
         ),
       ),
       new Spacer(),
