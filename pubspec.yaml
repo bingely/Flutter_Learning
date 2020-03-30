@@ -26,11 +26,12 @@ dependencies:
   # webview
   flutter_webview_plugin: "^0.3.0+2"
   # 预览图片
-  photo_view: ^0.4.2
-  # 图片/视频选择，拍照
-  image_picker: ^0.6.3+1
+  # photo_view: ^0.4.2
+  #image_picker: ^0.6.3+1
   # 多选图片
-  multi_image_picker: ^4.6.4
+  #multi_image_picker: ^4.6.4
+  # 多选图片/视频选择，拍照
+  image_pickers: ^1.0.7+1
   # 权限管理
   #permission_handler: ^3.1.0
   # 录音插件

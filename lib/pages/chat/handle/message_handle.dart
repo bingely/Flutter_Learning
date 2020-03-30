@@ -7,38 +7,24 @@ import 'package:flutter_qyyim/common/route/route.dart';
 import 'package:flutter_qyyim/config/t.dart';
 import 'package:flutter_qyyim/pages/chat/camarademo/camera_screen.dart';
 import 'package:flutter_qyyim/pages/chat/video/video_page.dart';
-import 'package:flutter_qyyim/tool/log_utils.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:image_pickers/image_pickers.dart';
 import 'package:path_provider/path_provider.dart';
-
-import '../shoot_page.dart';
 
 
 Future<dynamic> getDimMessages(String id,
     {int type, Callback callback, int num = 50}) async {
   try {
     //var result = await im.getMessages(id, num, type ?? 1);
-   // return result;
+    // return result;
   } on PlatformException {
     debugPrint('获取失败');
   }
 }
-
+/*相册*/
 Future<void> sendImageMsg(String userName, int type,
-    {Callback callback, ImageSource source}) async {
-  File image = await ImagePicker.pickImage(source: source);
-  if (image == null) return;
-
+    {Callback callback}) async {
   try {
-   // await im.sendImageMessages(userName, compressImg.path, type: type);
-    callback(image.path);
-  } on PlatformException {
-    debugPrint("发送图片消息失败");
-  }
-
-  /*try {
-    var resultList = await MultiImagePicker.pickImages(
+    /*var resultList = await MultiImagePicker.pickImages(
       // 选择图片的最大数量
       maxImages: 9,
       // 是否支持拍照
@@ -52,37 +38,56 @@ Future<void> sendImageMsg(String userName, int type,
       ),
     );
 
-    callback("");
+    resultList.forEach((asset){
+      LogUtil.e(asset);
+    });*/
+
+    String imgs = "";
+    var _listImagePaths = await ImagePickers.pickerPaths(
+      galleryMode: GalleryMode.image,
+      selectCount: 9,
+      showCamera: false,
+    );
+    _listImagePaths.forEach((media) {
+      imgs = imgs + media.path+",";
+    });
+    callback(imgs);
   } on Exception catch (e) {
     e.toString();
-  }*/
-
+  }
 }
 
+/*拍照*/
+Future<void> openCamera(
+    {Callback callback}) async {
+  try {
+    ImagePickers.openCamera(cameraMimeType: CameraMimeType.video).then((media){
+      callback(media.path);
+    });
+  } on PlatformException {
+    debugPrint("发送图片消息失败");
+  }
+}
 
 Future<void> sendVideoMsg(String userName, int type,
     {Callback callback}) async {
-  File videoFile = await ImagePicker.pickVideo(source: ImageSource.camera);
-  if (videoFile == null) return;
-  // File compressImg = await singleCompressFile(image);
   try {
-    // await im.sendImageMessages(userName, compressImg.path, type: type);
-    callback(videoFile.path);
+    ImagePickers.openCamera(cameraMimeType: CameraMimeType.video).then((media){
+      callback(media.path);
+    });
   } on PlatformException {
-    debugPrint("发送图片消息失败");
   }
 }
 
 Future<dynamic> sendSoundMessages(String id, String soundPath, int duration,
     int type, Callback callback) async {
   try {
-   // var result = await im.sendSoundMessages(id, soundPath, type, duration);
-   // callback(result);
+    // var result = await im.sendSoundMessages(id, soundPath, type, duration);
+    // callback(result);
   } on PlatformException {
     debugPrint('发送语音  失败');
   }
 }
-
 
 Future<void> sendVedioMsg() async {
   try {
@@ -91,60 +96,20 @@ Future<void> sendVedioMsg() async {
     WidgetsFlutterBinding.ensureInitialized();
     cameras = await availableCameras();
 
-
     final _cameraKey = GlobalKey<CameraScreenState>();
 
     routePush(new VideoPage(key: _cameraKey));
 
-   // _takeVideo();
-   // _takePhoto();
+    // _takeVideo();
+    // _takePhoto();
   } on CameraException catch (e) {
     //logError(e.code, e.description);
   }
 }
 
-
-/*拍照*/
-Future<void> _takePhoto() async {
-  var image = await ImagePicker.pickImage(source: ImageSource.camera);
-  print('拍照返回：' + image.toString());
+/// 预览图片
+previewImage(String url) {
+  ImagePickers.previewImage(url);
 }
 
-/*相册*/
-Future<void> _openGallery() async {
-  var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-  print('相册返回：' + image.toString());
-}
 
-/*选取视频*/
-Future<void> _getVideo() async {
-  var image = await ImagePicker.pickVideo(source: ImageSource.gallery);
-  print('选取视频：' + image.toString());
-}
-/*拍摄视频*/
-Future<void> _takeVideo() async {
-  var image = await ImagePicker.pickVideo(source: ImageSource.camera);
-  print('拍摄视频：' + image.toString());
-}
-/*拍摄视频*/
-Future<File> _takeVideoFile() async {
-  var image = await ImagePicker.pickVideo(source: ImageSource.camera);
-  print('拍摄视频：' + image.toString());
-  return image;
-}
-
-Future<void> takePath() async{
-  var tempDir = await getTemporaryDirectory();
-  String tempPath = tempDir.path;
-
-  var appDocDir = await getApplicationDocumentsDirectory();
-  String appDocPath = appDocDir.path;
-
-  var appExternalDir = await getExternalStorageDirectory();
-
-
-  print('临时目录: ' + tempPath);
-  print('文档目录: ' + appDocPath);
-  print('Android平台可用: ' + appExternalDir.path); ///storage/emulated/0/Android/data/qyy.im.flutter_qyyim/files
-
-}

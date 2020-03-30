@@ -21,7 +21,6 @@ import 'package:flutter_qyyim/ui/edit/text_span_builder.dart';
 import 'package:flutter_qyyim/ui/main_input.dart';
 import 'package:flutter_qyyim/ui/special_text/emoji_text.dart';
 import 'package:flutter_qyyim/view_model/chat_view_model.dart';
-import 'package:image_picker/image_picker.dart';
 
 import 'chat_details_body.dart';
 import 'chat_details_row.dart';
@@ -194,15 +193,21 @@ class ChatePageState extends State<ChatPage> {
   /// 点击底部的按钮事件
   void moreTap(name, BuildContext context) {
     if (name == '相册') {
-      sendImageMsg(widget.id, widget.type, source: ImageSource.gallery,
-          callback: (v) {
-        if (v == null) return;
-        print(v);
-        chatViewModle.sendMgs(MsgEvent(content: v, type: MsgType.IMG));
+      sendImageMsg(widget.id, widget.type,
+          callback: (imgs) {
+        if (imgs.contains(",")) {
+          var split = imgs.split(",");
+          split.forEach((img){
+            if (img.isNotEmpty) {
+              chatViewModle.sendMgs(MsgEvent(content: img, type: MsgType.IMG));
+            }
+          });
+        } else {
+          chatViewModle.sendMgs(MsgEvent(content: imgs, type: MsgType.IMG));
+        }
       });
     } else if (name == "拍摄") {
-      sendImageMsg(widget.id, widget.type, source: ImageSource.camera,
-          callback: (v) {
+      openCamera(callback: (v) {
         if (v == null) return;
         print(v);
         chatViewModle.sendMgs(MsgEvent(content: v, type: MsgType.VIDEO));

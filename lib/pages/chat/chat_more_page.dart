@@ -4,7 +4,6 @@ import 'package:flutter_qyyim/common/route/route.dart';
 import 'package:flutter_qyyim/config/t.dart';
 import 'package:flutter_qyyim/pages/chat/shoot_page.dart';
 import 'package:flutter_qyyim/tool/log_utils.dart';
-import 'package:image_picker/image_picker.dart';
 
 import 'handle/message_handle.dart';
 import 'more_item_card.dart';
@@ -32,33 +31,6 @@ class _ChatMorePageState extends State<ChatMorePage> {
   ];
 
 
-
-  action(String name) async {
-    if (name == '相册') {
-      sendImageMsg(widget.id, widget.type, source: ImageSource.gallery,
-          callback: (v) {
-        if (v == null) return;
-        print(v);
-        // Notice.send(WeChatActions.msg(), v ?? '');
-      });
-      //ImagePicker.pickImage(source: ImageSource.gallery);
-    } else if (name == '拍摄') {
-      //ImagePicker.pickImage(source: ImageSource.camera);
-      try {
-        List<CameraDescription> cameras;
-
-        WidgetsFlutterBinding.ensureInitialized();
-        cameras = await availableCameras();
-
-        routePush(new ShootPage(cameras));
-      } on CameraException catch (e) {
-       LogUtil.e(e.description);
-      }
-
-    } else {
-      //showToast(context,'敬请期待$name');
-    }
-  }
 
   itemBuild(data) {
     return new Container(

@@ -4,11 +4,12 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/config/app.dart';
+import 'package:flutter_qyyim/pages/chat/handle/message_handle.dart';
 import 'package:flutter_qyyim/tool/check.dart';
 import 'package:flutter_qyyim/common/route/route.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
 import 'package:flutter_qyyim/pages/chat/model/chat_data.dart';
-import 'package:photo_view/photo_view.dart';
+import 'package:image_pickers/image_pickers.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/provider/global_model.dart';
@@ -75,14 +76,7 @@ class ImgMsg extends StatelessWidget {
                       imageUrl: url, height: resultH, fit: BoxFit.cover),
             ),
           ),
-          onTap: () => routePush(
-            new PhotoView(
-              imageProvider: isFile ? FileImage(File(url)) : NetworkImage(url),
-              onTapUp: (c, f, s) => Navigator.of(context).pop(),
-              maxScale: 3.0,
-              minScale: 1.0,
-            ),
-          ),
+          onTap: () => previewImage(url),
         ),
       ),
       new Spacer(),
