@@ -55,10 +55,14 @@ class ChatDetailsBody extends StatelessWidget {
               slivers: <Widget>[
                 SliverExpanded(),
                 SliverList(
-                  delegate: SliverChildBuilderDelegate((c, i) {
-                   // chatViewModel.list.sort((a, b) => (a.id).compareTo(b.id));
-                    ChatData model = chatViewModel.list[i];
-                    return new SendMessageView(model);
+                  delegate: SliverChildBuilderDelegate((c, index) {
+                    // chatViewModel.list.sort((a, b) => (a.id).compareTo(b.id));
+                    ChatData model = chatViewModel.list[index];
+                    //list最后一条消息（时间上是最老的），是没有下一条了
+                    ChatData _nextModel = (index == chatViewModel.list.length - 1) ? null : chatViewModel.list[index + 1];
+
+
+                    return new SendMessageView(model,_nextModel);
                   }, childCount: chatViewModel.list?.length),
                 )
               ],
