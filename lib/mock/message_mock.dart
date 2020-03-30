@@ -22,7 +22,7 @@ Future<List<Message>> getMessageData() async {
         avatar:'https://randomuser.me/api/portraits/women/10.jpg',
         title:'lisa',
         subTitle:'我在思考问题。。',
-        time:DateTime(2020, 6, 20, 17, 30,20),
+        time:DateTime(2020, 3, 20, 17, 30,20),
         type:MessageType.CHAT)
   ];
 

@@ -10,7 +10,7 @@ class SharedUtil {
 
   SharedUtil._internal() {
     //初始化
-    //init
+    //init  3129
   }
 
   static SharedUtil _getInstance() {

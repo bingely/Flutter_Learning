@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_qyyim/config/app.dart';
+import 'package:flutter_qyyim/tool/device_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -28,11 +29,8 @@ Future<void> main() async {
   runApp(ProviderConfig.getInstance().getMultiGlobal(App()));
 
   /// Android状态栏透明
-  if (Platform.isAndroid) {
-    SystemUiOverlayStyle systemUiOverlayStyle =
-        SystemUiOverlayStyle(statusBarColor: Colors.transparent);
-    SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
-  }
+  DeviceUtils.setBarStatus(true);
+
 }
 
 class App extends StatelessWidget {

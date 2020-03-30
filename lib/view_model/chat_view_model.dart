@@ -6,7 +6,7 @@ import 'package:flutter_qyyim/common/provider/view_state_refresh_list_model.dart
 import 'package:flutter_qyyim/mock/chat_mock.dart';
 import 'package:flutter_qyyim/pages/chat/event/MsgEvent.dart';
 import 'package:flutter_qyyim/pages/chat/model/chat_data.dart';
-import 'package:flutter_qyyim/tool/date_utils.dart';
+import 'package:flutter_qyyim/tool/date_util.dart';
 
 class ChatViewModel extends ViewStateRefreshListModel<ChatData> {
 
@@ -38,7 +38,7 @@ class ChatViewModel extends ViewStateRefreshListModel<ChatData> {
       sqljson = '{"text": "$content", "type": "Text"}';
     }
 
-    var currentStamp = DateUtils.getCurrentStamp();
+    var currentStamp = DateUtil.getNowDateMs();
     // 模拟存到服务器中，数据库插入
     var chatData = ChatData(msg: sqljson, id: '$currentStamp', nickName: 'bingley',time: currentStamp);
     list.insert(0,chatData);

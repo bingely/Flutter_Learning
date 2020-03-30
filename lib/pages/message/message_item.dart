@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/route/route.dart';
 import 'package:flutter_qyyim/common/touch_callback.dart';
 import 'package:flutter_qyyim/config/router_manger.dart';
-import 'package:flutter_qyyim/tool/date_utils.dart';
+import 'package:flutter_qyyim/tool/timeline_util.dart';
 import 'package:flutter_qyyim/ui/image_view.dart';
 import '../../model/message.dart';
 import 'package:date_format/date_format.dart';
@@ -88,8 +88,7 @@ class MessageItem extends StatelessWidget {
                       margin: const EdgeInsets.only(top: 12.0),
                       child: Text(
                         //格式化时间
-                        DateUtils.formateTime(message.time,
-                            format: [HH, ':', nn, ':', 'ss']),
+                        TimelineUtil.formatByDateTime(message.time),
                         style:
                             TextStyle(fontSize: 14.0, color: Color(0xFFa9a9a9)),
                       ),

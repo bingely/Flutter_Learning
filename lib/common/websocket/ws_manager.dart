@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/tool/net_util.dart';
 import 'package:web_socket_channel/io.dart';
@@ -17,6 +19,8 @@ class WsManager {
   static final int PING_INTERVAL = 30 * 1000;
   /// websocket连接状态
   var connecting = false;
+
+  ObserverList<onReceiveMessage> observerList = ObserverList<onReceiveMessage>();
 
   WsManager._();
 
@@ -36,7 +40,10 @@ class WsManager {
           pingInterval: Duration(milliseconds: PING_INTERVAL));
       // header dureation TODO
       setSocketChannel(ioWebSocketChannel);
-      _socketChannel.sink.add("connected!"); // 将数据发送到服务器
+      if (ioWebSocketChannel != null) {
+        // 是成功state
+        _socketChannel.sink.add("connected!"); // 将数据发送到服务器
+      }
       // 监听动作
       _socketChannel.stream.listen(
             (data) => listenMessage(data),
@@ -46,6 +53,11 @@ class WsManager {
     } catch (e) {
       debugPrint('Connection exception $e');
     }
+  }
+
+  //发送消息
+  Future<bool> sendMessage(Map<String, dynamic> data) async {
+    _socketChannel.sink.add(json.encode(data));
   }
 
 
@@ -72,6 +84,10 @@ class WsManager {
     connecting = true;
     debugPrint('ws channel---> message$data');
     // 解析数据 TODO
+
+    observerList.forEach((onReceiveMessage listener) {
+      listener(json.decode(data));
+    });
   }
 
   IOWebSocketChannel getSocketChannel() => _socketChannel;
@@ -94,4 +110,18 @@ class WsManager {
     print('超时handler');
   }
 
+
+
+  //外部添加监听
+  addListener(onReceiveMessage listener) {
+    if (observerList.contains(listener)) {
+      return;
+    }
+    observerList.add(listener);
+  }
+
+  removeListener(onReceiveMessage listener) {
+    observerList.remove(listener);
+  }
 }
+typedef onReceiveMessage(Map<String, dynamic> json); //接收到服务器的消息
