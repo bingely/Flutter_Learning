@@ -52,8 +52,13 @@ class EmojiUitl {
   }
 
   EmojiUitl._() {
-    for (int i = 1; i < 49; i++) {
-      _emojiMap["[$i]"] = "$_emojiFilePath/$i.png";
+
+    for (int i = 0; i <100;i++) {
+      if (i < 90) {
+        _emojiMap["[$i]"] = "$_emojiFilePath/$i.gif";
+      } else {
+        _emojiMap["[$i]"] = "$_emojiFilePath/$i.png";
+      }
     }
   }
 }

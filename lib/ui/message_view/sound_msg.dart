@@ -69,7 +69,7 @@ class _SoundMsgState extends State<SoundMsg> with TickerProviderStateMixin {
           controller.reverse();
         }
         if (status == AnimationStatus.dismissed) {
-          controller.forward();
+          //controller.forward();
         }
       });
 

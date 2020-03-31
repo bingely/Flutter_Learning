@@ -236,10 +236,10 @@ class ChatePageState extends State<ChatPage> {
           crossAxisCount: 8, crossAxisSpacing: 10.0, mainAxisSpacing: 10.0),
       itemBuilder: (context, index) {
         return GestureDetector(
-          child: Image.asset(EmojiUitl.instance.emojiMap["[${index + 1}]"]),
+          child: Image.asset(EmojiUitl.instance.emojiMap["[$index]"]),
           behavior: HitTestBehavior.translucent,
           onTap: () {
-            insertEmojText("[${index + 1}]");
+            insertEmojText("[$index]");
           },
         );
       },

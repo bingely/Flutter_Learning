@@ -7,6 +7,7 @@ import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/pages/chat/handle/message_handle.dart';
 import 'package:flutter_qyyim/tool/check.dart';
 import 'package:flutter_qyyim/common/route/route.dart';
+import 'package:flutter_qyyim/tool/log_utils.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
 import 'package:flutter_qyyim/pages/chat/model/chat_data.dart';
 import 'package:image_pickers/image_pickers.dart';
@@ -45,14 +46,15 @@ class ImgMsg extends StatelessWidget {
     image.image.resolve(new ImageConfiguration()).addListener(
         new ImageStreamListener((ImageInfo info, bool _) {
           _height = info.image.height;
+          var width2 = info.image.width;
           resultH = _height > 200.0 ? 200.0 : _height;
 
-          print("testfilelist$_height");
+          LogUtil.e("testfilelist$_height");
 
-          print("testfilelist$resultH");
+          LogUtil.e("testfilelist$resultH");
         }));
 
-    print("testfile---");
+    LogUtil.e("testfile---");
 
 
     var isFile = File(url).existsSync();
@@ -63,15 +65,12 @@ class ImgMsg extends StatelessWidget {
       new Expanded(
         child: new GestureDetector(
           child: new Container(
-            padding: EdgeInsets.all(5.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            ),
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.all(0),
             child: new ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              borderRadius: BorderRadius.all(Radius.circular(4.0)),
               child: isFile
-                  ? new Image.file(File(url))
+                  ? new Image.file(File(url),height: resultH)
                   : new CachedNetworkImage(
                       imageUrl: url, height: resultH, fit: BoxFit.cover),
             ),
