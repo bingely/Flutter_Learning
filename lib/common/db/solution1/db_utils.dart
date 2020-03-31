@@ -128,6 +128,8 @@ class DbUtils {
 
     maps = await database.query(
       t.getTableName(),
+      where: (key + " = ?"),
+      whereArgs: [value],
       limit: limit,
       offset: offset,
       orderBy: orderBy,

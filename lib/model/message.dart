@@ -1,8 +1,8 @@
 //消息类型枚举类型
 enum MessageType { SYSTEM,PUBLIC,CHAT,GROUP }
 
-//聊天数据
-class Message{
+//聊天会话数据
+class SessionMsg{
   //头像
   String avatar;
   //主标题
@@ -16,6 +16,6 @@ class Message{
 
   String userId;
 
-  Message({this.avatar,this.title,this.subTitle,this.time,this.type,this.userId});
+  SessionMsg({this.avatar,this.title,this.subTitle,this.time,this.type,this.userId});
 }
 

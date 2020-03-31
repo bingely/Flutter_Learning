@@ -12,13 +12,16 @@ class ChatViewModel extends ViewStateRefreshListModel<ChatData> {
 
   bool isBottom = false;
 
+  String chatId;
+  ChatViewModel(this.chatId);
+
   /// 初始化聊天数据
   @override
   Future<List<ChatData>> loadData({int pageNum}) async {
     //debugPrint('查询到的结果数量**************${queryItemsLimit.length}---$currentPageNum');
     isBottom = false;
     //await Future.delayed(Duration(seconds: 1));
-    return DbUtils.getInstance().queryItemsLimit(ChatData(),limit: pageSize,offset: (currentPageNum - 1) * pageSize,orderBy: "id Desc");
+    return DbUtils.getInstance().queryItemsLimit(ChatData(),limit: pageSize,offset: (currentPageNum - 1) * pageSize,orderBy: "id Desc",key:"chatId",value: chatId);
   }
 
   /// 发送消息
@@ -40,9 +43,13 @@ class ChatViewModel extends ViewStateRefreshListModel<ChatData> {
 
     var currentStamp = DateUtil.getNowDateMs();
     // 模拟存到服务器中，数据库插入
-    var chatData = ChatData(msg: sqljson, id: '$currentStamp', nickName: 'bingley',time: currentStamp);
+    var chatData = ChatData(msg: sqljson, id: '$currentStamp', nickName: 'bingley',time: currentStamp,chatId: chatId);
     list.insert(0,chatData);
     DbUtils.getInstance().insertItem(chatData);
+
+
+    // 再更新下会话消息
+
 
     isBottom = true;
     setIdle();

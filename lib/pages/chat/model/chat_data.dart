@@ -2,12 +2,14 @@ import 'package:flutter_qyyim/common/db/solution1/db_base_bean.dart';
 
 class ChatData extends DbBaseBean {
   final String msg;
-  final String id;
+  final String id;  // 消息id
   final int time;
   final String nickName;
   final String avatar;
 
-  ChatData({this.msg, this.id, this.time, this.nickName, this.avatar});
+  final String chatId; // 会话id
+
+  ChatData({this.msg, this.id, this.time, this.nickName, this.avatar, this.chatId});
 
   @override
   String getTableName() {
@@ -22,6 +24,7 @@ class ChatData extends DbBaseBean {
       time: map['time'] as int,
       nickName: map['nickName'] as String,
       avatar: map['avatar'] as String,
+      chatId: map['chatId'] as String
     );
   }
 
@@ -33,6 +36,7 @@ class ChatData extends DbBaseBean {
       'time': this.time,
       'nickName': this.nickName,
       'avatar': this.avatar,
+      'chatId': this.chatId
     };
   }
 }

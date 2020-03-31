@@ -10,9 +10,9 @@ import 'package:flutter/services.dart';
 import '../model/message.dart';
 
 ///
-class MessageViewModel extends ViewStateRefreshListModel<Message>{
+class MessageViewModel extends ViewStateRefreshListModel<SessionMsg>{
   @override
-  Future<List<Message>> loadData({int pageNum}) {
+  Future<List<SessionMsg>> loadData({int pageNum}) {
     return getMessageData();
   }
 

@@ -38,9 +38,9 @@ enum ButtonType { voice, emoj, more }
 class ChatPage extends StatefulWidget {
   final String title;
   final int type;
-  final String id;
+  final String id; // 单聊的话是目标用户id
 
-  final Message message;
+  final SessionMsg message;
 
   const ChatPage({Key key, this.title, this.type, this.id, this.message})
       : super(key: key);
@@ -118,7 +118,7 @@ class ChatePageState extends State<ChatPage> {
         rightDMActions: rWidget,
       ),
       body: ProviderWidget<ChatViewModel>(
-        model: ChatViewModel(),
+        model: ChatViewModel( widget.message.userId),
         onModelReady: (modle) {
           modle.initData();
           chatViewModle = modle;

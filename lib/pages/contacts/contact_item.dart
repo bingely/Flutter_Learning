@@ -154,7 +154,7 @@ class ContactItemState extends State<ContactItem> {
               avatar: widget.avatar,
               title: widget.title));*/
           NavigatorUtil.pushWithCuperino(
-              context, ChatPage(message: Message(title:'${widget.title}',userId: '${widget.identifier}')));
+              context, ChatPage(message: SessionMsg(title:'${widget.title}',userId: '${widget.identifier}')));
         }
       },
       child: new Row(children: content),

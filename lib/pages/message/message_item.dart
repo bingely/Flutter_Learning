@@ -10,7 +10,7 @@ import 'package:date_format/date_format.dart';
 
 //聊天信息项
 class MessageItem extends StatelessWidget {
-  final Message message;
+  final SessionMsg message;
 
   MessageItem(this.message);
 

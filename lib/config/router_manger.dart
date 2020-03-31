@@ -66,7 +66,7 @@ class Router {
       case RouteName.app:
         return NoAnimRouteBuilder(TabNavigatorPage());
       case RouteName.chat:
-        var message = settings.arguments as Message;
+        var message = settings.arguments as SessionMsg;
         return CupertinoPageRoute(
             builder: (context) => ChatPage(message: message));
       case RouteName.msglist:
