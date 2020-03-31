@@ -5,6 +5,7 @@ import 'package:flutter_qyyim/pages/contacts/contacts_page.dart';
 import 'package:flutter_qyyim/pages/me/me_page.dart';
 import 'package:flutter_qyyim/pages/message/message_page.dart';
 import 'package:badges/badges.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 List<Widget> widegets = <Widget>[
   new MessagePage(),
@@ -36,6 +37,7 @@ class TabNavigatorPageState extends State<TabNavigatorPage> {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
     return Scaffold(
       //  中间显示的
       body: WillPopScope(
@@ -56,7 +58,7 @@ class TabNavigatorPageState extends State<TabNavigatorPage> {
       // 底部导航按钮
       bottomNavigationBar: BottomNavigationBar(
         elevation: 0,
-        unselectedFontSize: 12.0,
+        unselectedFontSize: ScreenUtil().setSp(12),
         selectedFontSize: 12.0,
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,

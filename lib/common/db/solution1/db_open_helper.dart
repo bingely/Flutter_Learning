@@ -11,6 +11,7 @@ class DbOpenHelper{
     // 联系人表
     String contractSql = 'CREATE TABLE Contact (id TEXT PRIMARY KEY, avatar TEXT, name TEXT, nameIndex TEXT)';
     // 离线消息表
+    //String sessionSql = 'CREATE TABLE SessionMsg (id TEXT PRIMARY KEY, avatar TEXT, name TEXT, nameIndex TEXT)';
 
     await db.execute(messageSql);
     await db.execute(contractSql);

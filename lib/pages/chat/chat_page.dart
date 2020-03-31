@@ -149,7 +149,7 @@ class ChatePageState extends State<ChatPage> {
                   value: _textController.text,
                   onTap: () {
                     chatViewModle.sendMgs(MsgEvent(
-                        content: _textController.text, type: MsgType.TXT));
+                        content: _textController.text.trim(), type: MsgType.TXT));
                     _textController.clear();
                   },
                   moreTap: () {

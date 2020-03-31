@@ -21,6 +21,7 @@ class MessageItem extends StatelessWidget {
       onPressed: () {
         // 跳到对应的聊天页面
         Navigator.pushNamed(context, RouteName.chat, arguments: message);
+
       },
       //按下回调处理
       child: Container(

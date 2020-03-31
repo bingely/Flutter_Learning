@@ -19,7 +19,7 @@ class TextMsg extends StatelessWidget {
     var body = [
       new MsgAvatar(model: model, globalModel: globalModel),
       new TextItemContainer(
-        text: text ?? '文字为空',
+        text: text?.trim(),
         action: '',
         isMyself: model.id == globalModel.account,
       ),

@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_orm_plugin/flutter_orm_plugin.dart';
 import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
 import 'package:flutter_qyyim/common/db/student_dao.dart';
 import 'package:flutter_qyyim/common/db/test_dao.dart';
@@ -27,13 +26,6 @@ class _FileDataPageState extends State<FileDataPage> {
 
   //  DbUtils.getInstance().openDb("qqyim");
 
-
-    Map<String , Field> fields = new Map<String , Field>();
-    fields["studentId"] = Field(FieldType.Integer, primaryKey: true , autoIncrement: true);
-    fields["name"] = Field(FieldType.Text);
-   // fields["class"] = Field(FieldType.Text, foreignKey: true, to: "School_Class");
-    fields["score"] = Field(FieldType.Real);
-    FlutterOrmPlugin.createTable("School2","Student1",fields);
     super.initState();
   }
 

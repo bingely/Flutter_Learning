@@ -14,7 +14,7 @@ class SessionMsg{
   //消息类型
   MessageType type;
 
-  String userId;
+  String userId;// 也是会话id,每个用户都对应一个会话
 
   SessionMsg({this.avatar,this.title,this.subTitle,this.time,this.type,this.userId});
 }
