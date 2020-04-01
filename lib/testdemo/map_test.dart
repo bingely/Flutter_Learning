@@ -1,6 +1,7 @@
 import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 import 'package:amap_search_fluttify/amap_search_fluttify.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/testdemo/trip/model/travel_model.dart';
 import 'package:flutter_qyyim/tool/log_utils.dart';
 import 'package:flutter_qyyim/tool/misc.dart';
 import 'package:flutter_qyyim/tool/toast_util.dart';
@@ -41,11 +42,11 @@ class _MapTestPageState extends State<MapTestPage> {
           if (await requestPermission()) {
             await controller.showMyLocation(MyLocationOption(show: true));
 
+            //onTap();
 
-            onTap();
+            getCurrentLocation();
           } else {
             ToastUtils.show("open your map permission", context);
-
           }
         },
       ),
@@ -61,5 +62,34 @@ class _MapTestPageState extends State<MapTestPage> {
     poiList?.forEach((Pois) {
       LogUtil.e(Pois.title);
     });
+  }
+
+  List<String> _poiTitleList = [];
+
+  getCurrentLocation() async {
+    final latLng = await _controller?.getLocation();
+    ToastUtils.show('当前经纬度Extension: ${latLng.toString()}', context);
+
+    final poiList = await AmapSearch.searchAround(
+      LatLng(
+        double.tryParse(latLng?.latitude.toString()) ?? 29.08,
+        double.tryParse(latLng.longitude.toString()) ?? 119.65,
+      ),
+    );
+
+    Stream.fromIterable(poiList)
+        .asyncMap((it) async =>
+            'title: ' +
+            (await it.title) +
+            ', address: ' +
+            (await it.address) +
+            ', businessArea: ' +
+            (await it.businessArea) +
+            ', ' +
+            (await it.latLng).toString())
+        .toList()
+        .then((it) => setState(() {
+              _poiTitleList = it;
+            }));
   }
 }
