@@ -25,6 +25,16 @@ apply plugin: 'com.android.application'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 apply plugin: 'kotlin-android'
 android {
+
+    signingConfigs {
+        config {
+            keyAlias 'key'
+            keyPassword 'qqyim123456'
+            storeFile file('../key.jks')
+            storePassword 'qqyim123456'
+        }
+    }
+
     compileSdkVersion 28
 
     lintOptions {
@@ -47,11 +57,26 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.config
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+        }
+
+        debug {
+            signingConfig signingConfigs.config
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+        }
+
+        // 打包
+        applicationVariants.all { variant ->
+            variant.outputs.all { output ->
+                outputFileName = "setup_im.apk"
+            }
         }
     }
 }

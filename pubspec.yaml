@@ -60,6 +60,8 @@ dependencies:
   shimmer: ^1.0.0
   # 侧滑删除
   flutter_slidable: ^0.5.4
+  # 地图
+  #amap_map_fluttify: ^0.18.3+ddeef69
 
   # ****************************数据相关******************************************
   shared_preferences: any
