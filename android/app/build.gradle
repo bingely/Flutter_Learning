@@ -28,9 +28,9 @@ android {
 
     signingConfigs {
         config {
-            keyAlias 'key'
+            keyAlias 'qyy'
             keyPassword 'qqyim123456'
-            storeFile file('../key.jks')
+            storeFile file('../qyyim.jks')
             storePassword 'qqyim123456'
         }
     }
@@ -62,21 +62,12 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.config
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
         }
 
         debug {
             signingConfig signingConfigs.config
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-        }
-
-        // 打包
-        applicationVariants.all { variant ->
-            variant.outputs.all { output ->
-                outputFileName = "setup_im.apk"
-            }
         }
     }
 }
