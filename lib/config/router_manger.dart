@@ -13,6 +13,7 @@ import 'package:flutter_qyyim/testdemo/event_handle_chapter8/both_direction_test
 import 'package:flutter_qyyim/testdemo/event_handle_chapter8/gestur_confic_test_page.dart';
 import 'package:flutter_qyyim/testdemo/event_handle_chapter8/gesture_detector_page.dart';
 import 'package:flutter_qyyim/testdemo/file_data_page.dart';
+import 'package:flutter_qyyim/testdemo/map_test.dart';
 import 'package:flutter_qyyim/testdemo/scrcole_chapter6/custom_scrollview.dart';
 import 'package:flutter_qyyim/testdemo/scrcole_chapter6/listview/list_demo.dart';
 import 'package:flutter_qyyim/testdemo/scrcole_chapter6/listview/listview_head.dart';
@@ -64,7 +65,7 @@ class Router {
       case RouteName.splash:
         return NoAnimRouteBuilder(CustomScrollViewTestRoute());
       case RouteName.app:
-        return NoAnimRouteBuilder(TabNavigatorPage());
+        return NoAnimRouteBuilder(MapTestPage());
       case RouteName.chat:
         var message = settings.arguments as SessionMsg;
         return CupertinoPageRoute(

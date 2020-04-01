@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_qyyim/config/app.dart';
@@ -30,6 +31,12 @@ Future<void> main() async {
 
   /// Android状态栏透明
   DeviceUtils.setBarStatus(true);
+
+  await AmapService.init(
+    iosKey: '4a5c00784c8a5b1660a702686cf57774',
+    androidKey: 'a3294b588ecb07d341f5467368a41f9e',
+  );
+  await AmapCore.init('4a5c00784c8a5b1660a702686cf57774');
 
 }
 
