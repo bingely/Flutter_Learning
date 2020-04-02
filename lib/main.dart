@@ -32,11 +32,12 @@ Future<void> main() async {
   /// Android状态栏透明
   DeviceUtils.setBarStatus(true);
 
-  await AmapService.init(
+  /*await AmapService.init(
     iosKey: '4a5c00784c8a5b1660a702686cf57774',
     androidKey: 'a3294b588ecb07d341f5467368a41f9e',
-  );
-  //await AmapCore.init('4a5c00784c8a5b1660a702686cf57774');
+  );*/
+  // android 是在配置文件里面设置
+  await AmapCore.init('4a5c00784c8a5b1660a702686cf57774');
 
 }
 

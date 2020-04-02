@@ -1,14 +1,20 @@
 import 'package:amap_map_fluttify/amap_map_fluttify.dart';
+import 'package:amap_search_fluttify/amap_search_fluttify.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/pages/chat/event/MsgEvent.dart';
+import 'package:flutter_qyyim/pages/chat/map/place.dart';
+import 'package:flutter_qyyim/pages/chat/map/place_view.dart';
 import 'package:flutter_qyyim/testdemo/trip/model/travel_model.dart';
+import 'package:flutter_qyyim/testdemo/trip/widget/search_bar.dart';
 import 'package:flutter_qyyim/tool/device_utils.dart';
 import 'package:flutter_qyyim/tool/log_utils.dart';
 import 'package:flutter_qyyim/tool/misc.dart';
 import 'package:flutter_qyyim/tool/toast_util.dart';
 import 'package:flutter_qyyim/ui/commom_bar.dart';
 import 'package:flutter_qyyim/ui/commom_button.dart';
+import 'package:flutter_qyyim/view_model/place_view_model.dart';
 
 import 'cross_data/event_bus.dart';
 
@@ -21,11 +27,13 @@ class _MapTestPageState extends State<MapTestPage> {
   AmapController _controller;
 
   String showAddressText = "周围的数据";
+  ScrollController sC;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    sC = new ScrollController();
   }
 
   @override
@@ -52,7 +60,6 @@ class _MapTestPageState extends State<MapTestPage> {
                     await controller
                         .showMyLocation(MyLocationOption(show: true));
 
-
                     /*final marker = await _controller?.addMarker(
                       MarkerOption(
                         latLng: LatLng(22.53233,113.952584),
@@ -66,6 +73,7 @@ class _MapTestPageState extends State<MapTestPage> {
                       ),
                     );
                     _markers.add(marker);*/
+                    setState(() {});
                   } else {
                     ToastUtils.show("open your map permission", context);
                   }
@@ -78,7 +86,7 @@ class _MapTestPageState extends State<MapTestPage> {
               left: 16,
               child: Text(
                 '取消',
-                style: TextStyle(color: Colors.white,fontSize: 18),
+                style: TextStyle(color: Colors.white, fontSize: 18),
               ),
             ),
             Positioned(
@@ -90,80 +98,58 @@ class _MapTestPageState extends State<MapTestPage> {
                 width: 65,
                 onTap: () async {
                   final latLng = await _controller?.getLocation();
-                  ToastUtils.show('当前经纬度Extension: ${latLng.toString()}', context);
-
+                  ToastUtils.show(
+                      '当前经纬度Extension: ${latLng.toString()}', context);
 
                   _controller.screenShot((data) async {
-
-                    eventBus.fire(MsgEvent(latLng: latLng,type: MsgType.MAP,mapPic: data));
+                    eventBus.fire(MsgEvent(
+                        latLng: latLng, type: MsgType.MAP, mapPic: data));
                     Navigator.pop(context);
-
                   });
-
-
-
-
-
-
                 },
               ),
             )
           ]),
-          Column(
-            children: <Widget>[
-              ComMomButton(
-                  text: "查询",
-                  onTap: () {
-                    getCurrentLocation();
-                  }),
-              Text('$showAddressText'),
-            ],
-          ),
+          (_controller != null)
+              ? Flexible(
+                  child: Column(
+                    children: <Widget>[
+                      //Text('$showAddressText'),
+                      SearchBar(
+                        searchBarType: SearchBarType.homeLight,
+                        defaultText: '搜索地址',
+                        leftButtonClick: () {},
+                      ),
+                      ProviderWidget<PlaceViewModle>(
+                        model: new PlaceViewModle(),
+                        onModelReady: (modle) async {
+                          final latLng = await _controller?.getLocation();
+                          ToastUtils.show(
+                              '当前经纬度Extension: ${latLng.toString()}', context);
+                          modle.getCurrentLocation(latLng);
+                        },
+                        builder: (context, modle, widget) {
+                          return Flexible(
+                            child: new ListView.builder(
+                              controller: sC,
+                              shrinkWrap: true,
+                              //内容适配
+                              padding: EdgeInsets.all(8.0),
+                              reverse: false,
+                              itemBuilder: (context, int index) {
+                                return new PlaceView(modle.poiTitleList[index]);
+                              },
+                              itemCount: modle.poiTitleList?.length,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                )
+              : Container(),
         ],
       ),
     );
-  }
-
-  onTap() async {
-    /*final poiList = await AmapSearch.searchKeyword(
-      "肯德基",
-      city: "深圳",
-    );
-
-    poiList?.forEach((Pois) {
-      LogUtil.e(Pois.title);
-    });*/
-  }
-
-  List<String> _poiTitleList = [];
-
-  getCurrentLocation() async {
-    final latLng = await _controller?.getLocation();
-    ToastUtils.show('当前经纬度Extension: ${latLng.toString()}', context);
-
-
-
-    /*final poiList = await AmapSearch.searchAround(
-      LatLng(
-        double.tryParse(latLng?.latitude.toString()) ?? 29.08,
-        double.tryParse(latLng.longitude.toString()) ?? 119.65,
-      ),
-    );
-
-    Stream.fromIterable(poiList)
-        .asyncMap((it) async =>
-            'title: ' +
-            (await it.title) +
-            ', address: ' +
-            (await it.address) +
-            ', businessArea: ' +
-            (await it.businessArea) +
-            ', ' +
-            (await it.latLng).toString())
-        .toList()
-        .then((it) => setState(() {
-              _poiTitleList = it;
-              showAddressText = _poiTitleList.toString();
-            }));*/
   }
 }

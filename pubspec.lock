@@ -15,6 +15,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.19.1+b2681d9"
+  amap_search_fluttify:
+    dependency: "direct main"
+    description:
+      name: amap_search_fluttify
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.8.0+b2681d9"
   analyzer:
     dependency: transitive
     description:
