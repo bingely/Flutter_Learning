@@ -1,5 +1,7 @@
 
 
+import 'dart:typed_data';
+
 import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 
 class MsgEvent {
@@ -9,7 +11,9 @@ class MsgEvent {
 
   LatLng latLng;  // 经纬度
 
-  MsgEvent({this.content, this.type, this.recordTime,this.latLng});
+  Uint8List mapPic;
+
+  MsgEvent({this.content, this.type, this.recordTime,this.latLng,this.mapPic});
 
 }
 

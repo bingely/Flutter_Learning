@@ -59,27 +59,7 @@ class _MapMsgViewState extends State<MapMsgView> {
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 child: Stack(
                   children: <Widget>[
-                    Container(
-                      child: AmapView(
-                        centerCoordinate: LatLng(22.53233,113.952584),
-                        mapType: MapType.Standard,
-                        zoomGesturesEnabled: false,
-                        scrollGesturesEnabled: false,
-                        showZoomControl: false,
-                        maskDelay: Duration(milliseconds: 500),
-                        onMapCreated: (controller) async {
-                          //_controller = controller;
-                          if (await requestPermission()) {
-                            await controller.setZoomLevel(19);
-                            await controller
-                                .showMyLocation(MyLocationOption(show: true));
-                          } else {
-                            ToastUtils.show("open your map permission", context);
-                          }
-                        },
-                      ),
-                      height: 155,
-                    ),
+                    if (widget.model.mapPic != null) Image.memory(widget.model.mapPic)
                     //_controller.value.isPlaying?null:
                   ],
                 ),

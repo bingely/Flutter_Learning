@@ -92,9 +92,19 @@ class _MapTestPageState extends State<MapTestPage> {
                   final latLng = await _controller?.getLocation();
                   ToastUtils.show('当前经纬度Extension: ${latLng.toString()}', context);
 
-                  eventBus.fire(MsgEvent(latLng: latLng,type: MsgType.MAP));
 
-                  Navigator.pop(context);
+                  _controller.screenShot((data) async {
+
+                    eventBus.fire(MsgEvent(latLng: latLng,type: MsgType.MAP,mapPic: data));
+                    Navigator.pop(context);
+
+                  });
+
+
+
+
+
+
                 },
               ),
             )
@@ -130,6 +140,8 @@ class _MapTestPageState extends State<MapTestPage> {
   getCurrentLocation() async {
     final latLng = await _controller?.getLocation();
     ToastUtils.show('当前经纬度Extension: ${latLng.toString()}', context);
+
+
 
     /*final poiList = await AmapSearch.searchAround(
       LatLng(

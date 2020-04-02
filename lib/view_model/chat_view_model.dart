@@ -30,6 +30,7 @@ class ChatViewModel extends ViewStateRefreshListModel<ChatData> {
     String content = event.content;
 
     String sqljson = "";
+    var mapPic;
     if (msgType == MsgType.VIDEO) {
       sqljson = '{"videosrc": "$content","urls": "$content","type": "Video","path": "$content"}';
     } else if (msgType == MsgType.IMG) {
@@ -41,11 +42,13 @@ class ChatViewModel extends ViewStateRefreshListModel<ChatData> {
       sqljson = '{"text": "$content", "type": "Text"}';
     } else if (msgType == MsgType.MAP) {
       sqljson = '{"text": "${event.latLng.toString()}", "type": "Map"}';
+
+       mapPic = event.mapPic;
     }
 
     var currentStamp = DateUtil.getNowDateMs();
     // 模拟存到服务器中，数据库插入
-    var chatData = ChatData(msg: sqljson, id: '$currentStamp', nickName: 'bingley',time: currentStamp,chatId: chatId);
+    var chatData = ChatData(msg: sqljson, id: '$currentStamp', nickName: 'bingley',time: currentStamp,chatId: chatId,mapPic: mapPic);
     list.insert(0,chatData);
     DbUtils.getInstance().insertItem(chatData);
 
