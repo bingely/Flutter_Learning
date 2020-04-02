@@ -36,7 +36,7 @@ Future<void> main() async {
     iosKey: '4a5c00784c8a5b1660a702686cf57774',
     androidKey: 'a3294b588ecb07d341f5467368a41f9e',
   );
-  await AmapCore.init('4a5c00784c8a5b1660a702686cf57774');
+  //await AmapCore.init('4a5c00784c8a5b1660a702686cf57774');
 
 }
 

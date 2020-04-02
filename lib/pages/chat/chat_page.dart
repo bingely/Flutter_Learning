@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
 import 'package:flutter_qyyim/common/provider/provider_widget.dart';
+import 'package:flutter_qyyim/config/router_manger.dart';
 import 'package:flutter_qyyim/model/message.dart';
 import 'package:flutter_qyyim/pages/contacts/contacts.dart';
 import 'package:flutter_qyyim/pages/qr/qr_page.dart';
@@ -221,7 +222,10 @@ class ChatePageState extends State<ChatPage> {
           // _handleSubmittedVideoData(url);
         }
       });
-    } else {
+    } else if (name == "地图"){
+      Navigator.pushNamed(context, RouteName.MAP);
+    }
+    else {
       sendVideoMsg(widget.id, widget.type, callback: (v) {
         if (v == null) return;
         print("视频地址" + v);
