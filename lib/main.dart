@@ -25,19 +25,19 @@ Future<void> main() async {
   await StorageManager.init();
   /// Provider如果与Listenable/一起使用，现在抛出Stream。考虑使用ListenableProvider/ StreamProvider代替。或者，可以通过设置Provider.debugCheckInvalidValueType 为null这样来禁用此异常***/
  // Provider.debugCheckInvalidValueType = null;
-
-  /// APP入口并配置Provider
-  runApp(ProviderConfig.getInstance().getMultiGlobal(App()));
-
-  /// Android状态栏透明
-  DeviceUtils.setBarStatus(true);
-
   /*await AmapService.init(
     iosKey: '4a5c00784c8a5b1660a702686cf57774',
     androidKey: 'a3294b588ecb07d341f5467368a41f9e',
   );*/
   // android 是在配置文件里面设置
   await AmapCore.init('4a5c00784c8a5b1660a702686cf57774');
+  /// APP入口并配置Provider
+  runApp(ProviderConfig.getInstance().getMultiGlobal(App()));
+
+  /// Android状态栏透明
+  DeviceUtils.setBarStatus(true);
+
+
 
 }
 
