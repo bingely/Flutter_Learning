@@ -103,8 +103,12 @@ class _MapTestPageState extends State<MapTestPage> {
                 onTap: () async {
                   final latLng = await _controller?.getLocation();
                   _controller.screenShot((data) async {
+                    var place;
+                    if (placeViewModel.places.isNotEmpty) {
+                       place = placeViewModel.places[0];
+                    }
                     eventBus.fire(MsgEvent(
-                        latLng: latLng, type: MsgType.MAP, mapPic: data));
+                        latLng: latLng, type: MsgType.MAP, mapPic: data,place: place));
                     Navigator.pop(context);
                   });
                 },

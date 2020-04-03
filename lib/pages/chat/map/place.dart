@@ -4,5 +4,5 @@ class Place {
   String title;
   String address;
   String cityName;
-  String distance;
+  int distance;
 }

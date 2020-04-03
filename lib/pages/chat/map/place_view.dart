@@ -19,7 +19,7 @@ class PlaceView extends StatelessWidget {
               border: Border(
                   bottom: BorderSide(color: AppColors.lineColor, width: 0.2)),
               title: '${place.title}',
-              label: '${place.address}',
+              label: '距离${place.distance}米   |   ${place.address}',
               isLabel: true,
               padding: EdgeInsets.symmetric(vertical: 16.0),
               width: 25.0,

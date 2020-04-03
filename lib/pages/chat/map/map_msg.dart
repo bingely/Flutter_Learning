@@ -57,8 +57,12 @@ class _MapMsgViewState extends State<MapMsgView> {
             ),
             child: new ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                child: Stack(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    Text(msg['text']),
+                    SizedBox(height: 10,),
                     if (widget.model.mapPic != null) Image.memory(widget.model.mapPic)
                     //_controller.value.isPlaying?null:
                   ],

@@ -32,14 +32,19 @@ class PlaceViewModle extends ViewStateModel {
     poiList.forEach((poi) async {
       Place place = new Place();
       place.title = await poi.title;
-     // place.distance = (await poi.distance).toString();
+      place.distance = await poi.distance;
       place.cityName = await poi.cityName;
       place.address = await poi.address;
-      LogUtil.e('${poi.toFutureString()}');
+
       places.add(place);
+      //String poiString = await poi.toFutureString();
+     // LogUtil.e('$poiString');
+      if (poiList.last == poi) {
+        LogUtil.e('查询到数据${places.length}');
+        setIdle();
+      }
     });
 
-    setIdle();
 
     /*await Stream.fromIterable(poiList)
         .asyncMap((it) async {
@@ -70,4 +75,6 @@ class PlaceViewModle extends ViewStateModel {
       //setIdle();
     });*/
   }
+
+
 }
