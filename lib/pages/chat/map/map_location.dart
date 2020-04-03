@@ -16,16 +16,17 @@ import 'package:flutter_qyyim/ui/commom_bar.dart';
 import 'package:flutter_qyyim/ui/commom_button.dart';
 import 'package:flutter_qyyim/view_model/place_view_model.dart';
 
-import 'cross_data/event_bus.dart';
+import '../../../testdemo/cross_data/event_bus.dart';
 
 final _assetsIcon1 = Uri.parse('assets/images/wechat_locate.png');
 
-class MapTestPage extends StatefulWidget {
+/// 定位地图
+class MapLocationPage extends StatefulWidget {
   @override
-  _MapTestPageState createState() => new _MapTestPageState();
+  _MapLocationPageState createState() => new _MapLocationPageState();
 }
 
-class _MapTestPageState extends State<MapTestPage> {
+class _MapLocationPageState extends State<MapLocationPage> {
 
   AmapController _controller;
 
@@ -86,11 +87,16 @@ class _MapTestPageState extends State<MapTestPage> {
               height: 455,
             ),
             Positioned(
-              top: 45,
-              left: 16,
-              child: Text(
-                '取消',
-                style: TextStyle(color: Colors.white, fontSize: 18),
+              top: 35,
+              left: 8,
+              child: FlatButton(
+                onPressed: (){
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  '取消',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
               ),
             ),
             Positioned(

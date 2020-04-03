@@ -94,7 +94,7 @@ class _SearchBarState extends State<SearchBar> {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      '上海',
+                      '深圳',
                       style: TextStyle(color: _homeFontColor(), fontSize: 14),
                     ),
                     Icon(

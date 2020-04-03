@@ -13,7 +13,7 @@ import 'package:flutter_qyyim/testdemo/event_handle_chapter8/both_direction_test
 import 'package:flutter_qyyim/testdemo/event_handle_chapter8/gestur_confic_test_page.dart';
 import 'package:flutter_qyyim/testdemo/event_handle_chapter8/gesture_detector_page.dart';
 import 'package:flutter_qyyim/testdemo/file_data_page.dart';
-import 'package:flutter_qyyim/testdemo/map_test.dart';
+import 'package:flutter_qyyim/pages/chat/map/map_location.dart';
 import 'package:flutter_qyyim/testdemo/scrcole_chapter6/custom_scrollview.dart';
 import 'package:flutter_qyyim/testdemo/scrcole_chapter6/listview/list_demo.dart';
 import 'package:flutter_qyyim/testdemo/scrcole_chapter6/listview/listview_head.dart';
@@ -74,7 +74,7 @@ class Router {
       case RouteName.msglist:
         return NoAnimRouteBuilder(MessagePage());
       case RouteName.MAP:
-        return NoAnimRouteBuilder(MapTestPage());
+        return NoAnimRouteBuilder(MapLocationPage());
       case RouteName.search:
         return NoAnimRouteBuilder(SearchWidget());
       case RouteName.video_page:
