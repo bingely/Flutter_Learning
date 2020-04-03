@@ -5,7 +5,6 @@ import 'package:flutter_qyyim/ui/ui.dart';
 import 'package:flutter_qyyim/tool/device_utils.dart';
 import 'package:flutter_qyyim/ui/image_view.dart';
 
-
 class ListTileView extends StatelessWidget {
   final BoxBorder border;
   final VoidCallback onPressed;
@@ -41,7 +40,11 @@ class ListTileView extends StatelessWidget {
     var text = new Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        new Text(title ?? '', style: titleStyle ?? null),
+        new Text(
+          title ?? '',
+          style: titleStyle ?? null,
+          overflow: TextOverflow.ellipsis,
+        ),
         new Text(
           label ?? '',
           style: TextStyle(color: AppColors.mainTextColor, fontSize: 12),
@@ -50,7 +53,9 @@ class ListTileView extends StatelessWidget {
     );
 
     var view = [
-      isLabel ? text : new Text(title, style: titleStyle),
+      isLabel
+          ? text
+          : new Text(title, style: titleStyle, overflow: TextOverflow.ellipsis),
       new Spacer(),
       new Container(
         width: 7.0,
@@ -68,8 +73,7 @@ class ListTileView extends StatelessWidget {
         new Container(
           width: width - 5,
           margin: EdgeInsets.symmetric(horizontal: horizontal),
-          child:
-              new ImageView(img: icon, width: width, fit: fit),
+          child: new ImageView(img: icon, width: width, fit: fit),
         ),
         new Container(
           width: DeviceUtils.winWidth(context) - 60,

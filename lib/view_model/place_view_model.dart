@@ -1,6 +1,7 @@
 import 'package:amap_search_fluttify/amap_search_fluttify.dart';
 import 'package:flutter_qyyim/common/provider/view_state_model.dart';
 import 'package:flutter_qyyim/pages/chat/map/place.dart';
+import 'package:flutter_qyyim/tool/log_utils.dart';
 
 class PlaceViewModle extends ViewStateModel {
   onTap() async {
@@ -15,7 +16,7 @@ class PlaceViewModle extends ViewStateModel {
   }
 
   List<String> poiTitleList = [];
-  List<Place> places;
+  List<Place> places =[];
 
 
   /// 获取当前位置的周围数据
@@ -27,15 +28,30 @@ class PlaceViewModle extends ViewStateModel {
       ),
     );
 
-    await Stream.fromIterable(poiList)
+    places.clear();
+    poiList.forEach((poi) async {
+      Place place = new Place();
+      place.title = await poi.title;
+     // place.distance = (await poi.distance).toString();
+      place.cityName = await poi.cityName;
+      place.address = await poi.address;
+      LogUtil.e('${poi.toFutureString()}');
+      places.add(place);
+    });
+
+    setIdle();
+
+    /*await Stream.fromIterable(poiList)
         .asyncMap((it) async {
           Place place = new Place();
+          place.title = await it.title;
+          //place.distance = (await it.distance).toString();
           place.cityName = await it.cityName;
-          place.tile = await it.address;
+          place.address = await it.address;
         })
         .toList()
         .then((value) {
-          places = value;
+          //places = value;
          // setIdle();
         });
     Stream.fromIterable(poiList)
@@ -51,7 +67,7 @@ class PlaceViewModle extends ViewStateModel {
         .toList()
         .then((it) {
       poiTitleList = it;
-      setIdle();
-    });
+      //setIdle();
+    });*/
   }
 }

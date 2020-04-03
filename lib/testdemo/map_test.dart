@@ -26,6 +26,7 @@ class MapTestPage extends StatefulWidget {
 }
 
 class _MapTestPageState extends State<MapTestPage> {
+
   AmapController _controller;
 
   String showAddressText = "周围的数据";
@@ -45,7 +46,6 @@ class _MapTestPageState extends State<MapTestPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _controller.dispose();
     super.dispose();
   }
@@ -102,9 +102,6 @@ class _MapTestPageState extends State<MapTestPage> {
                 width: 65,
                 onTap: () async {
                   final latLng = await _controller?.getLocation();
-                  ToastUtils.show(
-                      '当前经纬度Extension: ${latLng.toString()}', context);
-
                   _controller.screenShot((data) async {
                     eventBus.fire(MsgEvent(
                         latLng: latLng, type: MsgType.MAP, mapPic: data));
@@ -142,9 +139,9 @@ class _MapTestPageState extends State<MapTestPage> {
                         padding: EdgeInsets.all(8.0),
                         reverse: false,
                         itemBuilder: (context, int index) {
-                          return new PlaceView(modle.poiTitleList[index]);
+                          return new PlaceView(modle.places[index]);
                         },
-                        itemCount: modle.poiTitleList?.length,
+                        itemCount: modle.places?.length,
                       ),
                     );
                   },
