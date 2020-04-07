@@ -12,6 +12,8 @@ import 'package:flutter_qyyim/testdemo/trip/model/common_model.dart';
 import 'package:flutter_qyyim/testdemo/trip/model/grid_nav_model.dart';
 import 'package:flutter_qyyim/testdemo/trip/model/home_model.dart';
 import 'package:flutter_qyyim/testdemo/trip/model/sales_box_model.dart';
+import 'package:flutter_qyyim/testdemo/trip/view/speak_page.dart';
+import 'package:flutter_qyyim/testdemo/trip/view/travel_search_page.dart';
 import 'package:flutter_qyyim/testdemo/trip/view_model/home_model.dart';
 import 'package:flutter_qyyim/testdemo/trip/widget/grid_nav.dart';
 import 'package:flutter_qyyim/testdemo/trip/widget/loading_container.dart';
@@ -201,14 +203,14 @@ class _TravelHomePageState extends State<TravelHomePage> {
   }
 
   _jumpToSearch() {
-//    NavigatorUtil.push(
-//        context,
-//        SearchPage(
-//          hint: SEARCH_BAR_DEFAULT_TEXT,
-//        ));
+    NavigatorUtil.push(
+        context,
+        SearchPage(
+          hint: SEARCH_BAR_DEFAULT_TEXT,
+        ));
   }
 
   _jumpToSpeak() {
-    //NavigatorUtil.push(context, SpeakPage());
+    NavigatorUtil.push(context, SpeakPage());
   }
 }

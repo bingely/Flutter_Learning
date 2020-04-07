@@ -34,6 +34,12 @@ Future<void> main() async {
   /// APP入口并配置Provider
   runApp(ProviderConfig.getInstance().getMultiGlobal(App()));
 
+  /* 一行代码 全灰致敬
+  runApp(ColorFiltered(
+    colorFilter: ColorFilter.mode(Colors.white, BlendMode.color),
+    child: ProviderConfig.getInstance().getMultiGlobal(App()),
+  ));*/
+
   /// Android状态栏透明
   DeviceUtils.setBarStatus(true);
 

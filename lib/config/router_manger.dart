@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_qyyim/pages/chat/camarademo/gallery.dart';
 import 'package:flutter_qyyim/pages/chat/chat_page.dart';
+import 'package:flutter_qyyim/pages/chat/map/map_locationed.dart';
+import 'package:flutter_qyyim/pages/chat/map/map_search_page.dart';
 import 'package:flutter_qyyim/pages/chat/video/video_page.dart';
 import 'package:flutter_qyyim/model/message.dart';
 import 'package:flutter_qyyim/pages/splash_page.dart';
@@ -21,6 +23,7 @@ import 'package:flutter_qyyim/testdemo/trip/tab_navigator_page2.dart';
 import 'package:flutter_qyyim/testdemo/wann/pages/project/article_list_item.dart';
 import 'package:flutter_qyyim/testdemo/wann/pages/project/project_page.dart';
 import 'package:flutter_qyyim/testdemo/wann/tab_navigator_page3.dart';
+import 'package:flutter_qyyim/ui/hom.dart';
 import 'package:flutter_qyyim/ui/page_route_anim.dart';
 
 /// how to use? 还可以传递 自定义的对象（arguments）
@@ -56,6 +59,8 @@ class RouteName {
   static const String wanna = 'wanna';
   static const String trip = 'trip';
   static const String MAP = 'map';
+
+  static const String MAP_LOCATIONED = "maplocated";
 }
 
 /// CupertinoPageRoute 是一种具有带有滑动关闭的苹果页面效果
@@ -64,9 +69,9 @@ class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RouteName.splash:
-        return NoAnimRouteBuilder(CustomScrollViewTestRoute());
+        return NoAnimRouteBuilder(ChatPage());
       case RouteName.app:
-        return NoAnimRouteBuilder(MapLocationPage());
+        return NoAnimRouteBuilder(TabNavigatorPage());
       case RouteName.chat:
         var message = settings.arguments as SessionMsg;
         return CupertinoPageRoute(
@@ -85,6 +90,8 @@ class Router {
         return CupertinoPageRoute(builder: (context) => TabNavigatorPage2());
       case RouteName.wanna:
         return CupertinoPageRoute(builder: (context) => TabNavigatorPageWana());
+      case RouteName.MAP_LOCATIONED:
+        return CupertinoPageRoute(builder: (context) => MapLocationedPage());
       default:
         return CupertinoPageRoute(
             builder: (_) => Scaffold(

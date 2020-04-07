@@ -4,9 +4,11 @@ import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/provider/global_model.dart';
 import 'package:flutter_qyyim/config/app.dart';
+import 'package:flutter_qyyim/config/router_manger.dart';
 import 'package:flutter_qyyim/pages/chat/model/chat_data.dart';
 import 'package:flutter_qyyim/tool/check.dart';
 import 'package:flutter_qyyim/tool/misc.dart';
+import 'package:flutter_qyyim/tool/navigator_util.dart';
 import 'package:flutter_qyyim/tool/toast_util.dart';
 import 'package:flutter_qyyim/ui/message_view/msg_avatar.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
@@ -70,6 +72,7 @@ class _MapMsgViewState extends State<MapMsgView> {
             ),
           ),
           onTap: () {
+            Navigator.pushNamed(context, RouteName.MAP_LOCATIONED );
 
           },
         ),

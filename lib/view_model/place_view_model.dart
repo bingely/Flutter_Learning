@@ -4,19 +4,21 @@ import 'package:flutter_qyyim/pages/chat/map/place.dart';
 import 'package:flutter_qyyim/tool/log_utils.dart';
 
 class PlaceViewModle extends ViewStateModel {
-  onTap() async {
-    /*final poiList = await AmapSearch.searchKeyword(
-      "肯德基",
-      city: "深圳",
-    );
 
-    poiList?.forEach((Pois) {
-      LogUtil.e(Pois.title);
-    });*/
-  }
 
   List<String> poiTitleList = [];
   List<Place> places =[];
+
+
+
+  searchKeyWord(String key) async {
+    final poiList = await AmapSearch.searchKeyword(
+      key,
+      city: "深圳",
+    );
+
+    await showPlaceListData(poiList);
+  }
 
 
   /// 获取当前位置的周围数据
@@ -28,22 +30,7 @@ class PlaceViewModle extends ViewStateModel {
       ),
     );
 
-    places.clear();
-    poiList.forEach((poi) async {
-      Place place = new Place();
-      place.title = await poi.title;
-      place.distance = await poi.distance;
-      place.cityName = await poi.cityName;
-      place.address = await poi.address;
-
-      places.add(place);
-      //String poiString = await poi.toFutureString();
-     // LogUtil.e('$poiString');
-      if (poiList.last == poi) {
-        LogUtil.e('查询到数据${places.length}');
-        setIdle();
-      }
-    });
+    await showPlaceListData(poiList);
 
 
     /*await Stream.fromIterable(poiList)
@@ -74,6 +61,25 @@ class PlaceViewModle extends ViewStateModel {
       poiTitleList = it;
       //setIdle();
     });*/
+  }
+
+  Future showPlaceListData(List<Poi> poiList) async {
+    places.clear();
+    poiList.forEach((poi) async {
+      Place place = new Place();
+      place.title = await poi.title;
+      place.distance = await poi.distance;
+      place.cityName = await poi.cityName;
+      place.address = await poi.address;
+
+      places.add(place);
+      //String poiString = await poi.toFutureString();
+     // LogUtil.e('$poiString');
+      if (poiList.last == poi) {
+        LogUtil.e('查询到数据${places.length}');
+        setIdle();
+      }
+    });
   }
 
 
