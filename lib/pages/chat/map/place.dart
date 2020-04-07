@@ -5,4 +5,6 @@ class Place {
   String address;
   String cityName;
   int distance;
+
+  bool isCheck = false;
 }

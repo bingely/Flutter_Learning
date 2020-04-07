@@ -12,11 +12,13 @@ import 'package:flutter_qyyim/tool/device_utils.dart';
 import 'package:flutter_qyyim/tool/log_utils.dart';
 import 'package:flutter_qyyim/tool/misc.dart';
 import 'package:flutter_qyyim/tool/toast_util.dart';
+import 'package:flutter_qyyim/ui/bottom_drag_widget.dart';
 import 'package:flutter_qyyim/ui/commom_bar.dart';
 import 'package:flutter_qyyim/ui/commom_button.dart';
 import 'package:flutter_qyyim/view_model/place_view_model.dart';
 
 import '../../../testdemo/cross_data/event_bus.dart';
+import 'map_search_widget.dart';
 
 final _assetsIcon1 = Uri.parse('assets/images/wechat_locate.png');
 
@@ -27,7 +29,6 @@ class MapLocationPage extends StatefulWidget {
 }
 
 class _MapLocationPageState extends State<MapLocationPage> {
-
   AmapController _controller;
 
   String showAddressText = "周围的数据";
@@ -37,7 +38,6 @@ class _MapLocationPageState extends State<MapLocationPage> {
   var index = 0;
 
   PlaceViewModle placeViewModel;
-
 
   @override
   void initState() {
@@ -54,84 +54,92 @@ class _MapLocationPageState extends State<MapLocationPage> {
   /// 套上ProviderWidget包装不过渡刷新
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: Column(
-        children: <Widget>[
-          Stack(children: <Widget>[
-            Container(
-              child: AmapView(
-                mapType: MapType.Standard,
-                showZoomControl: false,
-                onMapMoveEnd: (mapMove) async {
-                  await onMapMoveEnd(context);
-                  final latLng = await _controller?.getCenterCoordinate();
-                  if (latLng != null) {
-                    placeViewModel?.getCurrentLocation(latLng);
-                  }
-                },
-                maskDelay: Duration(milliseconds: 500),
-                onMapCreated: (controller) async {
-                  _controller = controller;
-                  if (await requestPermission()) {
-                    await controller
-                        .showMyLocation(MyLocationOption(show: true));
-                    await controller.setZoomLevel(16);
-                    setState(() {
-                    });
-                  } else {
-                    ToastUtils.show("open your map permission", context);
-                  }
+    return BottomDragWidget(
+      body: _getBody(),
+      dragContainer: DragContainer(
+          drawer: OverscrollNotificationWidget(child: _dragContainer()),
+          defaultShowHeight: DeviceUtils.winHeight(context) * 0.5,
+          height: DeviceUtils.winHeight(context) * 0.8),
+    );
+  }
 
-                },
-              ),
-              height: 455,
+  Widget _getBody() {
+    return CustomScrollView(
+      slivers: <Widget>[
+        Container(
+          child: AmapView(
+            mapType: MapType.Standard,
+            showZoomControl: false,
+            onMapMoveEnd: (mapMove) async {
+              await onMapMoveEnd(context);
+              final latLng = await _controller?.getCenterCoordinate();
+              if (latLng != null) {
+                placeViewModel?.getCurrentLocation(latLng);
+              }
+            },
+            maskDelay: Duration(milliseconds: 500),
+            onMapCreated: (controller) async {
+              _controller = controller;
+              if (await requestPermission()) {
+                await controller.showMyLocation(MyLocationOption(show: true));
+                await controller.setZoomLevel(16);
+                setState(() {});
+              } else {
+                ToastUtils.show("open your map permission", context);
+              }
+            },
+          ),
+          height: 455,
+        ),
+        Positioned(
+          top: 35,
+          left: 8,
+          child: FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              '取消',
+              style: TextStyle(color: Colors.white, fontSize: 18),
             ),
-            Positioned(
-              top: 35,
-              left: 8,
-              child: FlatButton(
-                onPressed: (){
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  '取消',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                ),
-              ),
-            ),
-            Positioned(
-              right: 16,
-              top: 45,
-              child: ComMomButton(
-                text: '发送',
-                height: 35,
-                width: 65,
-                onTap: () async {
-                  final latLng = await _controller?.getLocation();
-                  _controller.screenShot((data) async {
-                    var place;
-                    if (placeViewModel.places.isNotEmpty) {
-                       place = placeViewModel.places[0];
-                    }
-                    eventBus.fire(MsgEvent(
-                        latLng: latLng, type: MsgType.MAP, mapPic: data,place: place));
-                    Navigator.pop(context);
-                  });
-                },
-              ),
-            )
-          ]),
-          (_controller != null)
-              ? Flexible(
+          ),
+        ),
+        Positioned(
+          right: 16,
+          top: 45,
+          child: ComMomButton(
+            text: '发送',
+            height: 35,
+            width: 65,
+            onTap: () async {
+              final latLng = await _controller?.getLocation();
+              _controller.screenShot((data) async {
+                var place;
+                if (placeViewModel.places.isNotEmpty) {
+                  place = placeViewModel.places[0];
+                }
+                eventBus.fire(MsgEvent(
+                    latLng: latLng,
+                    type: MsgType.MAP,
+                    mapPic: data,
+                    place: place));
+                Navigator.pop(context);
+              });
+            },
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _dragContainer() {
+    return (_controller != null)
+        ? Flexible(
             child: Column(
               children: <Widget>[
                 //Text('$showAddressText'),
                 Text('$index'),
-                SearchBar(
-                  searchBarType: SearchBarType.homeLight,
-                  defaultText: '搜索地址',
-                  leftButtonClick: () {},
-                ),
+                MapSearchWidget(),
                 ProviderWidget<PlaceViewModle>(
                   model: PlaceViewModle(),
                   onModelReady: (modle) async {
@@ -141,7 +149,7 @@ class _MapLocationPageState extends State<MapLocationPage> {
                       modle?.getCurrentLocation(latLng);
                     }
                   },
-                  builder: (context, modle, widget){
+                  builder: (context, modle, widget) {
                     return Flexible(
                       child: new ListView.builder(
                         controller: sC,
@@ -159,10 +167,7 @@ class _MapLocationPageState extends State<MapLocationPage> {
               ],
             ),
           )
-              : Container(),
-        ],
-      ),
-    );
+        : Container();
   }
 
   Future onMapMoveEnd(BuildContext context) async {
@@ -184,7 +189,6 @@ class _MapLocationPageState extends State<MapLocationPage> {
       ),
     );
     _markers.add(marker);
-
 
     index++;
   }

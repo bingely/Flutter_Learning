@@ -47,6 +47,7 @@ class ListTileView extends StatelessWidget {
         ),
         new Text(
           label ?? '',
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(color: AppColors.mainTextColor, fontSize: 12),
         ),
       ],
@@ -54,9 +55,8 @@ class ListTileView extends StatelessWidget {
 
     var view = [
       isLabel
-          ? text
+          ? Expanded(child: text)
           : new Text(title, style: titleStyle, overflow: TextOverflow.ellipsis),
-      new Spacer(),
       new Container(
         width: 7.0,
         child: new Image.asset(

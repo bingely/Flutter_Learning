@@ -66,7 +66,7 @@ class Router {
       case RouteName.splash:
         return NoAnimRouteBuilder(CustomScrollViewTestRoute());
       case RouteName.app:
-        return NoAnimRouteBuilder(TabNavigatorPage());
+        return NoAnimRouteBuilder(MapLocationPage());
       case RouteName.chat:
         var message = settings.arguments as SessionMsg;
         return CupertinoPageRoute(
