@@ -30,6 +30,15 @@ class _MapLocationPageState extends State<MapLocationPage> {
 
   PlaceViewModle placeViewModel;
 
+  GlobalKey<NestedScrollViewState> _key = GlobalKey<NestedScrollViewState>();
+
+  TextEditingController textEditingController = TextEditingController();
+
+  /// 当前底部的记录位置
+  var mCurrentlistIndex = 0;
+  /// 搜索关键词
+  String mapPlaceVlaue ="";
+
   @override
   void initState() {
     super.initState();
@@ -45,13 +54,10 @@ class _MapLocationPageState extends State<MapLocationPage> {
   @override
   Widget build(BuildContext context) {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
-    var pinnedHeaderHeight =
-        //statusBar height
-        statusBarHeight * 6 +
-            //pinned SliverAppBar height in header
-            kToolbarHeight;
+    var pinnedHeaderHeight = statusBarHeight * 6 + kToolbarHeight;
     return new Scaffold(
         body: NestedScrollView(
+      key: _key,
       headerSliverBuilder: (context, bool) => _getHeadView(),
       body: _getBodyView(),
       pinnedHeaderSliverHeightBuilder: () {
@@ -66,21 +72,27 @@ class _MapLocationPageState extends State<MapLocationPage> {
           pinned: true,
           expandedHeight: DeviceUtils.winHeight(context) * 0.6,
           actions: <Widget>[
-            IconButton(icon: Icon(Icons.send,color: Colors.green,),onPressed: () async {
-              final latLng = await _controller?.getLocation();
-              _controller.screenShot((data) async {
-                var place;
-                if (placeViewModel.places.isNotEmpty) {
-                  place = placeViewModel.places[0];
-                }
-                eventBus.fire(MsgEvent(
-                    latLng: latLng,
-                    type: MsgType.MAP,
-                    mapPic: data,
-                    place: place));
-                Navigator.pop(context);
-              });
-            },)
+            IconButton(
+              icon: Icon(
+                Icons.send,
+                color: Colors.green,
+              ),
+              onPressed: () async {
+                final latLng = await _controller?.getLocation();
+                _controller.screenShot((data) async {
+                  var place;
+                  if (placeViewModel.places.isNotEmpty) {
+                    place = placeViewModel.places[0];
+                  }
+                  eventBus.fire(MsgEvent(
+                      latLng: latLng,
+                      type: MsgType.MAP,
+                      mapPic: data,
+                      place: place));
+                  Navigator.pop(context);
+                });
+              },
+            )
           ],
           flexibleSpace: FlexibleSpaceBar(
               //centerTitle: true,
@@ -93,11 +105,15 @@ class _MapLocationPageState extends State<MapLocationPage> {
                     onMapMoveEnd: (mapMove) async {
                       await onMapMoveEnd(context);
                       final latLng = await _controller?.getCenterCoordinate();
-                      if (latLng != null) {
+                      if (latLng != null && mapPlaceVlaue.isEmpty) {
                         placeViewModel?.getCurrentLocation(latLng);
                       }
+                      mCurrentlistIndex = 0;
                     },
                     maskDelay: Duration(milliseconds: 500),
+                    onMapClicked: (mapMove) async{
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
                     onMapCreated: (controller) async {
                       _controller = controller;
                       if (await requestPermission()) {
@@ -111,41 +127,79 @@ class _MapLocationPageState extends State<MapLocationPage> {
                     },
                   ),
                 ),
-
               ]))),
-
     ];
   }
+
+  bool isShow = false;
 
   Widget _getBodyView() {
     return (_controller != null)
         ? Column(
-      children: <Widget>[
-        MapSearchWidget(),
-        ProviderWidget<PlaceViewModle>(
-          model: PlaceViewModle(),
-          onModelReady: (modle) async {
-            placeViewModel = modle;
-            final latLng = await _controller?.getCenterCoordinate();
-            if (latLng != null) {
-              modle?.getCurrentLocation(latLng);
-            }
-          },
-          builder: (context, modle, widget) {
-            return Expanded(
-              child: new ListView.builder(
-                padding: EdgeInsets.all(8.0),
-                reverse: false,
-                itemBuilder: (context, int index) {
-                  return new PlaceView(modle.places[index]);
+            children: <Widget>[
+              MapSearchWidget(
+                controller: textEditingController,
+                onChanged: (value) {
+                  mapPlaceVlaue = value;
+                  if (value.isNotEmpty) {
+                    placeViewModel?.searchKeyWord(value);
+                  } else {
+                    // 复原底部地址勾选的位置
+                    mCurrentlistIndex = 0;
+                  }
                 },
-                itemCount: modle.places?.length,
+                onTapClick: () {
+                  _key.currentState.currentInnerPosition.animateTo(0.0,
+                      duration: Duration(milliseconds: 100),
+                      curve: Curves.easeIn);
+
+                  //_key.currentState.currentInnerPosition.animateTo(DeviceUtils.winHeight(context) * 0.6, duration: Duration(milliseconds: 100), curve: Curves.easeIn);
+
+                  setState(() {
+                    isShow = true;
+                  });
+                },
+                isShow: isShow,
               ),
-            );
-          },
-        ),
-      ],
-    )
+              ProviderWidget<PlaceViewModle>(
+                model: PlaceViewModle(),
+                onModelReady: (modle) async {
+                  placeViewModel = modle;
+                  final latLng = await _controller?.getCenterCoordinate();
+                  if (latLng != null) {
+                    modle?.getCurrentLocation(latLng);
+                  }
+                },
+                builder: (context, modle, widget) {
+                  return Expanded(
+                    child: new ListView.builder(
+                      padding: EdgeInsets.all(8.0),
+                      reverse: false,
+                      itemBuilder: (context, int index) {
+                        var place = modle.places[index];
+                        return new PlaceView(
+                          place,
+                          index: index,
+                          mindex: mCurrentlistIndex,
+                          onpress: () {
+                            mCurrentlistIndex = index;
+                            // 重新确定中心坐标
+                            _controller.setCenterCoordinate(
+                                place.latLng.latitude, place.latLng.longitude);
+                            place.isCheck = true;
+                            setState(() {
+
+                          });
+                          },
+                        );
+                      },
+                      itemCount: modle.places?.length,
+                    ),
+                  );
+                },
+              ),
+            ],
+          )
         : Container();
   }
 

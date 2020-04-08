@@ -56,25 +56,27 @@ class _MapLocationedPageState extends State<MapLocationedPage> {
       appBar: ComMomBar(title: '位置信息'),
       body: Column(
         children: <Widget>[
-          Container(
-            child: AmapView(
-              mapType: MapType.Standard,
-              showZoomControl: false,
-              maskDelay: Duration(milliseconds: 500),
-              onMapCreated: (controller) async {
-                _controller = controller;
-                if (await requestPermission()) {
-                  await controller.showMyLocation(MyLocationOption(show: true));
-                  await controller.setZoomLevel(16);
-                  setState(() {});
-                } else {
-                  ToastUtils.show("open your map permission", context);
-                }
-              },
+          Expanded(
+            child: Container(
+              child: AmapView(
+                mapType: MapType.Standard,
+                showZoomControl: false,
+                maskDelay: Duration(milliseconds: 500),
+                onMapCreated: (controller) async {
+                  _controller = controller;
+                  if (await requestPermission()) {
+                    await controller.showMyLocation(MyLocationOption(show: true));
+                    await controller.setZoomLevel(16);
+                    setState(() {});
+                  } else {
+                    ToastUtils.show("open your map permission", context);
+                  }
+                },
+              ),
+              height: DeviceUtils.winHeight(context),
             ),
-            height: DeviceUtils.winHeight(context) * 0.6,
           ),
-          Row(
+          /*Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -102,7 +104,7 @@ class _MapLocationedPageState extends State<MapLocationedPage> {
                 ),
               )
             ],
-          ),
+          ),*/
         ],
       ),
     );

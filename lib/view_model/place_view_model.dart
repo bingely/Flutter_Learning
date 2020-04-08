@@ -71,6 +71,7 @@ class PlaceViewModle extends ViewStateModel {
       place.distance = await poi.distance;
       place.cityName = await poi.cityName;
       place.address = await poi.address;
+      place.latLng= await poi.latLng;
 
       places.add(place);
       //String poiString = await poi.toFutureString();
