@@ -281,6 +281,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.1"
+  extended_nested_scroll_view:
+    dependency: "direct main"
+    description:
+      name: extended_nested_scroll_view
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.4.0"
   extended_text:
     dependency: "direct main"
     description:
@@ -405,7 +412,7 @@ packages:
       name: flutter_webview_plugin
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.3.10+1"
+    version: "0.3.11"
   foundation_fluttify:
     dependency: transitive
     description:

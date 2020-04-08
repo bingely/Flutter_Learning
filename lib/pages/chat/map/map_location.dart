@@ -1,20 +1,14 @@
 import 'package:amap_map_fluttify/amap_map_fluttify.dart';
-import 'package:amap_search_fluttify/amap_search_fluttify.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide NestedScrollView;
+import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/pages/chat/event/MsgEvent.dart';
 import 'package:flutter_qyyim/pages/chat/map/map_search_widget.dart';
-import 'package:flutter_qyyim/pages/chat/map/place.dart';
 import 'package:flutter_qyyim/pages/chat/map/place_view.dart';
-import 'package:flutter_qyyim/pages/search/search.dart';
-import 'package:flutter_qyyim/testdemo/trip/model/travel_model.dart';
-import 'package:flutter_qyyim/testdemo/trip/widget/search_bar.dart';
+
 import 'package:flutter_qyyim/tool/device_utils.dart';
-import 'package:flutter_qyyim/tool/log_utils.dart';
 import 'package:flutter_qyyim/tool/misc.dart';
 import 'package:flutter_qyyim/tool/toast_util.dart';
-import 'package:flutter_qyyim/ui/commom_bar.dart';
 import 'package:flutter_qyyim/ui/commom_button.dart';
 import 'package:flutter_qyyim/view_model/place_view_model.dart';
 
@@ -29,21 +23,16 @@ class MapLocationPage extends StatefulWidget {
 }
 
 class _MapLocationPageState extends State<MapLocationPage> {
-
   AmapController _controller;
 
   String showAddressText = "周围的数据";
-  ScrollController sC;
   List<Marker> _markers = [];
 
-
   PlaceViewModle placeViewModel;
-
 
   @override
   void initState() {
     super.initState();
-    sC = new ScrollController();
   }
 
   @override
@@ -55,109 +44,109 @@ class _MapLocationPageState extends State<MapLocationPage> {
   /// 套上ProviderWidget包装不过渡刷新
   @override
   Widget build(BuildContext context) {
+    final double statusBarHeight = MediaQuery.of(context).padding.top;
+    var pinnedHeaderHeight =
+        //statusBar height
+        statusBarHeight * 6 +
+            //pinned SliverAppBar height in header
+            kToolbarHeight;
     return new Scaffold(
-      body: Column(
-        children: <Widget>[
-          Stack(children: <Widget>[
-            Container(
-              child: AmapView(
-                mapType: MapType.Standard,
-                showZoomControl: false,
-                onMapMoveEnd: (mapMove) async {
-                  await onMapMoveEnd(context);
-                  final latLng = await _controller?.getCenterCoordinate();
-                  if (latLng != null) {
-                    placeViewModel?.getCurrentLocation(latLng);
-                  }
-                },
-                maskDelay: Duration(milliseconds: 500),
-                onMapCreated: (controller) async {
-                  _controller = controller;
-                  if (await requestPermission()) {
-                    await controller
-                        .showMyLocation(MyLocationOption(show: true));
-                    await controller.setZoomLevel(16);
-                    setState(() {
-                    });
-                  } else {
-                    ToastUtils.show("open your map permission", context);
-                  }
+        body: NestedScrollView(
+      headerSliverBuilder: (context, bool) => _getHeadView(),
+      body: _getBodyView(),
+      pinnedHeaderSliverHeightBuilder: () {
+        return pinnedHeaderHeight;
+      },
+    ));
+  }
 
-                },
-              ),
-              height: DeviceUtils.winHeight(context)*0.6,
-            ),
-            Positioned(
-              top: 35,
-              left: 8,
-              child: FlatButton(
-                onPressed: (){
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  '取消',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
+  List<Widget> _getHeadView() {
+    return [
+      SliverAppBar(
+          pinned: true,
+          expandedHeight: DeviceUtils.winHeight(context) * 0.6,
+          actions: <Widget>[
+            IconButton(icon: Icon(Icons.send,color: Colors.green,),onPressed: () async {
+              final latLng = await _controller?.getLocation();
+              _controller.screenShot((data) async {
+                var place;
+                if (placeViewModel.places.isNotEmpty) {
+                  place = placeViewModel.places[0];
+                }
+                eventBus.fire(MsgEvent(
+                    latLng: latLng,
+                    type: MsgType.MAP,
+                    mapPic: data,
+                    place: place));
+                Navigator.pop(context);
+              });
+            },)
+          ],
+          flexibleSpace: FlexibleSpaceBar(
+              //centerTitle: true,
+              collapseMode: CollapseMode.pin,
+              background: Stack(children: <Widget>[
+                Container(
+                  child: AmapView(
+                    mapType: MapType.Standard,
+                    showZoomControl: false,
+                    onMapMoveEnd: (mapMove) async {
+                      await onMapMoveEnd(context);
+                      final latLng = await _controller?.getCenterCoordinate();
+                      if (latLng != null) {
+                        placeViewModel?.getCurrentLocation(latLng);
+                      }
+                    },
+                    maskDelay: Duration(milliseconds: 500),
+                    onMapCreated: (controller) async {
+                      _controller = controller;
+                      if (await requestPermission()) {
+                        await controller
+                            .showMyLocation(MyLocationOption(show: true));
+                        await controller.setZoomLevel(16);
+                        setState(() {});
+                      } else {
+                        ToastUtils.show("open your map permission", context);
+                      }
+                    },
+                  ),
                 ),
-              ),
-            ),
-            Positioned(
-              right: 16,
-              top: 45,
-              child: ComMomButton(
-                text: '发送',
-                height: 35,
-                width: 65,
-                onTap: () async {
-                  final latLng = await _controller?.getLocation();
-                  _controller.screenShot((data) async {
-                    var place;
-                    if (placeViewModel.places.isNotEmpty) {
-                      place = placeViewModel.places[0];
-                    }
-                    eventBus.fire(MsgEvent(
-                        latLng: latLng, type: MsgType.MAP, mapPic: data,place: place));
-                    Navigator.pop(context);
-                  });
+
+              ]))),
+
+    ];
+  }
+
+  Widget _getBodyView() {
+    return (_controller != null)
+        ? Column(
+      children: <Widget>[
+        MapSearchWidget(),
+        ProviderWidget<PlaceViewModle>(
+          model: PlaceViewModle(),
+          onModelReady: (modle) async {
+            placeViewModel = modle;
+            final latLng = await _controller?.getCenterCoordinate();
+            if (latLng != null) {
+              modle?.getCurrentLocation(latLng);
+            }
+          },
+          builder: (context, modle, widget) {
+            return Expanded(
+              child: new ListView.builder(
+                padding: EdgeInsets.all(8.0),
+                reverse: false,
+                itemBuilder: (context, int index) {
+                  return new PlaceView(modle.places[index]);
                 },
+                itemCount: modle.places?.length,
               ),
-            )
-          ]),
-          (_controller != null)
-              ? Flexible(
-            child: Column(
-              children: <Widget>[
-                MapSearchWidget(),
-                ProviderWidget<PlaceViewModle>(
-                  model: PlaceViewModle(),
-                  onModelReady: (modle) async {
-                    placeViewModel = modle;
-                    final latLng = await _controller?.getCenterCoordinate();
-                    if (latLng != null) {
-                      modle?.getCurrentLocation(latLng);
-                    }
-                  },
-                  builder: (context, modle, widget){
-                    return Flexible(
-                      child: new ListView.builder(
-                        controller: sC,
-                        shrinkWrap: true,
-                        padding: EdgeInsets.all(8.0),
-                        reverse: false,
-                        itemBuilder: (context, int index) {
-                          return new PlaceView(modle.places[index]);
-                        },
-                        itemCount: modle.places?.length,
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          )
-              : Container(),
-        ],
-      ),
-    );
+            );
+          },
+        ),
+      ],
+    )
+        : Container();
   }
 
   Future onMapMoveEnd(BuildContext context) async {
@@ -179,6 +168,5 @@ class _MapLocationPageState extends State<MapLocationPage> {
       ),
     );
     _markers.add(marker);
-
   }
 }
