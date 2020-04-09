@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/ui/commom_button.dart';
 
 class CustomScrollViewTestRoute extends StatelessWidget {
   @override
@@ -12,12 +13,16 @@ class CustomScrollViewTestRoute extends StatelessWidget {
           SliverAppBar(
             pinned: true,
             expandedHeight: 250.0,
+            actions: <Widget>[
+              IconButton(icon: Icon(Icons.shopping_cart))
+            ],
             flexibleSpace: FlexibleSpaceBar(
               title: const Text('Demo'),
               background: Image.asset(
                 "assets/images/tabbar_contacts_c.webp", fit: BoxFit.cover,),
             ),
           ),
+
 
           SliverPadding(
             padding: const EdgeInsets.all(8.0),

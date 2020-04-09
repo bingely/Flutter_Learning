@@ -38,6 +38,11 @@ class _MapLocationPageState extends State<MapLocationPage> {
   var mCurrentlistIndex = 0;
   /// 搜索关键词
   String mapPlaceVlaue ="";
+  /// 是否第一次定位
+  bool firstLocated = true;
+
+  /// 用于区分是列表点击还是，地图移动
+  bool isPlaceCheck = false;
 
   @override
   void initState() {
@@ -104,23 +109,27 @@ class _MapLocationPageState extends State<MapLocationPage> {
                     showZoomControl: false,
                     onMapMoveEnd: (mapMove) async {
                       await onMapMoveEnd(context);
-                      final latLng = await _controller?.getCenterCoordinate();
-                      if (latLng != null && mapPlaceVlaue.isEmpty) {
-                        placeViewModel?.getCurrentLocation(latLng);
+                      if (!isPlaceCheck) {
+                        final latLng = await _controller?.getCenterCoordinate();
+                        if (latLng != null && mapPlaceVlaue.isEmpty) {
+                          placeViewModel?.getCurrentLocation(latLng);
+                        }
+                        mCurrentlistIndex = 0;
                       }
-                      mCurrentlistIndex = 0;
+                      isPlaceCheck = false;
                     },
                     maskDelay: Duration(milliseconds: 500),
                     onMapClicked: (mapMove) async{
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
                     onMapCreated: (controller) async {
-                      _controller = controller;
                       if (await requestPermission()) {
                         await controller
                             .showMyLocation(MyLocationOption(show: true));
                         await controller.setZoomLevel(16);
-                        setState(() {});
+                        setState(() {
+                          _controller = controller;
+                        });
                       } else {
                         ToastUtils.show("open your map permission", context);
                       }
@@ -137,6 +146,7 @@ class _MapLocationPageState extends State<MapLocationPage> {
     return (_controller != null)
         ? Column(
             children: <Widget>[
+              SizedBox(height: 16,),
               MapSearchWidget(
                 controller: textEditingController,
                 onChanged: (value) {
@@ -154,12 +164,18 @@ class _MapLocationPageState extends State<MapLocationPage> {
                       curve: Curves.easeIn);
 
                   //_key.currentState.currentInnerPosition.animateTo(DeviceUtils.winHeight(context) * 0.6, duration: Duration(milliseconds: 100), curve: Curves.easeIn);
-
                   setState(() {
                     isShow = true;
                   });
                 },
                 isShow: isShow,
+                onCancel: (){
+                  setState(() {
+                    isShow = false;
+                    textEditingController.clear();
+                    mapPlaceVlaue = "";
+                  });
+                },
               ),
               ProviderWidget<PlaceViewModle>(
                 model: PlaceViewModle(),
@@ -182,6 +198,7 @@ class _MapLocationPageState extends State<MapLocationPage> {
                           index: index,
                           mindex: mCurrentlistIndex,
                           onpress: () {
+                            isPlaceCheck = true;
                             mCurrentlistIndex = index;
                             // 重新确定中心坐标
                             _controller.setCenterCoordinate(
@@ -204,23 +221,32 @@ class _MapLocationPageState extends State<MapLocationPage> {
   }
 
   Future onMapMoveEnd(BuildContext context) async {
-    final center = await _controller?.getCenterCoordinate();
-    if (_markers.isNotEmpty) {
-      await _markers[0].remove();
-      _markers.removeAt(0);
+    // 第一次定位为当前位置
+    var center;
+    if (firstLocated) {
+      center = await _controller?.getLocation();
+      firstLocated = false;
+    } else {
+       center = await _controller?.getCenterCoordinate();
+      if (_markers.isNotEmpty) {
+        await _markers[0].remove();
+        _markers.removeAt(0);
+      }
+      final marker = await _controller?.addMarker(
+        MarkerOption(
+          latLng: center,
+          title: '北京',
+          snippet: '描述',
+          iconUri: _assetsIcon1,
+          imageConfig: createLocalImageConfiguration(context),
+          width: 58,
+          height: 58,
+          object: '自定义数据',
+        ),
+      );
+      _markers.add(marker);
     }
-    final marker = await _controller?.addMarker(
-      MarkerOption(
-        latLng: center,
-        title: '北京',
-        snippet: '描述',
-        iconUri: _assetsIcon1,
-        imageConfig: createLocalImageConfiguration(context),
-        width: 58,
-        height: 58,
-        object: '自定义数据',
-      ),
-    );
-    _markers.add(marker);
+
+
   }
 }

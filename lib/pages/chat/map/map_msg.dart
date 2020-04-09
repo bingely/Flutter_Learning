@@ -41,8 +41,6 @@ class _MapMsgViewState extends State<MapMsgView> {
   Widget build(BuildContext context) {
     Map<String, dynamic> msg = json.decode(widget.model?.msg);
 
- /*   if (!strNoEmpty(msg['videosrc'])) return Text('发送中');
-    var url = msg['videosrc'];*/
 
 
     final globalModel = Provider.of<GlobalModel>(context);
@@ -52,6 +50,8 @@ class _MapMsgViewState extends State<MapMsgView> {
       new Expanded(
         child: new GestureDetector(
           child: new Container(
+            width: 115,
+            height: 180,
             padding: EdgeInsets.all(5.0),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -65,8 +65,7 @@ class _MapMsgViewState extends State<MapMsgView> {
                   children: <Widget>[
                     Text(msg['text']),
                     SizedBox(height: 10,),
-                    if (widget.model.mapPic != null) Image.memory(widget.model.mapPic)
-                    //_controller.value.isPlaying?null:
+                    Expanded(child: Image.memory(widget.model.mapPic,fit:BoxFit.cover,width: 220))
                   ],
                 ),
             ),
@@ -77,7 +76,7 @@ class _MapMsgViewState extends State<MapMsgView> {
           },
         ),
       ),
-      new Spacer(),
+      new Space(width: 120),
     ];
     if (widget.model.id == globalModel.account) {
       body = body.reversed.toList();

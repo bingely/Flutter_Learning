@@ -47,7 +47,7 @@ class _PlaceViewState extends State<PlaceView> {
                     height: 6,
                   ),
                   Text(
-                    '距离${widget.place.distance}米   |   ${widget.place.address}',
+                    '${widget.place.address}',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   )

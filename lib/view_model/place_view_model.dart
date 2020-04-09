@@ -12,12 +12,12 @@ class PlaceViewModle extends ViewStateModel {
 
 
   searchKeyWord(String key) async {
-    final poiList = await AmapSearch.searchKeyword(
+    final poiList = await AmapSearch.fetchInputTips(
       key,
       city: "深圳",
     );
 
-    await showPlaceListData(poiList);
+    await showfetchInputTips(poiList);
   }
 
 
@@ -27,7 +27,7 @@ class PlaceViewModle extends ViewStateModel {
       LatLng(
         double.tryParse(latLng?.latitude.toString()) ?? 29.08,
         double.tryParse(latLng.longitude.toString()) ?? 119.65,
-      ),
+      ),radius: 2000
     );
 
     await showPlaceListData(poiList);
@@ -83,5 +83,22 @@ class PlaceViewModle extends ViewStateModel {
     });
   }
 
+  Future showfetchInputTips(List<InputTip> poiList) async {
+    places.clear();
+    poiList.forEach((poi) async {
+      Place place = new Place();
+      place.title = await poi.name;
+      place.cityName = await poi.district;
+      place.address = await poi.address;
+      place.latLng= await poi.location;
 
+      places.add(place);
+      //String poiString = await poi.toFutureString();
+      // LogUtil.e('$poiString');
+      if (poiList.last == poi) {
+        LogUtil.e('查询到数据${places.length}');
+        setIdle();
+      }
+    });
+  }
 }
