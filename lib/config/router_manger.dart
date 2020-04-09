@@ -92,7 +92,8 @@ class Router {
       case RouteName.wanna:
         return CupertinoPageRoute(builder: (context) => TabNavigatorPageWana());
       case RouteName.MAP_LOCATIONED:
-        return CupertinoPageRoute(builder: (context) => MapLocationedPage());
+        var mapinfo = settings.arguments as Map<String, dynamic>;
+        return CupertinoPageRoute(builder: (context) => MapLocationedPage(mapinfo:mapinfo));
       default:
         return CupertinoPageRoute(
             builder: (_) => Scaffold(

@@ -87,7 +87,7 @@ class _MapLocationPageState extends State<MapLocationPage> {
                 _controller.screenShot((data) async {
                   var place;
                   if (placeViewModel.places.isNotEmpty) {
-                    place = placeViewModel.places[0];
+                    place = placeViewModel.places[mCurrentlistIndex];
                   }
                   eventBus.fire(MsgEvent(
                       latLng: latLng,

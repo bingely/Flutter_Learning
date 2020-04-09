@@ -41,8 +41,7 @@ class ChatViewModel extends ViewStateRefreshListModel<ChatData> {
     } else if (msgType == MsgType.TXT) {
       sqljson = '{"text": "$content", "type": "Text"}';
     } else if (msgType == MsgType.MAP) {
-      sqljson = '{"text": "${event.place.title}", "type": "Map"}';
-
+      sqljson = '{"text": "${event.place.title}","address":"${event.place.address}","latitude":"${event.place.latLng.latitude}","lotitude":"${event.place.latLng.longitude}","type": "Map"}';
        mapPic = event.mapPic;
     }
 

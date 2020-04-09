@@ -71,7 +71,7 @@ class _MapMsgViewState extends State<MapMsgView> {
             ),
           ),
           onTap: () {
-            Navigator.pushNamed(context, RouteName.MAP_LOCATIONED );
+            Navigator.pushNamed(context, RouteName.MAP_LOCATIONED ,arguments: msg);
 
           },
         ),

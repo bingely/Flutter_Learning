@@ -24,6 +24,10 @@ final _assetsIcon1 = Uri.parse('assets/images/wechat_locate.png');
 
 /// 定位地图
 class MapLocationedPage extends StatefulWidget {
+
+  Map<String, dynamic> mapinfo;
+  MapLocationedPage({this.mapinfo});
+
   @override
   _MapLocationedPageState createState() => new _MapLocationedPageState();
 }
@@ -59,43 +63,65 @@ class _MapLocationedPageState extends State<MapLocationedPage> {
           Expanded(
             child: Container(
               child: AmapView(
+                centerCoordinate: LatLng(double.parse(widget.mapinfo['latitude']), double.parse(widget.mapinfo['lotitude'])),
                 mapType: MapType.Standard,
                 showZoomControl: false,
                 maskDelay: Duration(milliseconds: 500),
                 onMapCreated: (controller) async {
                   _controller = controller;
                   if (await requestPermission()) {
-                    await controller.showMyLocation(MyLocationOption(show: true));
-                    await controller.setZoomLevel(16);
+                    //await controller.showMyLocation(MyLocationOption(show: true));
+
+                    await controller.setZoomLevel(13);
+                    var center = LatLng(double.parse(widget.mapinfo['latitude']), double.parse(widget.mapinfo['lotitude']));
+                    if (_markers.isNotEmpty) {
+                      await _markers[0].remove();
+                      _markers.removeAt(0);
+                    }
+                    final marker = await _controller?.addMarker(
+                      MarkerOption(
+                        latLng: center,
+                        title: '北京',
+                        snippet: '描述',
+                        iconUri: _assetsIcon1,
+                        imageConfig: createLocalImageConfiguration(context),
+                        width: 58,
+                        height: 58,
+                        object: '自定义数据',
+                      ),
+                    );
+                    _markers.add(marker);
                     setState(() {});
                   } else {
                     ToastUtils.show("open your map permission", context);
                   }
+
+                  //_controller?.showLocateControl(true);
                 },
               ),
               height: DeviceUtils.winHeight(context),
             ),
           ),
-          /*Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 10),
+                  padding: EdgeInsets.symmetric(vertical: 16,horizontal: 16),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        'hhhh',
-                        style: TextStyle(fontSize: 18),
+                        widget.mapinfo['text'],
+                        style: TextStyle(fontSize: 20),
                       ),
                       SizedBox(
                         height: 6,
                       ),
                       Text(
-                        '距离米   |   fff',
+                        widget.mapinfo['address'],
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       )
@@ -104,7 +130,7 @@ class _MapLocationedPageState extends State<MapLocationedPage> {
                 ),
               )
             ],
-          ),*/
+          ),
         ],
       ),
     );
