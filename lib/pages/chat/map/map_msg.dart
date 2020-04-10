@@ -52,7 +52,6 @@ class _MapMsgViewState extends State<MapMsgView> {
           child: new Container(
             width: 115,
             height: 180,
-            padding: EdgeInsets.all(5.0),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -63,8 +62,9 @@ class _MapMsgViewState extends State<MapMsgView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(msg['text']),
-                    SizedBox(height: 10,),
+                    Padding(child: Text(msg['text']),padding: EdgeInsets.only(left: 10,top: 10),),
+                    Padding(child: Text(msg['address'],style: TextStyle(color: Colors.grey,fontSize: 12),),padding: EdgeInsets.only(left: 10,top: 6),),
+                    SizedBox(height: 6,),
                     Expanded(child: Image.memory(widget.model.mapPic,fit:BoxFit.cover,width: 220))
                   ],
                 ),

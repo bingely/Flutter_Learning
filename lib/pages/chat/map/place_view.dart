@@ -50,6 +50,7 @@ class _PlaceViewState extends State<PlaceView> {
                     '${widget.place.address}',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
+                    style: TextStyle(color: Colors.grey),
                   )
                 ],
               ),

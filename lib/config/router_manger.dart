@@ -10,6 +10,7 @@ import 'package:flutter_qyyim/pages/splash_page.dart';
 import 'package:flutter_qyyim/pages/message/message_page.dart';
 import 'package:flutter_qyyim/pages/tab_navigator_page.dart';
 import 'package:flutter_qyyim/pages/search/search.dart';
+import 'package:flutter_qyyim/testdemo/animation/bezier/bezier_page.dart';
 import 'package:flutter_qyyim/testdemo/contacts/contacts_page.dart';
 import 'package:flutter_qyyim/testdemo/event_handle_chapter8/both_direction_test_page.dart';
 import 'package:flutter_qyyim/testdemo/event_handle_chapter8/gestur_confic_test_page.dart';

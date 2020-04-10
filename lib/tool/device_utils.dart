@@ -26,15 +26,22 @@ class DeviceUtils{
     }
   }
 
+  /// 横屏
+  static setPreferredOrientationHorizol(){
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
+  }
+  ///全屏显示
+  static setEnabledSystemUIOverlays(){
+    SystemChrome.setEnabledSystemUIOverlays([]);
+  }
 
   /// 获取屏幕宽度
   static double winWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
   }
 
-  /*
-  * 获取屏幕高度
-  */
+  ///获取屏幕高度
   static double winHeight(BuildContext context) {
     return MediaQuery.of(context).size.height;
   }

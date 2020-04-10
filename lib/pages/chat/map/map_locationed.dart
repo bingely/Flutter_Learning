@@ -62,42 +62,57 @@ class _MapLocationedPageState extends State<MapLocationedPage> {
         children: <Widget>[
           Expanded(
             child: Container(
-              child: AmapView(
-                centerCoordinate: LatLng(double.parse(widget.mapinfo['latitude']), double.parse(widget.mapinfo['lotitude'])),
-                mapType: MapType.Standard,
-                showZoomControl: false,
-                maskDelay: Duration(milliseconds: 500),
-                onMapCreated: (controller) async {
-                  _controller = controller;
-                  if (await requestPermission()) {
-                    //await controller.showMyLocation(MyLocationOption(show: true));
+              child: Stack(
+                children: <Widget>[
+                  AmapView(
+                    centerCoordinate: LatLng(double.parse(widget.mapinfo['latitude']), double.parse(widget.mapinfo['lotitude'])),
+                    mapType: MapType.Standard,
+                    showZoomControl: false,
+                    maskDelay: Duration(milliseconds: 500),
+                    onMapCreated: (controller) async {
+                      _controller = controller;
+                      if (await requestPermission()) {
+                        //await controller.showMyLocation(MyLocationOption(show: true));
 
-                    await controller.setZoomLevel(13);
-                    var center = LatLng(double.parse(widget.mapinfo['latitude']), double.parse(widget.mapinfo['lotitude']));
-                    if (_markers.isNotEmpty) {
-                      await _markers[0].remove();
-                      _markers.removeAt(0);
-                    }
-                    final marker = await _controller?.addMarker(
-                      MarkerOption(
-                        latLng: center,
-                        title: '北京',
-                        snippet: '描述',
-                        iconUri: _assetsIcon1,
-                        imageConfig: createLocalImageConfiguration(context),
-                        width: 58,
-                        height: 58,
-                        object: '自定义数据',
+                        await controller.setZoomLevel(15,animated: false);
+                        var center = LatLng(double.parse(widget.mapinfo['latitude']), double.parse(widget.mapinfo['lotitude']));
+                        if (_markers.isNotEmpty) {
+                          await _markers[0].remove();
+                          _markers.removeAt(0);
+                        }
+                        final marker = await _controller?.addMarker(
+                          MarkerOption(
+                            latLng: center,
+                            title: '北京',
+                            snippet: '描述',
+                            iconUri: _assetsIcon1,
+                            imageConfig: createLocalImageConfiguration(context),
+                            width: 58,
+                            height: 58,
+                            object: '自定义数据',
+                          ),
+                        );
+                        _markers.add(marker);
+                        setState(() {});
+                      } else {
+                        ToastUtils.show("open your map permission", context);
+                      }
+
+                      //_controller?.showLocateControl(true);
+                    },
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional.bottomEnd,
+                    child: GestureDetector(
+                      onTap: (){
+                        _controller?.showMyLocation(MyLocationOption(show: true));
+                      },
+                      child: Image.asset(
+                        'assets/images/wechat_locator.png',
                       ),
-                    );
-                    _markers.add(marker);
-                    setState(() {});
-                  } else {
-                    ToastUtils.show("open your map permission", context);
-                  }
-
-                  //_controller?.showLocateControl(true);
-                },
+                    ),
+                  ),
+                ],
               ),
               height: DeviceUtils.winHeight(context),
             ),
@@ -124,6 +139,7 @@ class _MapLocationedPageState extends State<MapLocationedPage> {
                         widget.mapinfo['address'],
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
+                        style: TextStyle(color: Colors.grey),
                       )
                     ],
                   ),
