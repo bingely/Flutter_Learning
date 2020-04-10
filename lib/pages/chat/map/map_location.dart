@@ -2,9 +2,11 @@ import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 import 'package:flutter/material.dart' hide NestedScrollView;
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter_qyyim/common/provider/provider_widget.dart';
+import 'package:flutter_qyyim/pages/chat/event/AnimEvent.dart';
 import 'package:flutter_qyyim/pages/chat/event/MsgEvent.dart';
 import 'package:flutter_qyyim/pages/chat/map/map_search_widget.dart';
 import 'package:flutter_qyyim/pages/chat/map/place_view.dart';
+import 'package:flutter_qyyim/pages/chat/map/pointer.widget.dart';
 
 import 'package:flutter_qyyim/tool/device_utils.dart';
 import 'package:flutter_qyyim/tool/misc.dart';
@@ -107,18 +109,8 @@ class _MapLocationPageState extends State<MapLocationPage> {
                   child: AmapView(
                     mapType: MapType.Standard,
                     showZoomControl: false,
-                    onMapMoveEnd: (mapMove) async {
-                      await onMapMoveEnd(context);
-                      if (!isPlaceCheck) {
-                        final latLng = await _controller?.getCenterCoordinate();
-                        if (latLng != null && mapPlaceVlaue.isEmpty) {
-                          placeViewModel?.getCurrentLocation(latLng);
-                        }
-                        mCurrentlistIndex = 0;
-                      }
-                      isPlaceCheck = false;
-                    },
-                    maskDelay: Duration(milliseconds: 500),
+                    onMapMoveEnd: _handleMapMoveEnd,
+                    maskDelay: Duration(milliseconds: 800),
                     onMapClicked: (mapMove) async{
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
@@ -126,7 +118,9 @@ class _MapLocationPageState extends State<MapLocationPage> {
                       if (await requestPermission()) {
                         await controller
                             .showMyLocation(MyLocationOption(show: true));
-                        await controller.setZoomLevel(16);
+                        await controller.setZoomLevel(15,animated: false);
+                        await controller.showLocateControl(false);
+                        await _handleMapMoveEnd(null);
                         setState(() {
                           _controller = controller;
                         });
@@ -136,8 +130,35 @@ class _MapLocationPageState extends State<MapLocationPage> {
                     },
                   ),
                 ),
+                Pointer(pointer: null),
+                Align(
+                  alignment: AlignmentDirectional.bottomEnd,
+                  child: GestureDetector(
+                    onTap: (){
+                      _controller?.showMyLocation(MyLocationOption(show: true));
+                    },
+                    child: Image.asset(
+                      'assets/images/wechat_locator.png',
+                    ),
+                  ),
+                ),
               ]))),
     ];
+  }
+
+
+  Future<void> _handleMapMoveEnd(_) async {
+    //await onMapMoveEnd(context);
+    if (!isPlaceCheck) {
+      final latLng = await _controller?.getCenterCoordinate();
+      if (latLng != null && mapPlaceVlaue.isEmpty) {
+        placeViewModel?.getCurrentLocation(latLng);
+      }
+      mCurrentlistIndex = 0;
+    }
+    isPlaceCheck = false;
+
+    eventBus.fire(AnimEvent());
   }
 
   bool isShow = false;

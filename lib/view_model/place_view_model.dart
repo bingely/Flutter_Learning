@@ -24,10 +24,7 @@ class PlaceViewModle extends ViewStateModel {
   /// 获取当前位置的周围数据
   getCurrentLocation(LatLng latLng) async {
     final poiList = await AmapSearch.searchAround(
-      LatLng(
-        double.tryParse(latLng?.latitude.toString()) ?? 29.08,
-        double.tryParse(latLng.longitude.toString()) ?? 119.65,
-      ),radius: 2000
+        latLng,radius: 2000
     );
 
     await showPlaceListData(poiList);

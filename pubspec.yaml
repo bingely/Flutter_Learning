@@ -65,6 +65,7 @@ dependencies:
   amap_search_fluttify: ^0.8.0+b2681d9
   # nestedscroll
   extended_nested_scroll_view: ^0.4.0
+  after_layout: ^1.0.7+2
 
   # ****************************数据相关******************************************
   shared_preferences: any
