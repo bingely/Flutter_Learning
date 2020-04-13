@@ -1,6 +1,7 @@
 import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_qyyim/pages/chat/camarademo/camaramain.dart';
 import 'package:flutter_qyyim/pages/chat/camarademo/gallery.dart';
 import 'package:flutter_qyyim/pages/chat/chat_page.dart';
 import 'package:flutter_qyyim/pages/chat/map/map_locationed.dart';
@@ -15,6 +16,9 @@ import 'package:flutter_qyyim/testdemo/contacts/contacts_page.dart';
 import 'package:flutter_qyyim/testdemo/event_handle_chapter8/both_direction_test_page.dart';
 import 'package:flutter_qyyim/testdemo/event_handle_chapter8/gestur_confic_test_page.dart';
 import 'package:flutter_qyyim/testdemo/event_handle_chapter8/gesture_detector_page.dart';
+import 'package:flutter_qyyim/testdemo/file/file_picker_demo.dart';
+import 'package:flutter_qyyim/testdemo/file/main.dart';
+import 'package:flutter_qyyim/testdemo/file/pdf_page.dart';
 import 'package:flutter_qyyim/testdemo/file_data_page.dart';
 import 'package:flutter_qyyim/pages/chat/map/map_location.dart';
 import 'package:flutter_qyyim/testdemo/scrcole_chapter6/custom_scrollview.dart';

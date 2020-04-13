@@ -29,6 +29,7 @@ class _ChatMorePageState extends State<ChatMorePage> {
     {"name": "视频", "icon": "assets/images/chat/ic_details_camera.webp"},
     {"name": "自定义视频", "icon": "assets/images/chat/ic_details_camera.webp"},
     {"name": "地图", "icon": "assets/images/chat/ic_details_camera.webp"},
+    {"name": "文件", "icon": "assets/images/chat/ic_details_camera.webp"},
   ];
 
 

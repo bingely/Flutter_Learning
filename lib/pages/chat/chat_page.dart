@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:extended_text_field/extended_text_field.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
@@ -17,11 +18,13 @@ import 'package:flutter_qyyim/tool/device_utils.dart';
 import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/pages/chat/camarademo/camera_screen.dart';
 import 'package:flutter_qyyim/testdemo/cross_data/event_bus.dart';
+import 'package:flutter_qyyim/tool/toast_util.dart';
 import 'package:flutter_qyyim/ui/commom_bar.dart';
 import 'package:flutter_qyyim/ui/edit/text_span_builder.dart';
 import 'package:flutter_qyyim/ui/main_input.dart';
 import 'package:flutter_qyyim/ui/special_text/emoji_text.dart';
 import 'package:flutter_qyyim/view_model/chat_view_model.dart';
+import 'package:open_file/open_file.dart';
 
 import 'chat_details_body.dart';
 import 'chat_details_row.dart';
@@ -224,6 +227,14 @@ class ChatePageState extends State<ChatPage> {
       });
     } else if (name == "地图"){
       Navigator.pushNamed(context, RouteName.MAP);
+    } else if (name == '文件'){
+      FilePicker.getFilePath().then((path){
+        //chatViewModle.sendMgs(MsgEvent(content: path, type: MsgType.FILE));
+        OpenFile.open(path).then((openresult){
+          LogUtil.e(openresult.message);
+          ToastUtils.show(openresult.message, context);
+        });
+      });
     }
     else {
       sendVideoMsg(widget.id, widget.type, callback: (v) {

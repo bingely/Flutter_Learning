@@ -43,6 +43,8 @@ class ChatViewModel extends ViewStateRefreshListModel<ChatData> {
     } else if (msgType == MsgType.MAP) {
       sqljson = '{"text": "${event.place.title}","address":"${event.place.address}","latitude":"${event.place.latLng.latitude}","lotitude":"${event.place.latLng.longitude}","type": "Map"}';
        mapPic = event.mapPic;
+    } else if (msgType == MsgType.FILE) {
+      sqljson = '{"text": "$content", "type": "File"}';
     }
 
     var currentStamp = DateUtil.getNowDateMs();

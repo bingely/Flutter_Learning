@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_qyyim/config/storage_manager.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -37,4 +40,12 @@ Future _post(String url, Map<String, dynamic> params) async {
 Future _get(String url, {Map<String, dynamic> params}) async {
   var response = await http.get(url, queryParameters: params);
   return response.data;
+}
+
+
+/// 可以用于加载本地的json文件逻辑
+ Future<dynamic> mock({String action, Map params}) async {
+var responseStr = await rootBundle.loadString('mock/$action.json');
+var responseJson = json.decode(responseStr);
+return responseJson['data'];
 }

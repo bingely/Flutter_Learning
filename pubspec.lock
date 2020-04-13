@@ -316,6 +316,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.5.3"
+  ffi:
+    dependency: transitive
+    description:
+      name: ffi
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.3"
   file:
     dependency: transitive
     description:
@@ -323,6 +330,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "5.1.0"
+  file_picker:
+    dependency: "direct main"
+    description:
+      name: file_picker
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.6.2"
   fixnum:
     dependency: transitive
     description:
@@ -356,6 +370,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.3"
+  flutter_filereader:
+    dependency: "direct main"
+    description:
+      name: flutter_filereader
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.0.0"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
@@ -368,6 +389,27 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.0.3"
+  flutter_pdfview:
+    dependency: "direct main"
+    description:
+      name: flutter_pdfview
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.1"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.6"
+  flutter_qr_reader:
+    dependency: "direct main"
+    description:
+      name: flutter_qr_reader
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.3"
   flutter_screenutil:
     dependency: "direct main"
     description:
@@ -490,6 +532,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.1.4"
+  image_picker:
+    dependency: transitive
+    description:
+      name: image_picker
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.6.5"
   image_pickers:
     dependency: "direct main"
     description:
@@ -581,6 +630,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.1+2"
+  open_file:
+    dependency: "direct main"
+    description:
+      name: open_file
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.0.1"
   package_config:
     dependency: transitive
     description:
