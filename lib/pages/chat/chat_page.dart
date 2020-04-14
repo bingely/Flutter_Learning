@@ -228,12 +228,17 @@ class ChatePageState extends State<ChatPage> {
     } else if (name == "地图"){
       Navigator.pushNamed(context, RouteName.MAP);
     } else if (name == '文件'){
-      FilePicker.getFilePath().then((path){
-        //chatViewModle.sendMgs(MsgEvent(content: path, type: MsgType.FILE));
-        OpenFile.open(path).then((openresult){
+      /*FilePicker.getFilePath().then((path){
+        chatViewModle.sendMgs(MsgEvent(content: path, type: MsgType.FILE));
+        *//*OpenFile.open(path).then((openresult){
           LogUtil.e(openresult.message);
           ToastUtils.show(openresult.message, context);
-        });
+        });*//*
+      });*/
+
+      FilePicker.getFile().then((file) async {
+        // 路径（包含了名字），大小，
+        chatViewModle.sendMgs(MsgEvent(content: file.path, fileSize: file.lengthSync().toString(),type: MsgType.FILE));
       });
     }
     else {

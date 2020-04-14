@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/pages/chat/file/file_msg.dart';
 import 'package:flutter_qyyim/pages/chat/map/map_msg.dart';
 import 'package:flutter_qyyim/tool/date_util.dart';
 import 'package:flutter_qyyim/ui/message_view/Img_msg.dart';
@@ -106,7 +107,10 @@ class _SendMessageViewState extends State<SendMessageView> {
       return VideoMsg(msg, widget.model);
     } else if (msgType == "Map"){
       return MapMsgView(msg, widget.model);
-    }else {
+    } else if (msgType == "File") {
+      return FileMsgView(msg, widget.model);
+    }
+    else {
       return new Text('未知消息');
     }
     //return new Text('未知消息');

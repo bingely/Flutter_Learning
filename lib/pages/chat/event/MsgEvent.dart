@@ -13,13 +13,19 @@ class MsgEvent {
 
   Uint8List mapPic;
 
+
+
+  /// 文件相关的
+  String fileSize;
+
   MsgEvent(
       {this.content,
       this.type,
       this.recordTime,
       this.latLng,
       this.mapPic,
-      this.place});
+      this.place,
+      this.fileSize});
 }
 
 enum MsgType { TXT, IMG, VIDEO, VOICE, MAP, FILE }
