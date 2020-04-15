@@ -7,10 +7,12 @@ import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/config/router_manger.dart';
 import 'package:flutter_qyyim/pages/chat/model/chat_data.dart';
 import 'package:flutter_qyyim/tool/check.dart';
+import 'package:flutter_qyyim/tool/device_utils.dart';
 import 'package:flutter_qyyim/tool/file_util.dart';
 import 'package:flutter_qyyim/tool/misc.dart';
 import 'package:flutter_qyyim/tool/navigator_util.dart';
 import 'package:flutter_qyyim/tool/toast_util.dart';
+import 'package:flutter_qyyim/ui/bubble/bublewidget.dart';
 import 'package:flutter_qyyim/ui/message_view/msg_avatar.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
 import 'package:open_file/open_file.dart';
@@ -46,17 +48,13 @@ class _MapMsgViewState extends State<FileMsgView> {
     final globalModel = Provider.of<GlobalModel>(context);
     var body = [
       new MsgAvatar(model: widget.model, globalModel: globalModel),
-      new Space(width: AppConstants.mainSpace),
       new Expanded(
-        child: new GestureDetector(
-          child: new Container(
-            padding: EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            ),
-            child: new ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        child: GestureDetector(
+          child: FLBubble(
+            from: FLBubbleFrom.left,
+            backgroundColor: Colors.white,
+            child: new Container(
+              width: 186,
               child: Row(
                 children: <Widget>[
                   Expanded(
@@ -68,13 +66,12 @@ class _MapMsgViewState extends State<FileMsgView> {
                         SizedBox(
                           height: 6,
                         ),
-                        ///
                         Text(FileUtil.renderSize(double.parse(msg['filesize'])),
                             style: TextStyle(color: Colors.grey, fontSize: 12)),
                       ],
                     ),
                   ),
-                  Icon(Icons.picture_as_pdf)
+                  icontype(msg['text'])
                 ],
               ),
             ),
@@ -100,6 +97,25 @@ class _MapMsgViewState extends State<FileMsgView> {
   }
 
   String getPathName(String filePath) {
-    return filePath.substring(filePath.lastIndexOf("/")+1);
+    return filePath.substring(filePath.lastIndexOf("/") + 1);
+  }
+
+  Widget icontype(String filepath) {
+    String type = filepath.substring(filepath.lastIndexOf(".") + 1);
+    switch (type) {
+      case "pdf":
+        return Icon(Icons.picture_as_pdf);
+        break;
+      case "doc":
+        return Icon(Icons.translate);
+        break;
+      case "apk":
+        return Icon(Icons.android);
+        break;
+      case "jpg":
+        return Icon(Icons.import_contacts);
+        break;
+    }
+    return Icon(Icons.device_unknown);
   }
 }

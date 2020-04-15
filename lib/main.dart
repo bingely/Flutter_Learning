@@ -31,6 +31,7 @@ Future<void> main() async {
   );*/
   // android 是在配置文件里面设置
   await AmapCore.init('4a5c00784c8a5b1660a702686cf57774');
+  await enableFluttifyLog(false);
   /// APP入口并配置Provider
   runApp(ProviderConfig.getInstance().getMultiGlobal(App()));
 
