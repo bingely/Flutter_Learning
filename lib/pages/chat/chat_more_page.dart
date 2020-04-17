@@ -28,8 +28,8 @@ class _ChatMorePageState extends State<ChatMorePage> {
     {"name": "拍摄", "icon": "assets/images/chat/ic_details_camera.webp"},
     {"name": "视频", "icon": "assets/images/chat/ic_details_camera.webp"},
     {"name": "自定义视频", "icon": "assets/images/chat/ic_details_camera.webp"},
-    {"name": "地图", "icon": "assets/images/chat/ic_details_camera.webp"},
-    {"name": "文件", "icon": "assets/images/chat/ic_details_camera.webp"},
+    {"name": "地图", "icon": "assets/images/chat/ic_details_localtion.webp"},
+    {"name": "文件", "icon": "assets/images/chat/ic_details_file.webp"},
   ];
 
 

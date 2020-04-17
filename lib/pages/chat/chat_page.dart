@@ -218,13 +218,8 @@ class ChatePageState extends State<ChatPage> {
       });
     } else if (name == "自定义视频") {
       final _cameraKey = GlobalKey<CameraScreenState>();
-      //routePush(new VideoPage(key: _cameraKey));
-      Navigator.pushNamed(context, "video_page", arguments: "url").then((url) {
-        if (url != null) {
-          print("video_page$url");
-          // _handleSubmittedVideoData(url);
-        }
-      });
+      //routePush(new VideoPage(key: _cameraKey));x
+      Navigator.pushNamed(context, RouteName.video_page);
     } else if (name == "地图"){
       Navigator.pushNamed(context, RouteName.MAP);
     } else if (name == '文件'){

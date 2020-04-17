@@ -18,7 +18,6 @@ import 'package:flutter_qyyim/testdemo/event_handle_chapter8/gestur_confic_test_
 import 'package:flutter_qyyim/testdemo/event_handle_chapter8/gesture_detector_page.dart';
 import 'package:flutter_qyyim/testdemo/file/file_picker_demo.dart';
 import 'package:flutter_qyyim/testdemo/file/main.dart';
-import 'package:flutter_qyyim/testdemo/file/pdf_page.dart';
 import 'package:flutter_qyyim/testdemo/file_data_page.dart';
 import 'package:flutter_qyyim/pages/chat/map/map_location.dart';
 import 'package:flutter_qyyim/testdemo/scrcole_chapter6/customscrollvew/custom_scrollview.dart';

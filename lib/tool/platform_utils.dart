@@ -34,4 +34,10 @@ class PlatformUtils {
       return null;
     }
   }
+
+  /// 判断系统版本
+  static bool isAndroid()
+  {
+    return Platform.isAndroid;
+  }
 }

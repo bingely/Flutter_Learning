@@ -96,8 +96,7 @@ class _HomePageState extends State<HomeFilePage> {
   }
 
   onTap(String type, String assetPath) async {
-    //String localPath = await fileLocalName(type, assetPath);
-    String localPath = "/storage/emulated/0/Android/data/qyy.im.flutter_qyyim/files/filereader/files/docx.docx";
+    String localPath = await fileLocalName(type, assetPath);
     if (!await File(localPath).exists()) {
       if (!await asset2Local(type, assetPath)) {
         return;

@@ -11,12 +11,14 @@ import 'package:flutter_qyyim/tool/device_utils.dart';
 import 'package:flutter_qyyim/tool/file_util.dart';
 import 'package:flutter_qyyim/tool/misc.dart';
 import 'package:flutter_qyyim/tool/navigator_util.dart';
+import 'package:flutter_qyyim/tool/platform_utils.dart';
 import 'package:flutter_qyyim/tool/toast_util.dart';
 import 'package:flutter_qyyim/ui/bubble/bublewidget.dart';
 import 'package:flutter_qyyim/ui/message_view/msg_avatar.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
 import 'package:open_file/open_file.dart';
 import 'package:provider/provider.dart';
+import 'package:x5_webview/x5_sdk.dart';
 
 class FileMsgView extends StatefulWidget {
   final msg;
@@ -76,10 +78,25 @@ class _MapMsgViewState extends State<FileMsgView> {
               ),
             ),
           ),
-          onTap: () {
-            OpenFile.open(msg['text']).then((openresult) {
-              ToastUtils.show(openresult.message, context);
-            });
+          onTap: ()  {
+            // 判断ios 还是android
+            if(PlatformUtils.isAndroid()) {
+              X5Sdk.openFile(msg['text']);
+            } else{
+              // 第一种适配方案是通过打开应用外的可用软件
+              OpenFile.open(msg['text']).then((openresult) {
+                ToastUtils.show(openresult.message, context);
+              });
+              // 第二种适配方案
+              // ios可使用webview_flutter或其他已实现IOS WXWebView插件
+              //  Widget _createIosView() {
+              //    return UiKitView(
+              //      viewType: "FileReader",
+              //      onPlatformViewCreated: _onPlatformViewCreated,
+              //      creationParamsCodec: StandardMessageCodec(),
+              //    );
+              //  }
+            }
           },
         ),
       ),

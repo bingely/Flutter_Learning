@@ -69,10 +69,9 @@ dependencies:
   after_layout: ^1.0.7+2
   # 文件选择
   file_picker: ^1.6.2
-  flutter_filereader: ^2.0.0
-  flutter_pdfview: ^1.0.1
+  #flutter_filereader: ^2.0.0
   open_file: ^3.0.1
-
+  x5_webview: ^0.2.0
 
   # ****************************数据相关******************************************
   shared_preferences: any
