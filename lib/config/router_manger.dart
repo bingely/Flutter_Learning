@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_qyyim/pages/chat/camarademo/camaramain.dart';
 import 'package:flutter_qyyim/pages/chat/camarademo/gallery.dart';
 import 'package:flutter_qyyim/pages/chat/chat_page.dart';
+import 'package:flutter_qyyim/pages/chat/detail/friend_detail_page.dart';
 import 'package:flutter_qyyim/pages/chat/map/map_locationed.dart';
 import 'package:flutter_qyyim/pages/chat/video/video_page.dart';
 import 'package:flutter_qyyim/model/message.dart';
@@ -76,7 +77,7 @@ class Router {
       case RouteName.splash:
         return NoAnimRouteBuilder(ChatPage());
       case RouteName.app:
-        return NoAnimRouteBuilder(TabNavigatorPage());
+        return NoAnimRouteBuilder(FriendDetailPage());
       case RouteName.chat:
         var message = settings.arguments as SessionMsg;
         return CupertinoPageRoute(
