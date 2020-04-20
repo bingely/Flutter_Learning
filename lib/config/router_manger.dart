@@ -77,7 +77,7 @@ class Router {
       case RouteName.splash:
         return NoAnimRouteBuilder(ChatPage());
       case RouteName.app:
-        return NoAnimRouteBuilder(FriendDetailPage());
+        return NoAnimRouteBuilder(TabNavigatorPage());
       case RouteName.chat:
         var message = settings.arguments as SessionMsg;
         return CupertinoPageRoute(

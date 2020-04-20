@@ -31,51 +31,43 @@ class _FriendDetailPageState extends State<FriendDetailPage> {
   @override
   Widget build(BuildContext context) {
     List<Widget> widgets = headUserIcons();
-
     return new Scaffold(
       backgroundColor: AppColors.chatBg,
       appBar: ComMomBar(
         title: "聊天信息",
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            // 头像布局
-            Container(
-              padding: EdgeInsets.all(16),
-              width: DeviceUtils.winWidth(context),
-              color: Colors.white,
-              child: Wrap(
-                alignment: WrapAlignment.start,
-                //沿主轴方向居中
-                spacing: 8.0, // 主轴(水平)方向间距
-                runSpacing: 4.0, // 纵轴（垂直）方向间距
-                children: widgets,
-              ),
-            ),
+      body: ListView(
+        children: <Widget>[
+          // 头像布局
+          Container(
+            padding: EdgeInsets.all(16),
+            width: DeviceUtils.winWidth(context),
+            color: Colors.white,
+            child: GridView.count(shrinkWrap: true,crossAxisCount: 5,children: widgets,crossAxisSpacing: 8, mainAxisSpacing: 8),
+          ),
 
-            LabelRow(
-              label: "查找聊天记录",
-              margin: EdgeInsets.only(top: 16),
-            ),
+          LabelRow(
+            label: "查找聊天记录",
+            margin: EdgeInsets.only(top: 16),
+          ),
 
-            LabelRow(
-              label: "消息免打扰",
-              isRight: false,
-              margin: EdgeInsets.only(top: 16),
-              rightW: CupertinoSwitch(
-                value: false,
-                onChanged: (bool) {},
-              ),
+          LabelRow(
+            label: "消息免打扰",
+            isRight: false,
+            margin: EdgeInsets.only(top: 16),
+            rightW: CupertinoSwitch(
+              value: false,
+              onChanged: (bool) {},
             ),
-            LabelRow(label: "设置当前的聊天背景",   margin: EdgeInsets.only(top: 16),),
-            LabelRow(
-              label: "清空聊天记录",
-            ),
-          ],
-        ),
+          ),
+          LabelRow(
+            label: "设置当前的聊天背景",
+            margin: EdgeInsets.only(top: 16),
+          ),
+          LabelRow(
+            label: "清空聊天记录",
+          ),
+        ],
       ),
     );
   }
@@ -89,59 +81,10 @@ class _FriendDetailPageState extends State<FriendDetailPage> {
           height: 55,
           img: "https://randomuser.me/api/portraits/women/76.jpg",
         ),
-        Text('name')
+        Expanded(child: Text('你好'))
       ],
     ));
-    widgets.add(Column(
-      children: <Widget>[
-        ImageView(
-          width: 55,
-          height: 55,
-          img: "https://randomuser.me/api/portraits/women/76.jpg",
-        ),
-        Text('name')
-      ],
-    ));
-    widgets.add(Column(
-      children: <Widget>[
-        ImageView(
-          width: 55,
-          height: 55,
-          img: "https://randomuser.me/api/portraits/women/76.jpg",
-        ),
-        Text('name')
-      ],
-    ));
-    widgets.add(Column(
-      children: <Widget>[
-        ImageView(
-          width: 55,
-          height: 55,
-          img: "https://randomuser.me/api/portraits/women/76.jpg",
-        ),
-        Text('name')
-      ],
-    ));
-    widgets.add(Column(
-      children: <Widget>[
-        ImageView(
-          width: 55,
-          height: 55,
-          img: "https://randomuser.me/api/portraits/women/76.jpg",
-        ),
-        Text('name')
-      ],
-    ));
-    widgets.add(Column(
-      children: <Widget>[
-        ImageView(
-          width: 55,
-          height: 55,
-          img: "https://randomuser.me/api/portraits/women/76.jpg",
-        ),
-        Text('name')
-      ],
-    ));
+
 
     widgets.add(ImageView(
       width: 55,

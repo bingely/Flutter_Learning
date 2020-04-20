@@ -11,17 +11,23 @@ class SingleChildScrollViewPage extends StatelessWidget {
         child: Center(
           child: Column(
             //动态创建一个List<Widget>
-            children: str
+            /*children: str
                 .split("")
                 //每一个字母都用一个Text显示,字体为原来的两倍
                 .map((s) => Text(
                       s,
                       textScaleFactor: 2.0,
                     ))
-                .toList(),
+                .toList(),*/
+
+            children: str.split('').map((s)=> Text(
+              s
+            )).toList(),
           ),
         ),
       ),
     );
   }
 }
+
+
