@@ -5,6 +5,7 @@ enum MessageType { SYSTEM,PUBLIC,CHAT,GROUP }
 class SessionMsg{
   //头像
   String avatar;
+  List<String> avatars;
   //主标题
   String title;
   //子标题
@@ -16,6 +17,6 @@ class SessionMsg{
 
   String userId;// 也是会话id,每个用户都对应一个会话
 
-  SessionMsg({this.avatar,this.title,this.subTitle,this.time,this.type,this.userId});
+  SessionMsg({this.avatar,this.avatars,this.title,this.subTitle,this.time,this.type,this.userId});
 }
 

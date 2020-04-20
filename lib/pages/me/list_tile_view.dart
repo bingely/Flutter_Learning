@@ -57,6 +57,7 @@ class ListTileView extends StatelessWidget {
       isLabel
           ? Expanded(child: text)
           : new Text(title, style: titleStyle, overflow: TextOverflow.ellipsis),
+      new Spacer(),
       new Container(
         width: 7.0,
         child: new Image.asset(

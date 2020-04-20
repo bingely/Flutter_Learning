@@ -4,6 +4,7 @@ import 'package:flutter_qyyim/common/route/route.dart';
 import 'package:flutter_qyyim/common/touch_callback.dart';
 import 'package:flutter_qyyim/config/router_manger.dart';
 import 'package:flutter_qyyim/tool/timeline_util.dart';
+import 'package:flutter_qyyim/ui/avatars.dart';
 import 'package:flutter_qyyim/ui/image_view.dart';
 import '../../model/message.dart';
 import 'package:date_format/date_format.dart';
@@ -17,25 +18,23 @@ class MessageItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //最外层容器
-    return FlatButton(
-      onPressed: () {
+    return InkWell(
+      onTap: (){
         // 跳到对应的聊天页面
         Navigator.pushNamed(context, RouteName.chat, arguments: message);
-
       },
       //按下回调处理
       child: Container(
-        height: 64,
+        height: 68,
+        padding: EdgeInsets.only(left: 16),
         child: Row(
           //垂直方向居中显示
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             //展示头像
             Badge(
-              child: ImageView(
-                img: message.avatar,
-                width: 48.0,
-                height: 48.0,
+              child: Avatars(
+                message: message,
               ),
               badgeContent: Text(
                 "3",
@@ -68,7 +67,7 @@ class MessageItem extends StatelessWidget {
                           maxLines: 1,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
+                          padding: const EdgeInsets.only(top: 4.0),
                         ),
                         Text(
                           message.subTitle,
@@ -86,7 +85,7 @@ class MessageItem extends StatelessWidget {
                     Container(
                       //时间顶部对齐
                       alignment: AlignmentDirectional.topStart,
-                      margin: const EdgeInsets.only(top: 12.0),
+                      margin: const EdgeInsets.only(top: 12.0,right: 16),
                       child: Text(
                         //格式化时间
                         TimelineUtil.formatByDateTime(message.time),
