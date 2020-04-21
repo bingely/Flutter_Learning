@@ -9,7 +9,7 @@ import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
 import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/config/router_manger.dart';
 import 'package:flutter_qyyim/model/message.dart';
-import 'package:flutter_qyyim/pages/chat/detail/friend_detail_page.dart';
+import 'package:flutter_qyyim/pages/chat/detail/chat_info_page.dart';
 import 'package:flutter_qyyim/pages/contacts/contacts.dart';
 import 'package:flutter_qyyim/pages/qr/qr_page.dart';
 import 'package:flutter_qyyim/tool/log_utils.dart';
@@ -81,7 +81,7 @@ class ChatePageState extends State<ChatPage> {
       chatViewModle.sendMgs(event);
     });
 
-    // ScrollController 滑动的处理
+    // ScrollController 滑动的处理P
     _sC.addListener(() {
      // FocusScope.of(context).requestFocus(new FocusNode());
       // 收紧软键盘
@@ -113,7 +113,7 @@ class ChatePageState extends State<ChatPage> {
     var rWidget = [
       new InkWell(
         child: new Image.asset('assets/images/right_more.png'),
-        onTap: () => NavigatorUtil.pushWithCuperino(context, FriendDetailPage()),
+        onTap: () => NavigatorUtil.pushWithCuperino(context, ChatInfoPage()),
       )
     ];
     // 如果放在外面为啥会慢一拍？？TODO

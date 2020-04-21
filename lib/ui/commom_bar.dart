@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_qyyim/config/app.dart';
 
+/// 通用appbar封装
+/// 如果要控制标题居中显示 centerTitle
 class ComMomBar extends StatelessWidget implements PreferredSizeWidget {
   const ComMomBar(
       {this.title = "",

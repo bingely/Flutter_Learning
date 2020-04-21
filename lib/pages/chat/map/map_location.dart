@@ -38,8 +38,10 @@ class _MapLocationPageState extends State<MapLocationPage> {
 
   /// 当前底部的记录位置
   var mCurrentlistIndex = 0;
+
   /// 搜索关键词
-  String mapPlaceVlaue ="";
+  String mapPlaceVlaue = "";
+
   /// 是否第一次定位
   bool firstLocated = true;
 
@@ -79,12 +81,13 @@ class _MapLocationPageState extends State<MapLocationPage> {
           pinned: true,
           expandedHeight: DeviceUtils.winHeight(context) * 0.6,
           actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.send,
-                color: Colors.green,
-              ),
-              onPressed: () async {
+            ComMomButton(
+              text: '发送',
+              style: TextStyle(color: Colors.white),
+              width: 65.0,
+              margin: EdgeInsets.all(10.0),
+              radius: 4.0,
+              onTap: () async {
                 final latLng = await _controller?.getLocation();
                 _controller.screenShot((data) async {
                   var place;
@@ -111,14 +114,14 @@ class _MapLocationPageState extends State<MapLocationPage> {
                     showZoomControl: false,
                     onMapMoveEnd: _handleMapMoveEnd,
                     maskDelay: Duration(milliseconds: 800),
-                    onMapClicked: (mapMove) async{
+                    onMapClicked: (mapMove) async {
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
                     onMapCreated: (controller) async {
                       if (await requestPermission()) {
                         await controller
                             .showMyLocation(MyLocationOption(show: true));
-                        await controller.setZoomLevel(15,animated: false);
+                        await controller.setZoomLevel(15, animated: false);
                         await controller.showLocateControl(false);
                         await _handleMapMoveEnd(null);
                         setState(() {
@@ -134,7 +137,7 @@ class _MapLocationPageState extends State<MapLocationPage> {
                 Align(
                   alignment: AlignmentDirectional.bottomEnd,
                   child: GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       _controller?.showMyLocation(MyLocationOption(show: true));
                     },
                     child: Image.asset(
@@ -145,7 +148,6 @@ class _MapLocationPageState extends State<MapLocationPage> {
               ]))),
     ];
   }
-
 
   Future<void> _handleMapMoveEnd(_) async {
     //await onMapMoveEnd(context);
@@ -167,7 +169,9 @@ class _MapLocationPageState extends State<MapLocationPage> {
     return (_controller != null)
         ? Column(
             children: <Widget>[
-              SizedBox(height: 16,),
+              SizedBox(
+                height: 16,
+              ),
               MapSearchWidget(
                 controller: textEditingController,
                 onChanged: (value) {
@@ -190,7 +194,7 @@ class _MapLocationPageState extends State<MapLocationPage> {
                   });
                 },
                 isShow: isShow,
-                onCancel: (){
+                onCancel: () {
                   setState(() {
                     isShow = false;
                     textEditingController.clear();
@@ -225,9 +229,7 @@ class _MapLocationPageState extends State<MapLocationPage> {
                             _controller.setCenterCoordinate(
                                 place.latLng.latitude, place.latLng.longitude);
                             place.isCheck = true;
-                            setState(() {
-
-                          });
+                            setState(() {});
                           },
                         );
                       },
@@ -248,7 +250,7 @@ class _MapLocationPageState extends State<MapLocationPage> {
       center = await _controller?.getLocation();
       firstLocated = false;
     } else {
-       center = await _controller?.getCenterCoordinate();
+      center = await _controller?.getCenterCoordinate();
       if (_markers.isNotEmpty) {
         await _markers[0].remove();
         _markers.removeAt(0);
@@ -267,7 +269,5 @@ class _MapLocationPageState extends State<MapLocationPage> {
       );
       _markers.add(marker);
     }
-
-
   }
 }

@@ -129,6 +129,7 @@ class AppConstants {
   static const ConversationMuteIconSize = 18.0;
   static const ContactAvatarSize = 42.0;
   static const TitleTextSize = 16.0;
+  static const Container_MARGIN = 16.0;
   static const ContentTextSize = 20.0;
   static const DesTextSize = 13.0;
   static const IndexBarWidth = 24.0;
