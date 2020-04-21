@@ -6,6 +6,8 @@ import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/pages/contacts/contact_item.dart';
 import 'package:flutter_qyyim/pages/contacts/contact_view.dart';
 import 'package:flutter_qyyim/pages/contacts/contacts.dart';
+import 'package:flutter_qyyim/tool/log_utils.dart';
+import 'package:flutter_qyyim/ui/commom_bar.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
 import 'package:flutter_qyyim/tool/device_utils.dart';
 import 'package:flutter_qyyim/config/app.dart';
@@ -13,14 +15,12 @@ import 'package:flutter_qyyim/config/dictionary.dart';
 import 'package:flutter_qyyim/ui/null_view.dart';
 import 'package:flutter_qyyim/view_model/contact_view_model.dart';
 
-
-
 /// 联系人
-class ContactsPage extends StatefulWidget {
-  _ContactsPageState createState() => _ContactsPageState();
+class FriendChoosePage extends StatefulWidget {
+  _FriendChoosePageState createState() => _FriendChoosePageState();
 }
 
-class _ContactsPageState extends State<ContactsPage>
+class _FriendChoosePageState extends State<FriendChoosePage>
     with AutomaticKeepAliveClientMixin {
   var indexBarBg = Colors.transparent;
   var currentLetter = '';
@@ -56,17 +56,25 @@ class _ContactsPageState extends State<ContactsPage>
     super.build(context);
     sC = new ScrollController();
 
+
     List<Widget> body = [
       /// 联系人视图
       ProviderWidget<ContactViewModel>(
-          model:ContactViewModel(),
+        model: ContactViewModel(),
         onModelReady: (modlue) {
           modlue.getContacts(_functionButtons, _contacts, _letterPosMap);
         },
         builder: (context, modlue, widget) {
           _contacts = modlue.contacts;
           return new ContactView(
-              sC: sC, functionButtons: _functionButtons, contacts: _contacts);
+            type: ClickType.select,
+            sC: sC,
+            functionButtons: _functionButtons,
+            contacts: _contacts,
+            callback: (data) {
+              LogUtil.e(data.toString());
+            },
+          );
         },
       ),
 
@@ -112,7 +120,10 @@ class _ContactsPageState extends State<ContactsPage>
       );
     }
     return new Scaffold(
-        appBar: AppBar(title: Text("联系人")), body: new Stack(children: body));
+        appBar: ComMomBar(
+          title: "选择联系人",
+        ),
+        body: new Stack(children: body));
   }
 
   String _getLetter(BuildContext context, double tileHeight, Offset globalPos) {

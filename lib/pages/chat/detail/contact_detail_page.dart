@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/ui/commom_bar.dart';
+import 'package:flutter_qyyim/ui/dialog_utils.dart';
 import 'package:flutter_qyyim/ui/image_view.dart';
 import 'package:flutter_qyyim/ui/label_row.dart';
 
@@ -30,6 +31,13 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
         rightDMActions: <Widget>[
           new InkWell(
             child: new Image.asset('assets/images/right_more.png'),
+            onTap: (){
+              //DialogUtils.showModalBottomSheetDialog(context);
+              //codeDialog(context);
+              //shoCam(context);
+              showBt(context);
+
+            },
           )
         ],
       ),

@@ -84,6 +84,24 @@ class ContactItemState extends State<ContactItem> {
     _avatarIcon = _avatarIcon;
 
     var content = [
+      widget.type == ClickType.select
+          ? new InkWell(
+        child: Padding(
+          padding: const EdgeInsets.only(right: 8),
+          child: new Image.asset(
+            'assets/images/login/${isSelect ? 'ic_select_have.webp' : 'ic_select_no.png'}',
+            width: 25.0,
+            height: 25.0,
+            fit: BoxFit.cover,
+          ),
+        ),
+        onTap: () {
+          setState(() => isSelect = !isSelect);
+          if (isSelect) widget.add(widget.identifier);
+          if (!isSelect) widget.cancel(widget.identifier);
+        },
+      )
+          : new Container(),
       _avatarIcon,
 
       ///  头像离名字的距离
@@ -112,21 +130,7 @@ class ContactItemState extends State<ContactItem> {
               style: TextStyle(fontWeight: FontWeight.w400), maxLines: 1),
         ),
       ),
-      widget.type == ClickType.select
-          ? new InkWell(
-              child: new Image.asset(
-                'assets/images/login/${isSelect ? 'ic_select_have.webp' : 'ic_select_no.png'}',
-                width: 25.0,
-                height: 25.0,
-                fit: BoxFit.cover,
-              ),
-              onTap: () {
-                setState(() => isSelect = !isSelect);
-                if (isSelect) widget.add(widget.identifier);
-                if (!isSelect) widget.cancel(widget.identifier);
-              },
-            )
-          : new Container()
+
     ];
 
     /// 列表项主体部分

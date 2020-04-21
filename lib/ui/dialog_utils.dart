@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/config/app.dart';
+import 'package:flutter_qyyim/tool/device_utils.dart';
+import 'package:flutter_qyyim/ui/ui.dart';
 
 /// 根据showDialog<T> boolean标志点击的是哪个区域按钮
 /// 自定义视图 TODO
 class DialogUtils {
-
-
+  /// 中间的对话框
   /// dialogType = 1 为ios CupertinoAlertDialog
   static Future<bool> showAlert(BuildContext context, String title,
       {String negativeText = '取消',
@@ -13,7 +15,6 @@ class DialogUtils {
       String mainTile = "温馨提示",
       bool onlyPositive = false,
       int dialogType = 1}) {
-
     _showAlert<bool>(
         context: context,
         child: dialogType == 1
@@ -38,13 +39,211 @@ class DialogUtils {
               ));
   }
 
+  /// 加载圈
   static showLoadingDialog(BuildContext context) {
     LoadingDialog().show(context);
   }
 
 //static dimissLoadingDialog()
 
+  /// 底部弹出的
+  /// 如何设置固定高度
+  /// 普通用法出现占比的控件是
+  static showModalBottomSheetDialog(BuildContext context) {
+
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return new ListTile(
+            leading: new Icon(Icons.photo_camera),
+            title: new Text("Camera"),
+            onTap: () async {
+              Navigator.pop(context);
+            },
+          );
+        });
+  }
 }
+
+/// 通过FractionallySize控制比例高度
+showBt(BuildContext context)
+ {
+   showModalBottomSheet(
+       context: context,
+       isScrollControlled: true,
+       builder: (context) {
+         return FractionallySizedBox(
+           heightFactor: 0.5,
+           child: BigListViewWidget(),
+         );
+       });
+}
+
+Widget BigListViewWidget() {
+  return ListView.builder(itemBuilder: (context, int){
+    return Text('$int');
+  },itemCount: 30,);
+}
+shoCam(BuildContext context){
+  showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context){
+        return new Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            new ListTile(
+              leading: new Icon(Icons.photo_camera),
+              title: new Text("Camera"),
+              onTap: () async {
+                Navigator.pop(context);
+              },
+            ),
+            new ListTile(
+              leading: new Icon(Icons.photo_library),
+              title: new Text("Gallery"),
+              onTap: () async {
+                Navigator.pop(context);
+              },
+            ),
+            new ListTile(
+              leading: new Icon(Icons.photo_camera),
+              title: new Text("Camera"),
+              onTap: () async {
+                Navigator.pop(context);
+              },
+            ),
+            new ListTile(
+              leading: new Icon(Icons.photo_library),
+              title: new Text("Gallery"),
+              onTap: () async {
+                Navigator.pop(context);
+              },
+            ),
+            new ListTile(
+              leading: new Icon(Icons.photo_camera),
+              title: new Text("Camera"),
+              onTap: () async {
+                Navigator.pop(context);
+              },
+            ),
+            new ListTile(
+              leading: new Icon(Icons.photo_library),
+              title: new Text("Gallery"),
+              onTap: () async {
+                Navigator.pop(context);
+              },
+            ),
+            new ListTile(
+              leading: new Icon(Icons.photo_camera),
+              title: new Text("Camera"),
+              onTap: () async {
+                Navigator.pop(context);
+              },
+            ),
+            new ListTile(
+              leading: new Icon(Icons.photo_library),
+              title: new Text("Gallery"),
+              onTap: () async {
+                Navigator.pop(context);
+              },
+            ),
+            new ListTile(
+              leading: new Icon(Icons.photo_camera),
+              title: new Text("Camera"),
+              onTap: () async {
+                Navigator.pop(context);
+              },
+            ),
+            new ListTile(
+              leading: new Icon(Icons.photo_library),
+              title: new Text("Gallery"),
+              onTap: () async {
+                Navigator.pop(context);
+              },
+            ),
+            new ListTile(
+              leading: new Icon(Icons.photo_camera),
+              title: new Text("Camera"),
+              onTap: () async {
+                Navigator.pop(context);
+              },
+            ),
+            new ListTile(
+              leading: new Icon(Icons.photo_library),
+              title: new Text("Gallery"),
+              onTap: () async {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      }
+  );
+}
+
+codeDialog(BuildContext context) {
+  Widget item(item) {
+    return new Container(
+      width: DeviceUtils.winWidth(context),
+      decoration: BoxDecoration(
+        border: item != '重置二维码'
+            ? Border(
+          bottom: BorderSide(color: AppColors.lineColor, width: 0.2),
+        )
+            : null,
+      ),
+      child: new FlatButton(
+        color: Colors.white,
+        padding: EdgeInsets.symmetric(vertical: 15.0),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        child: new Text(item),
+      ),
+    );
+  }
+
+  showModalBottomSheet(
+    context: context,
+    builder: (context) {
+      List data = ['换个样式', '保存到手机', '扫描二维码', '重置二维码'];
+      return new Material(
+        type: MaterialType.transparency,
+        child: new Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            new ClipRRect(
+              borderRadius: BorderRadius.all(
+                Radius.circular(10.0),
+              ),
+              child: new Container(
+                color: Colors.white,
+                child: new Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    new Column(children: data.map(item).toList()),
+                    new HorizontalLine(color: AppColors.appBarColor, height: 10.0),
+                    new FlatButton(
+                      padding: EdgeInsets.symmetric(vertical: 15.0),
+                      color: Colors.white,
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: new Container(
+                        width: DeviceUtils.winWidth(context),
+                        alignment: Alignment.center,
+                        child: new Text('取消'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      );
+    },
+  );
+}
+
 
 Future _showLoadingDialog(BuildContext c, LoadingDialog loading,
         {bool cancelable = true}) =>

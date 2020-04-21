@@ -3,13 +3,19 @@ import 'dart:typed_data';
 import 'package:flutter_qyyim/common/db/solution1/db_base_bean.dart';
 
 class ChatData extends DbBaseBean {
+  /// 消息内容
   final String msg;
-  final String id;  // 消息id
+  /// 消息id
+  final String id;
+  /// 消息时间
   final int time;
+  /// 用户昵称
   final String nickName;
+  /// 用户头像
   final String avatar;
-
-  final String chatId; // 会话id
+  /// 会话id
+  final String chatId;
+  /// 地图pic
   Uint8List mapPic;
 
 
