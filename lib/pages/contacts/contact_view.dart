@@ -14,6 +14,7 @@ class ContactView extends StatelessWidget {
   final List<Contact> contacts;
   final ClickType type;
   final Callback callback;
+  List<String> data = [];
 
   ContactView({
     this.sC,
@@ -21,11 +22,11 @@ class ContactView extends StatelessWidget {
     this.contacts = const [],
     this.type,
     this.callback,
+    this.data
   });
 
   @override
   Widget build(BuildContext context) {
-    List<String> data = [];
     return new ScrollConfiguration(
       behavior: MyBehavior(),
       child: new ListView.builder(
@@ -49,14 +50,19 @@ class ContactView extends StatelessWidget {
               identifier: _contact.id,
               groupTitle: _isGroupTitle ? _contact.nameIndex : null,
               isLine: _isBorder,
+              isSelect: _contact.isSelect,
               type: type,
               cancel: (v) {
                 data.remove(v);
                 callback(data);
+
+                _contact.isSelect = false;
               },
               add: (v) {
                 data.add(v);
                 callback(data);
+
+                _contact.isSelect = true;
               },
             );
           } else {

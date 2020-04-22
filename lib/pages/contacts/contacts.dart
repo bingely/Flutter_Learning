@@ -22,12 +22,15 @@ class Contact extends DbBaseBean {
     @required this.avatar,
     @required this.name,
     @required this.nameIndex,
+    this.isSelect = false
   });
 
   final String id; // 唯一标识
   final String avatar;
   final String name;
   final String nameIndex; // 名字首字母所在的index
+
+   bool isSelect; // 是否是选中
 
   @override
   DbBaseBean fromJson(Map<String, dynamic> map) {
@@ -36,6 +39,7 @@ class Contact extends DbBaseBean {
       avatar: map['avatar'] as String,
       name: map['name'] as String,
       nameIndex: map['nameIndex'] as String,
+      isSelect: map['isSelect'] as bool
     );
   }
 
@@ -51,6 +55,7 @@ class Contact extends DbBaseBean {
       'avatar': this.avatar,
       'name': this.name,
       'nameIndex': this.nameIndex,
+      'isSelect' : this.isSelect
     };
   }
 }

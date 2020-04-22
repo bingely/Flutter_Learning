@@ -6,6 +6,7 @@ import 'package:flutter_qyyim/pages/chat/camarademo/gallery.dart';
 import 'package:flutter_qyyim/pages/chat/chat_page.dart';
 import 'package:flutter_qyyim/pages/chat/detail/chat_info_page.dart';
 import 'package:flutter_qyyim/pages/chat/detail/contact_detail_page.dart';
+import 'package:flutter_qyyim/pages/chat/detail/friend_choose_page.dart';
 import 'package:flutter_qyyim/pages/chat/map/map_locationed.dart';
 import 'package:flutter_qyyim/pages/chat/video/video_page.dart';
 import 'package:flutter_qyyim/model/message.dart';
