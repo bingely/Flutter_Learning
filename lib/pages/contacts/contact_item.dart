@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/config/router_manger.dart';
 import 'package:flutter_qyyim/model/message.dart';
 import 'package:flutter_qyyim/pages/chat/chat_page.dart';
+import 'package:flutter_qyyim/tool/log_utils.dart';
 import 'package:flutter_qyyim/tool/navigator_util.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
 import 'package:flutter_qyyim/config/app.dart';
@@ -21,6 +22,7 @@ class ContactItem extends StatefulWidget {
   final ClickType type;
   final OnAdd add;
   final OnCancel cancel;
+  bool isSelect;
 
   ContactItem({
     @required this.avatar,
@@ -31,6 +33,7 @@ class ContactItem extends StatefulWidget {
     this.type = ClickType.open,
     this.add,
     this.cancel,
+    this.isSelect = false,
   });
 
   ContactItemState createState() => ContactItemState();
@@ -54,7 +57,6 @@ class ContactItemState extends State<ContactItem> {
     return _buttonHeight;
   }
 
-  bool isSelect = false;
 
   Map<String, dynamic> mapData;
 
@@ -80,6 +82,7 @@ class ContactItemState extends State<ContactItem> {
       fit: BoxFit.cover,
     );
 
+    LogUtil.e("contactitem----${widget.title}---${widget.isSelect}");
     /// 头像圆角
     _avatarIcon = _avatarIcon;
 
@@ -89,16 +92,16 @@ class ContactItemState extends State<ContactItem> {
         child: Padding(
           padding: const EdgeInsets.only(right: 8),
           child: new Image.asset(
-            'assets/images/login/${isSelect ? 'ic_select_have.webp' : 'ic_select_no.png'}',
+            'assets/images/login/${widget.isSelect ? 'ic_select_have.webp' : 'ic_select_no.png'}',
             width: 25.0,
             height: 25.0,
             fit: BoxFit.cover,
           ),
         ),
         onTap: () {
-          setState(() => isSelect = !isSelect);
-          if (isSelect) widget.add(widget.identifier);
-          if (!isSelect) widget.cancel(widget.identifier);
+          setState(() => widget.isSelect = !widget.isSelect);
+          if (widget.isSelect) widget.add(widget.identifier);
+          if (!widget.isSelect) widget.cancel(widget.identifier);
         },
       )
           : new Container(),
@@ -138,9 +141,9 @@ class ContactItemState extends State<ContactItem> {
       color: Colors.white,
       onPressed: () {
         if (widget.type == ClickType.select) {
-          setState(() => isSelect = !isSelect);
-          if (isSelect) widget.add(widget.identifier);
-          if (!isSelect) widget.cancel(widget.identifier);
+          setState(() => widget.isSelect = !widget.isSelect);
+          if (widget.isSelect) widget.add(widget.identifier);
+          if (!widget.isSelect) widget.cancel(widget.identifier);
           return;
         }
         if (widget.title == '新的朋友') {
