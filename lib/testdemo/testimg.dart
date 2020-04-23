@@ -13,12 +13,12 @@ import 'package:image_pickers/UIConfig.dart';
 import 'dart:ui' as ui;
 
 
-class MyApp extends StatefulWidget {
+class ImagPickPage extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<ImagPickPage> {
   GalleryMode _galleryMode = GalleryMode.image;
   GlobalKey globalKey;
   @override

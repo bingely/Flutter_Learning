@@ -39,7 +39,6 @@ class Contact extends DbBaseBean {
       avatar: map['avatar'] as String,
       name: map['name'] as String,
       nameIndex: map['nameIndex'] as String,
-      isSelect: map['isSelect'] as bool
     );
   }
 
@@ -55,7 +54,6 @@ class Contact extends DbBaseBean {
       'avatar': this.avatar,
       'name': this.name,
       'nameIndex': this.nameIndex,
-      'isSelect' : this.isSelect
     };
   }
 }

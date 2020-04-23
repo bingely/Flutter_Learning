@@ -4,6 +4,8 @@ import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/tool/device_utils.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
 
+import 'dialog/action_sheet.dart';
+
 /// 根据showDialog<T> boolean标志点击的是哪个区域按钮
 /// 自定义视图 TODO
 class DialogUtils {
@@ -49,9 +51,18 @@ class DialogUtils {
   /// 底部弹出的
   /// 如何设置固定高度
   /// 普通用法出现占比的控件是
-  static showModalBottomSheetDialog(BuildContext context) {
-
-    showModalBottomSheet(
+  static showModalBottomSheetDialog(
+    BuildContext context, {
+    Key key,
+    Widget title,
+    Widget message,
+    List<Widget> actions,
+    ScrollController messageScrollController,
+    ScrollController actionScrollController,
+    Widget cancelButton,
+  }) {
+    // 第一种实现方案 有些bug
+   /* showModalBottomSheet(
         context: context,
         builder: (context) {
           return new ListTile(
@@ -61,33 +72,43 @@ class DialogUtils {
               Navigator.pop(context);
             },
           );
-        });
+        });*/
+
+    // 第二种实现方案
+    ActionSheet.show(
+      context,
+      actions: actions,
+      cancelButton: cancelButton,
+    );
   }
 }
 
 /// 通过FractionallySize控制比例高度
-showBt(BuildContext context)
- {
-   showModalBottomSheet(
-       context: context,
-       isScrollControlled: true,
-       builder: (context) {
-         return FractionallySizedBox(
-           heightFactor: 0.5,
-           child: BigListViewWidget(),
-         );
-       });
+showBt(BuildContext context) {
+  showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return FractionallySizedBox(
+          heightFactor: 0.5,
+          child: BigListViewWidget(),
+        );
+      });
 }
 
 Widget BigListViewWidget() {
-  return ListView.builder(itemBuilder: (context, int){
-    return Text('$int');
-  },itemCount: 30,);
+  return ListView.builder(
+    itemBuilder: (context, int) {
+      return Text('$int');
+    },
+    itemCount: 30,
+  );
 }
-shoCam(BuildContext context){
+
+shoCam(BuildContext context) {
   showModalBottomSheet(
       context: context,
-      builder: (BuildContext context){
+      builder: (BuildContext context) {
         return new Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -177,8 +198,7 @@ shoCam(BuildContext context){
             ),
           ],
         );
-      }
-  );
+      });
 }
 
 codeDialog(BuildContext context) {
@@ -188,8 +208,8 @@ codeDialog(BuildContext context) {
       decoration: BoxDecoration(
         border: item != '重置二维码'
             ? Border(
-          bottom: BorderSide(color: AppColors.lineColor, width: 0.2),
-        )
+                bottom: BorderSide(color: AppColors.lineColor, width: 0.2),
+              )
             : null,
       ),
       child: new FlatButton(
@@ -222,7 +242,8 @@ codeDialog(BuildContext context) {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     new Column(children: data.map(item).toList()),
-                    new HorizontalLine(color: AppColors.appBarColor, height: 10.0),
+                    new HorizontalLine(
+                        color: AppColors.appBarColor, height: 10.0),
                     new FlatButton(
                       padding: EdgeInsets.symmetric(vertical: 15.0),
                       color: Colors.white,
@@ -243,7 +264,6 @@ codeDialog(BuildContext context) {
     },
   );
 }
-
 
 Future _showLoadingDialog(BuildContext c, LoadingDialog loading,
         {bool cancelable = true}) =>

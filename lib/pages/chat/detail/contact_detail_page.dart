@@ -1,9 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/ui/commom_bar.dart';
+import 'package:flutter_qyyim/ui/dialog/action_sheet.dart';
 import 'package:flutter_qyyim/ui/dialog_utils.dart';
 import 'package:flutter_qyyim/ui/image_view.dart';
 import 'package:flutter_qyyim/ui/label_row.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ContactDetailPage extends StatefulWidget {
   @override
@@ -11,17 +14,6 @@ class ContactDetailPage extends StatefulWidget {
 }
 
 class _ContactDetailPageState extends State<ContactDetailPage> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +23,9 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
         rightDMActions: <Widget>[
           new InkWell(
             child: new Image.asset('assets/images/right_more.png'),
-            onTap: (){
-              //DialogUtils.showModalBottomSheetDialog(context);
-              //codeDialog(context);
-              //shoCam(context);
-              showBt(context);
+            onTap: () {
+              //showRightActionDialog(context);
+              DialogUtils.showLoadingDialog(context);
 
             },
           )
@@ -106,6 +96,64 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  void showRightActionDialog(BuildContext context) {
+    //DialogUtils.showModalBottomSheetDialog(context);
+    //codeDialog(context);
+    //shoCam(context);
+    //showBt(context);
+
+    DialogUtils.showModalBottomSheetDialog(
+      context,
+      actions: <Widget>[
+        ActionSheetAction(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('设置备注和标签')),
+        ActionSheetAction(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('把她推荐给朋友'),
+        ),
+        ActionSheetAction(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('设为星标好友')),
+        ActionSheetAction(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('设置朋友圈和视频动态权限'),
+        ),
+        ActionSheetAction(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('加入黑名单')),
+        ActionSheetAction(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('投诉'),
+        ),
+        ActionSheetAction(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('删除'),
+        ),
+      ],
+      cancelButton: ActionSheetAction(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        child: Text('取消'),
       ),
     );
   }

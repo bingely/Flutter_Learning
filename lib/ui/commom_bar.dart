@@ -77,6 +77,7 @@ class ComMomBar extends StatelessWidget implements PreferredSizeWidget {
               centerTitle: true,
               actions: rightDMActions ?? [new Center()],
               bottom: bottom != null ? bottom : null,
+              titleSpacing: 0.0,
             ),
           )
         : new AppBar(
@@ -96,6 +97,7 @@ class ComMomBar extends StatelessWidget implements PreferredSizeWidget {
             centerTitle: false,
             bottom: bottom != null ? bottom : null,
             actions: rightDMActions ?? [new Center()],
+      titleSpacing: 0.0,
           );
   }
 }

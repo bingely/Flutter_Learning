@@ -92,5 +92,6 @@ List<Contact> mock_contacts = [
       avatar: 'https://randomuser.me/api/portraits/men/86.jpg',
       name: '01234',
       nameIndex: '#',
-      id: '1018'),
+      id: '1018',
+  isSelect: false),
 ];
