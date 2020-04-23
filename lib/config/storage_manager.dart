@@ -4,7 +4,6 @@ import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
 import 'package:flutter_qyyim/tool/log_utils.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:x5_webview/x5_sdk.dart';
 
 class StorageManager {
   /// app全局配置
@@ -29,9 +28,9 @@ class StorageManager {
     LogUtil.init();
 
 
-    X5Sdk.setDownloadWithoutWifi(true); //没有x5内核，是否在非wifi模式下载内核。默认false
+    /*X5Sdk.setDownloadWithoutWifi(true); //没有x5内核，是否在非wifi模式下载内核。默认false
     X5Sdk.init().then((isOK) {
       print(isOK ? "X5内核成功加载" : "X5内核加载失败");
-    });
+    });*/
   }
 }
