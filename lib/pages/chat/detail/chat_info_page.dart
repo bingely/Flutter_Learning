@@ -1,19 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
+import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/config/resource_mananger.dart';
+import 'package:flutter_qyyim/model/message.dart';
 import 'package:flutter_qyyim/pages/chat/detail/contact_detail_page.dart';
 import 'package:flutter_qyyim/pages/chat/detail/friend_choose_page.dart';
+import 'package:flutter_qyyim/pages/contacts/contacts.dart';
 import 'package:flutter_qyyim/pages/me/list_tile_view.dart';
+import 'package:flutter_qyyim/testdemo/trip/widget/loading_container.dart';
 import 'package:flutter_qyyim/tool/device_utils.dart';
+import 'package:flutter_qyyim/tool/log_utils.dart';
 import 'package:flutter_qyyim/tool/navigator_util.dart';
 import 'package:flutter_qyyim/ui/commom_bar.dart';
 import 'package:flutter_qyyim/ui/commom_button.dart';
 import 'package:flutter_qyyim/ui/image_view.dart';
 import 'package:flutter_qyyim/ui/label_row.dart';
+import 'package:flutter_qyyim/view_model/chatinfo_view_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChatInfoPage extends StatefulWidget {
+  SessionMsg message;
+  ChatInfoPage(this.message);
+
   @override
   _ChatInfoPageState createState() => new _ChatInfoPageState();
 }
@@ -23,21 +33,9 @@ class _ChatInfoPageState extends State<ChatInfoPage> {
   bool swich_strong_remider = false;
   bool swich_sticky_chat = false;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> widgets = headUserIcons();
     return new Scaffold(
       backgroundColor: AppColors.chatBg,
       appBar: ComMomBar(
@@ -46,16 +44,44 @@ class _ChatInfoPageState extends State<ChatInfoPage> {
       body: ListView(
         children: <Widget>[
           // 头像布局
-          Container(
-            padding: EdgeInsets.all(16),
-            width: DeviceUtils.winWidth(context),
-            color: Colors.white,
-            child: GridView.count(
-                shrinkWrap: true,
-                crossAxisCount: 5,
-                children: widgets,
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 8),
+          ProviderWidget<ChatInfoVIewModel>(
+            model: new ChatInfoVIewModel(),
+            onModelReady: (modle){
+              modle.headUserIcons(context,widget.message);
+            },
+            builder: (context, model, child){
+              if (model.widgets.length == 0) {
+                return LoadingContainer();
+              } else {
+                return Container(
+                  padding: EdgeInsets.all(16),
+                  width: DeviceUtils.winWidth(context),
+                  color: Colors.white,
+                  child: GridView.count(
+                      shrinkWrap: true,
+                      crossAxisCount: 5,
+                      children: model.widgets,
+                      crossAxisSpacing: 8,
+                      mainAxisSpacing: 8),
+
+                  /*child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3, //每行三列
+                        childAspectRatio: 1.0 //显示区域宽高相等
+                    ),
+                    itemCount: _icons.length,
+                    itemBuilder: (context, index) {
+                      //如果显示到最后一个并且Icon总数小于200时继续获取数据
+                      if (index == _icons.length - 1 && _icons.length < 200) {
+                        _retrieveIcons();
+                      }
+                      return Icon(_icons[index]);
+                    }
+                )*/
+                );
+              }
+            },
+
           ),
 
           LabelRow(
@@ -125,38 +151,4 @@ class _ChatInfoPageState extends State<ChatInfoPage> {
     );
   }
 
-  List<Widget> headUserIcons() {
-    List<Widget> widgets = List();
-    widgets.add(InkWell(
-      onTap: (){
-        NavigatorUtil.pushWithCuperino(context, ContactDetailPage());
-      },
-      child: Column(
-        children: <Widget>[
-          ImageView(
-            width: 55,
-            height: 55,
-            img: "https://randomuser.me/api/portraits/women/76.jpg",
-          ),
-          Expanded(child: Text('你好'))
-        ],
-      ),
-    ));
-
-    widgets.add(InkWell(
-      onTap: (){
-        NavigatorUtil.pushWithCuperino(context, FriendChoosePage());
-      },
-      child: Container(
-        child: ImageView(
-          width: 55,
-          height: 55,
-          img: ImageHelper.wrapAssets("chat/ic_details_add.png"),
-        ),
-        decoration: BoxDecoration(
-            border: Border.all(color: AppColors.lineColor, width: 0.2)),
-      ),
-    ));
-    return widgets;
-  }
 }

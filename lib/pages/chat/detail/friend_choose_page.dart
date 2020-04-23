@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
 import 'package:flutter_qyyim/common/provider/provider_widget.dart';
+import 'package:flutter_qyyim/model/message.dart';
 import 'package:flutter_qyyim/pages/contacts/contact_item.dart';
 import 'package:flutter_qyyim/pages/contacts/contact_view.dart';
 import 'package:flutter_qyyim/pages/contacts/contacts.dart';
 import 'package:flutter_qyyim/tool/log_utils.dart';
+import 'package:flutter_qyyim/tool/navigator_util.dart';
 import 'package:flutter_qyyim/tool/toast_util.dart';
 import 'package:flutter_qyyim/ui/commom_bar.dart';
 import 'package:flutter_qyyim/ui/commom_button.dart';
@@ -17,6 +19,8 @@ import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/config/dictionary.dart';
 import 'package:flutter_qyyim/ui/null_view.dart';
 import 'package:flutter_qyyim/view_model/contact_view_model.dart';
+
+import '../chat_page.dart';
 
 /// 联系人
 class FriendChoosePage extends StatefulWidget {
@@ -174,7 +178,30 @@ class _FriendChoosePageState extends State<FriendChoosePage>
                   ToastUtils.show("请选择联系人", context);
                 } else {
                   // 形成群信息 TODO
-                  ToastUtils.show("即将生成群信息"+idDatas.toString(), context);
+                  //ToastUtils.show("即将生成群信息"+idDatas.toString(), context);
+                  String names = "";
+                  String userids = "";
+                  idDatas.forEach((value) async {
+                    List<Contact> contacts = await DbUtils.getInstance()
+                        .queryItems(Contact(), key: "id", value: value);
+                    String name = contacts[0].name;
+                    String userid = contacts[0].id;
+
+                    if (idDatas.lastIndexOf(value) == idDatas.length - 1) {
+                      names += name;
+                      userids += userid;
+                      NavigatorUtil.pushWithCuperino(
+                          context,
+                          ChatPage(
+                              message: SessionMsg(
+                                  title: '$names',
+                                  userId: '$userids',
+                                  type: MessageType.GROUP)));
+                    } else {
+                      names += name + ",";
+                      userids += userid + ",";
+                    }
+                  });
                 }
               },
             )

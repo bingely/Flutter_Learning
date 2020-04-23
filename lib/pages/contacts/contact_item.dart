@@ -22,7 +22,7 @@ class ContactItem extends StatefulWidget {
   final ClickType type;
   final OnAdd add;
   final OnCancel cancel;
-  bool isSelect;
+  bool isSelect = false;
 
   ContactItem({
     @required this.avatar,

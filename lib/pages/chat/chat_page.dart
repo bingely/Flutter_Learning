@@ -97,6 +97,12 @@ class ChatePageState extends State<ChatPage> {
     _textController.addListener(() {
       LogUtil.v('textController.addListener');
     });
+
+
+    // 初始化信息
+    if (widget.message.type == MessageType.GROUP) {
+      //widget.title =
+    }
   }
 
   @override
@@ -110,17 +116,16 @@ class ChatePageState extends State<ChatPage> {
     var keyboardHeightMd = MediaQuery.of(context).viewInsets.bottom;
     keyboardHeight = max(keyboardHeight, keyboardHeightMd);
 
-    var rWidget = [
-      new InkWell(
-        child: new Image.asset('assets/images/right_more.png'),
-        onTap: () => NavigatorUtil.pushWithCuperino(context, ChatInfoPage()),
-      )
-    ];
     // 如果放在外面为啥会慢一拍？？TODO
     return Scaffold(
       appBar: new ComMomBar(
         title: widget.message != null ? widget.message.title : "",
-        rightDMActions: rWidget,
+        rightDMActions: [
+          new InkWell(
+            child: new Image.asset('assets/images/right_more.png'),
+            onTap: () => NavigatorUtil.pushWithCuperino(context, ChatInfoPage(widget.message)),
+          )
+        ],
       ),
       body: ProviderWidget<ChatViewModel>(
         model: ChatViewModel( widget.message.userId),
