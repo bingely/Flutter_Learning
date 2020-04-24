@@ -10,6 +10,8 @@ import 'package:flutter_qyyim/common/pinyin/pinyin_helper.dart';
 import 'package:flutter_qyyim/config/keys.dart';
 import 'package:flutter_qyyim/config/t.dart';
 import 'package:flutter_qyyim/pages/contacts/person_info_entity.dart';
+import 'package:flutter_qyyim/tool/json_util.dart';
+import 'package:flutter_qyyim/tool/log_utils.dart';
 import 'dart:convert';
 
 import 'package:flutter_qyyim/tool/shared_util.dart';
@@ -17,20 +19,19 @@ import 'package:flutter_qyyim/tool/shared_util.dart';
 import 'i_contact_info_entity.dart';
 
 class Contact extends DbBaseBean {
-  Contact({
-    @required this.id,
-    @required this.avatar,
-    @required this.name,
-    @required this.nameIndex,
-    this.isSelect = false
-  });
+  Contact(
+      {@required this.id,
+      @required this.avatar,
+      @required this.name,
+      @required this.nameIndex,
+      this.isSelect});
 
   final String id; // 唯一标识
   final String avatar;
   final String name;
   final String nameIndex; // 名字首字母所在的index
 
-   bool isSelect; // 是否是选中
+  int isSelect; // 是否是选中  默认0 未选中
 
   @override
   DbBaseBean fromJson(Map<String, dynamic> map) {
@@ -39,6 +40,7 @@ class Contact extends DbBaseBean {
       avatar: map['avatar'] as String,
       name: map['name'] as String,
       nameIndex: map['nameIndex'] as String,
+      isSelect: map['isSelect'] as int
     );
   }
 
@@ -54,6 +56,7 @@ class Contact extends DbBaseBean {
       'avatar': this.avatar,
       'name': this.name,
       'nameIndex': this.nameIndex,
+      'isSelect': this.isSelect
     };
   }
 }
@@ -64,11 +67,22 @@ class ContactsPageData {
   listFriend() async {
     List<Contact> contacts = new List<Contact>();
 
-    contacts.addAll(mock_contacts);
+    /// 奇怪为啥这种方式添加会记住选中的状态 TODO
+    //contacts.addAll(mock_contacts);
 
-    contacts.forEach((contact)=>{
-      DbUtils.getInstance().insertItem(contact )
+    /// 改成通过读取json
+/*    var encode = json.encode(mock_contacts);
+    LogUtil.e("listFriend====$encode");*/
+    String loadString = await JsonUtils.loadString('contact.json');
+    List contactJson = json.decode(loadString);
+    contactJson.forEach((json){
+      contacts.add(Contact().fromJson(json));
     });
+
+
+
+
+    contacts.forEach((contact) => {DbUtils.getInstance().insertItem(contact)});
     return contacts;
   }
 }

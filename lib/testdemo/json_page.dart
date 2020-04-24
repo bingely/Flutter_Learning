@@ -80,6 +80,8 @@ class _JsonPageState extends State<JsonPage> {
   Student parseStudent(String content) {
     final jsonResponse = json.decode(content);
     Student student = Student.fromJson(jsonResponse);
+
+
     print(student.teacher.name);
     return student;
   }

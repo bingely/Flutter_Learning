@@ -9,7 +9,7 @@ class DbOpenHelper{
     // 消息表
     String messageSql = 'CREATE TABLE MessageData (id TEXT PRIMARY KEY, msg TEXT, nickName TEXT, time INTEGER, avatar TEXT, chatId TEXT, mapPic BLOB)';
     // 联系人表
-    String contractSql = 'CREATE TABLE Contact (id TEXT PRIMARY KEY, avatar TEXT, name TEXT, nameIndex TEXT)';
+    String contractSql = 'CREATE TABLE Contact (id TEXT PRIMARY KEY, avatar TEXT, name TEXT, nameIndex TEXT, isSelect INTEGER )';
     // 离线消息表
     //String sessionSql = 'CREATE TABLE SessionMsg (id TEXT PRIMARY KEY, avatar TEXT, name TEXT, nameIndex TEXT)';
 

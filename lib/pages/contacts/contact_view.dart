@@ -56,13 +56,13 @@ class ContactView extends StatelessWidget {
                 data.remove(v);
                 callback(data);
 
-                _contact.isSelect = false;
+                _contact.isSelect = 0;
               },
               add: (v) {
                 data.add(v);
                 callback(data);
 
-                _contact.isSelect = true;
+                _contact.isSelect = 1;
               },
             );
           } else {

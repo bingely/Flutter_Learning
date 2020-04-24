@@ -190,13 +190,16 @@ class _FriendChoosePageState extends State<FriendChoosePage>
                     if (idDatas.lastIndexOf(value) == idDatas.length - 1) {
                       names += name;
                       userids += userid;
-                      NavigatorUtil.pushWithCuperino(
+
+
+                      NavigatorUtil.pushReplacement(
                           context,
                           ChatPage(
                               message: SessionMsg(
                                   title: '$names',
                                   userId: '$userids',
                                   type: MessageType.GROUP)));
+
                     } else {
                       names += name + ",";
                       userids += userid + ",";

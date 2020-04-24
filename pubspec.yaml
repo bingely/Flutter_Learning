@@ -120,7 +120,7 @@ flutter:
   assets:
     - assets/images/
     - assets/emoj/
-    - assets/data/friends.json
+    - assets/data/
 
     # webp格式的需要手动引入
     - assets/images/tabbar_contacts_c.webp

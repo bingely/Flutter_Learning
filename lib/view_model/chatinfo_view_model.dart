@@ -29,7 +29,7 @@ class ChatInfoVIewModel extends ViewStateModel {
         LogUtil.e("headUserIcons====${contact.avatar}");
         widgets.add(InkWell(
           onTap: (){
-            NavigatorUtil.pushWithCuperino(context, ContactDetailPage());
+            NavigatorUtil.push(context, ContactDetailPage());
           },
           child: Column(
             children: <Widget>[
@@ -48,7 +48,7 @@ class ChatInfoVIewModel extends ViewStateModel {
 
           widgets.add(InkWell(
             onTap: (){
-              NavigatorUtil.pushWithCuperino(context, FriendChoosePage());
+              NavigatorUtil.push(context, FriendChoosePage());
             },
             child: Container(
               child: ImageView(
@@ -74,7 +74,7 @@ class ChatInfoVIewModel extends ViewStateModel {
 
       widgets.add(InkWell(
         onTap: (){
-          NavigatorUtil.pushWithCuperino(context, ContactDetailPage());
+          NavigatorUtil.push(context, ContactDetailPage());
         },
         child: Column(
           children: <Widget>[
@@ -90,7 +90,7 @@ class ChatInfoVIewModel extends ViewStateModel {
 
       widgets.add(InkWell(
         onTap: (){
-          NavigatorUtil.pushWithCuperino(context, FriendChoosePage());
+          NavigatorUtil.push(context, FriendChoosePage());
         },
         child: Container(
           child: ImageView(

@@ -166,4 +166,7 @@ class AppConstants {
 
   static const defContentImg =
       'https://www.runoob.com/wp-content/uploads/2015/06/image_1c58e950q14da167k1nqpu2hn5e9.png';
+
+  /// 本地mock数据json
+  static const String mockData = 'assets/data/';
 }

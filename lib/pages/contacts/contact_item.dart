@@ -22,7 +22,7 @@ class ContactItem extends StatefulWidget {
   final ClickType type;
   final OnAdd add;
   final OnCancel cancel;
-  bool isSelect = false;
+  int isSelect = 0;
 
   ContactItem({
     @required this.avatar,
@@ -33,7 +33,7 @@ class ContactItem extends StatefulWidget {
     this.type = ClickType.open,
     this.add,
     this.cancel,
-    this.isSelect = false,
+    this.isSelect = 0,
   });
 
   ContactItemState createState() => ContactItemState();
@@ -83,6 +83,7 @@ class ContactItemState extends State<ContactItem> {
     );
 
     LogUtil.e("contactitem----${widget.title}---${widget.isSelect}");
+
     /// 头像圆角
     _avatarIcon = _avatarIcon;
 
@@ -92,16 +93,24 @@ class ContactItemState extends State<ContactItem> {
         child: Padding(
           padding: const EdgeInsets.only(right: 8),
           child: new Image.asset(
-            'assets/images/login/${widget.isSelect ? 'ic_select_have.webp' : 'ic_select_no.png'}',
+            'assets/images/login/${widget.isSelect == 1
+                ? 'ic_select_have.webp'
+                : 'ic_select_no.png'}',
             width: 25.0,
             height: 25.0,
             fit: BoxFit.cover,
           ),
         ),
         onTap: () {
-          setState(() => widget.isSelect = !widget.isSelect);
-          if (widget.isSelect) widget.add(widget.identifier);
-          if (!widget.isSelect) widget.cancel(widget.identifier);
+          setState(() {
+            if (widget.isSelect == 0) {
+              widget.isSelect = 1;
+            } else{
+              widget.isSelect = 0;
+            }
+          });
+          if (widget.isSelect == 1) widget.add(widget.identifier);
+          if (widget.isSelect == 0) widget.cancel(widget.identifier);
         },
       )
           : new Container(),
@@ -120,12 +129,12 @@ class ContactItemState extends State<ContactItem> {
             border: !isLine()
                 ? null
                 : Border(
-                    bottom: BorderSide(
+              bottom: BorderSide(
 
-                        /// 下划线粗细及颜色
-                        width: AppConstants.DividerWidth,
-                        color: AppColors.lineColor),
-                  ),
+                /// 下划线粗细及颜色
+                  width: AppConstants.DividerWidth,
+                  color: AppColors.lineColor),
+            ),
           ),
 
           /// 姓名
@@ -141,9 +150,15 @@ class ContactItemState extends State<ContactItem> {
       color: Colors.white,
       onPressed: () {
         if (widget.type == ClickType.select) {
-          setState(() => widget.isSelect = !widget.isSelect);
-          if (widget.isSelect) widget.add(widget.identifier);
-          if (!widget.isSelect) widget.cancel(widget.identifier);
+          setState(() {
+            if (widget.isSelect == 0) {
+              widget.isSelect = 1;
+            } else{
+              widget.isSelect = 0;
+            }
+          });
+          if (widget.isSelect == 1) widget.add(widget.identifier);
+          if (widget.isSelect == 0) widget.cancel(widget.identifier);
           return;
         }
         if (widget.title == '新的朋友') {
@@ -160,8 +175,9 @@ class ContactItemState extends State<ContactItem> {
               id: widget.identifier,
               avatar: widget.avatar,
               title: widget.title));*/
-          NavigatorUtil.pushWithCuperino(
-              context, ChatPage(message: SessionMsg(title:'${widget.title}',userId: '${widget.identifier}')));
+          NavigatorUtil.push(
+              context, ChatPage(message: SessionMsg(
+              title: '${widget.title}', userId: '${widget.identifier}')));
         }
       },
       child: new Row(children: content),
