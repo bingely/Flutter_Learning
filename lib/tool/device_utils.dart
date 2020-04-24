@@ -2,11 +2,27 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:device_info/device_info.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:package_info/package_info.dart';
 /// 几个Flutter开发中的常用函数 http://www.mamicode.com/info-detail-2332504.html
+/// 是否是生产环境
+const bool inProduction = const bool.fromEnvironment("dart.vm.product");
 
 class DeviceUtils{
+
+  static bool get isDesktop => !isWeb && (isWindows || isLinux || isMacOS);
+  static bool get isMobile => isAndroid || isIOS;
+  static bool get isWeb => kIsWeb;
+
+  static bool get isWindows => Platform.isWindows;
+  static bool get isLinux => Platform.isLinux;
+  static bool get isMacOS => Platform.isMacOS;
+  static bool get isAndroid => Platform.isAndroid;
+  static bool get isFuchsia => Platform.isFuchsia;
+  static bool get isIOS => Platform.isIOS;
 
   /*
   * 以下两行设置android状态栏为透明的沉浸。写在组件渲染之后，是为了在渲染后进行set赋值，
@@ -75,5 +91,31 @@ class DeviceUtils{
 
   static double topBarHeight(BuildContext context) {
     return kToolbarHeight + MediaQueryData.fromWindow(window).padding.top;
+  }
+
+
+
+  static Future<PackageInfo> getAppPackageInfo() {
+    return PackageInfo.fromPlatform();
+  }
+
+  static Future<String> getAppVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    return packageInfo.version;
+  }
+  static Future<String> getBuildNum() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    return packageInfo.buildNumber;
+  }
+
+  static Future getDeviceInfo() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    if (Platform.isAndroid) {
+      return await deviceInfo.androidInfo;
+    } else if (Platform.isIOS) {
+      return await deviceInfo.iosInfo;
+    } else {
+      return null;
+    }
   }
 }

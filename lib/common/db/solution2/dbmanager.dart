@@ -1,4 +1,4 @@
-import 'package:flutter_qyyim/tool/platform_utils.dart';
+import 'package:flutter_qyyim/tool/device_utils.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'package:path/path.dart';
@@ -18,7 +18,7 @@ class DBManager {
   static init() async {
     var databasePath = await getDatabasesPath();
     String path = databasePath + _DB_NAME;
-    if (Platform.isIOS) {
+    if (DeviceUtils.isIOS) {
       path = databasePath + "/" + _DB_NAME;
     }
 

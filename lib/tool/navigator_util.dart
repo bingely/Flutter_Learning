@@ -9,11 +9,13 @@ class NavigatorUtil {
   /// *********通过widget方式跳转，这种跳转方式的话,传的参数，只能放在Widge的构造函数了，*******
   static push(BuildContext context, Widget page) {
     //Navigator.push(context, MaterialPageRoute(builder: (context) => page));
+    FocusScope.of(context).unfocus();
     Navigator.push(context, CupertinoPageRoute(builder: (context) => page));
   }
 
   /// 关闭自身的页面，跳到新的页面
   static pushReplacement(BuildContext context, Widget page) {
+    FocusScope.of(context).unfocus();
     Navigator.pushReplacement(
         context, CupertinoPageRoute(builder: (context) => page));
   }
@@ -22,6 +24,7 @@ class NavigatorUtil {
 
   //// *********name************
   static pushReplacementNamed(BuildContext context, String routeName) {
+    FocusScope.of(context).unfocus();
     Navigator.pushReplacementNamed(context, routeName);
 
     //Navigator.popAndPushNamed(context, routeName);
@@ -30,6 +33,7 @@ class NavigatorUtil {
   /// 如果想在弹出新路由之前，删除路由栈中的所有路由
   static pushNamedAndRemoveUntil_Isdeletall(
       BuildContext context, String newRouteName, bool isDeletall) {
+    FocusScope.of(context).unfocus();
     Navigator.pushNamedAndRemoveUntil(
         context, newRouteName, (Route<dynamic> route) => isDeletall);
   }
@@ -38,6 +42,7 @@ class NavigatorUtil {
   /// 比如只弹出Screen1路由上面的Screen3和Screen2，然后再push新的Screen4
   static pushNamedAndRemoveUntil(
       BuildContext context, String newRouteName, String preRoutName) {
+    FocusScope.of(context).unfocus();
     Navigator.pushNamedAndRemoveUntil(
         context, '/$newRouteName', ModalRoute.withName('/$preRoutName'));
   }
@@ -45,5 +50,18 @@ class NavigatorUtil {
   /// 通过路由名字，移除指定的页面
   static popUntil(BuildContext context, String routname) {
     Navigator.popUntil(context, ModalRoute.withName("/$routname"));
+  }
+
+
+  /// 返回
+  static void goBack(BuildContext context) {
+    FocusScope.of(context).unfocus();
+    Navigator.pop(context);
+  }
+
+  /// 带参数返回
+  static void goBackWithParams(BuildContext context, result) {
+    FocusScope.of(context).unfocus();
+    Navigator.pop(context, result);
   }
 }

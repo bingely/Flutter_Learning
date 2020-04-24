@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/tool/keyborad.dart';
+import 'package:flutter_qyyim/ui/my_scroll_view.dart';
 
 class TextFieldPage extends StatefulWidget {
   @override
@@ -12,6 +14,12 @@ class _TextFieldPageState extends State<TextFieldPage> {
   // 控制焦点
   FocusNode focusNode1 = new FocusNode();
   FocusNode focusNode2 = new FocusNode();
+  FocusNode focusNode3 = new FocusNode();
+  FocusNode focusNode4 = new FocusNode();
+  FocusNode focusNode5 = new FocusNode();
+  FocusNode focusNode6 = new FocusNode();
+  FocusNode focusNode7 = new FocusNode();
+  FocusNode focusNode8 = new FocusNode();
   FocusScopeNode focusScopeNode;
 
   @override
@@ -36,6 +44,7 @@ class _TextFieldPageState extends State<TextFieldPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: new AppBar(
         title: new Text('textfield'),
       ),
@@ -47,8 +56,17 @@ class _TextFieldPageState extends State<TextFieldPage> {
                 hintStyle:
                     TextStyle(color: Colors.grey, fontSize: 14.0) //定义提示文本样式
                 )),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: MyScrollView(
+          keyboardConfig: KeyBoradUtils.getKeyboardActionsConfig(context, [
+            focusNode1,
+            focusNode2,
+            focusNode3,
+            focusNode4,
+            focusNode5,
+            focusNode6,
+            focusNode7,
+            focusNode8,
+          ]),
           children: <Widget>[
             TextField(
               focusNode: focusNode1,
@@ -70,7 +88,6 @@ class _TextFieldPageState extends State<TextFieldPage> {
                 print("onchange--->$value");
               },
               //
-
             ),
             Container(
               child: TextField(
@@ -82,14 +99,103 @@ class _TextFieldPageState extends State<TextFieldPage> {
 
                     // 自定义下划线
                     hintStyle: TextStyle(color: Colors.red, fontSize: 20.0),
-                    border: InputBorder.none
-                ),
+                    border: InputBorder.none),
                 obscureText: true,
               ),
               decoration: BoxDecoration(
-                // 下滑线浅灰色，宽度1像素
-                border: Border(bottom: BorderSide(color: Colors.yellow,width: 1.0))
+                  // 下滑线浅灰色，宽度1像素
+                  border: Border(
+                      bottom: BorderSide(color: Colors.yellow, width: 1.0))),
+            ),
+            Container(
+              child: TextField(
+                focusNode: focusNode3,
+                decoration: InputDecoration(
+                    labelText: "输入框",
+                    hintText: "自定义输入框",
+                    prefixIcon: Icon(Icons.lock),
+
+                    // 自定义下划线
+                    hintStyle: TextStyle(color: Colors.red, fontSize: 20.0),
+                    border: InputBorder.none),
+                obscureText: true,
               ),
+              decoration: BoxDecoration(
+                  // 下滑线浅灰色，宽度1像素
+                  border: Border(
+                      bottom: BorderSide(color: Colors.yellow, width: 1.0))),
+            ),
+            Container(
+              child: TextField(
+                focusNode: focusNode4,
+                decoration: InputDecoration(
+                    labelText: "输入框",
+                    hintText: "自定义输入框",
+                    prefixIcon: Icon(Icons.lock),
+
+                    // 自定义下划线
+                    hintStyle: TextStyle(color: Colors.red, fontSize: 20.0),
+                    border: InputBorder.none),
+                obscureText: true,
+              ),
+              decoration: BoxDecoration(
+                  // 下滑线浅灰色，宽度1像素
+                  border: Border(
+                      bottom: BorderSide(color: Colors.yellow, width: 1.0))),
+            ),
+            Container(
+              child: TextField(
+                focusNode: focusNode5,
+                decoration: InputDecoration(
+                    labelText: "输入框",
+                    hintText: "自定义输入框",
+                    prefixIcon: Icon(Icons.lock),
+
+                    // 自定义下划线
+                    hintStyle: TextStyle(color: Colors.red, fontSize: 20.0),
+                    border: InputBorder.none),
+                obscureText: true,
+              ),
+              decoration: BoxDecoration(
+                  // 下滑线浅灰色，宽度1像素
+                  border: Border(
+                      bottom: BorderSide(color: Colors.yellow, width: 1.0))),
+            ),
+            Container(
+              child: TextField(
+                focusNode: focusNode6,
+                decoration: InputDecoration(
+                    labelText: "输入框",
+                    hintText: "自定义输入框",
+                    prefixIcon: Icon(Icons.lock),
+
+                    // 自定义下划线
+                    hintStyle: TextStyle(color: Colors.red, fontSize: 20.0),
+                    border: InputBorder.none),
+                obscureText: true,
+              ),
+              decoration: BoxDecoration(
+                  // 下滑线浅灰色，宽度1像素
+                  border: Border(
+                      bottom: BorderSide(color: Colors.yellow, width: 1.0))),
+            ),
+            Container(
+              child: TextField(
+                focusNode: focusNode7,
+                decoration: InputDecoration(
+                    labelText: "输入框",
+                    hintText: "自定义输入框",
+                    prefixIcon: Icon(Icons.lock),
+
+                    // 自定义下划线
+                    hintStyle: TextStyle(color: Colors.red, fontSize: 20.0),
+                    border: InputBorder.none),
+                obscureText: true,
+              ),
+              decoration: BoxDecoration(
+                  // 下滑线浅灰色，宽度1像素
+                  border: Border(
+                      bottom: BorderSide(color: Colors.yellow, width: 1.0))),
             ),
             RaisedButton(
               onPressed: () {
@@ -108,6 +214,24 @@ class _TextFieldPageState extends State<TextFieldPage> {
                 focusScopeNode.requestFocus(focusNode2);
               },
               child: Text("移动焦点"),
+            ),
+            Container(
+              child: TextField(
+                focusNode: focusNode8,
+                decoration: InputDecoration(
+                    labelText: "输入框",
+                    hintText: "自定义输入框",
+                    prefixIcon: Icon(Icons.lock),
+
+                    // 自定义下划线
+                    hintStyle: TextStyle(color: Colors.red, fontSize: 20.0),
+                    border: InputBorder.none),
+                obscureText: true,
+              ),
+              decoration: BoxDecoration(
+                  // 下滑线浅灰色，宽度1像素
+                  border: Border(
+                      bottom: BorderSide(color: Colors.yellow, width: 1.0))),
             ),
             RaisedButton(
               onPressed: () {
