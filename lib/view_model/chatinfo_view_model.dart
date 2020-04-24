@@ -92,10 +92,9 @@ class ChatInfoVIewModel extends ViewStateModel {
           child: ImageView(
             width: 55,
             height: 55,
-            img: ImageHelper.wrapAssets("chat/ic_details_add.png"),
+            img: ImageHelper.wrapAssets("chat/icon_zj.png"),
           ),
-          decoration: BoxDecoration(
-              border: Border.all(color: AppColors.lineColor, width: 0.2)),
+
         ),
       ));
 

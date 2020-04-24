@@ -72,6 +72,8 @@ dependencies:
   #flutter_filereader: ^2.0.0
   open_file: ^3.0.1
   #x5_webview: ^0.2.0
+  # 处理键盘事件
+  keyboard_actions: ^3.2.1
 
   # ****************************数据相关******************************************
   shared_preferences: any
@@ -184,6 +186,7 @@ flutter:
     - assets/images/chat/sound_right_3.png
     - assets/images/chat/icon_sight_close.png
     - assets/images/chat/flip_camera_icon_nor.webp
+    - assets/images/chat/icon_zj.png
 
     - assets/images/mine/ic_small_code.png
     - assets/images/mine/ic_wallet.webp

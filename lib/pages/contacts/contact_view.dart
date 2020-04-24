@@ -74,14 +74,20 @@ class ContactView extends StatelessWidget {
                 identifier: _contact.id,
                 groupTitle: _isGroupTitle ? _contact.nameIndex : null,
                 isLine: false,
+                isSelect: _contact.isSelect,
+                canEnableSelect: _contact.canEnableSelect,
                 type: type,
                 cancel: (v) {
                   data.remove(v);
                   callback(data);
+
+                  _contact.isSelect = ContactState.isUnselect;
                 },
                 add: (v) {
                   data.add(v);
                   callback(data);
+
+                  _contact.isSelect = ContactState.isSelect;
                 },
               ),
               new HorizontalLine(),

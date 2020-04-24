@@ -182,8 +182,18 @@ class _FriendChoosePageState extends State<FriendChoosePage>
                 if (idDatas.length == 0) {
                   ToastUtils.show("请选择联系人", context);
                 } else {
-                  // 形成群信息 TODO
+                  // 形成群信息
                   //ToastUtils.show("即将生成群信息"+idDatas.toString(), context);
+                  // 如果有其它的选中的信息，可以添加
+                  var sessionMsg = widget.sessionMsg;
+                  var userIdData = sessionMsg.userId;
+                  if (sessionMsg.type == MessageType.GROUP) {
+                    List<String> userIds = userIdData.split(',');
+                    idDatas.addAll(userIds);
+                  } else {
+                    idDatas.add(userIdData);
+                  }
+
                   String names = "";
                   String userids = "";
                   idDatas.forEach((value) async {
