@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/config/router_manger.dart';
 import 'package:flutter_qyyim/model/message.dart';
 import 'package:flutter_qyyim/pages/chat/chat_page.dart';
+import 'package:flutter_qyyim/pages/contacts/contacts.dart';
 import 'package:flutter_qyyim/tool/log_utils.dart';
 import 'package:flutter_qyyim/tool/navigator_util.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
@@ -24,17 +25,19 @@ class ContactItem extends StatefulWidget {
   final OnCancel cancel;
   int isSelect = 0;
 
-  ContactItem({
-    @required this.avatar,
-    @required this.title,
-    this.identifier,
-    this.isLine = true,
-    this.groupTitle,
-    this.type = ClickType.open,
-    this.add,
-    this.cancel,
-    this.isSelect = 0,
-  });
+  int canEnableSelect = 0;
+
+  ContactItem(
+      {@required this.avatar,
+      @required this.title,
+      this.identifier,
+      this.isLine = true,
+      this.groupTitle,
+      this.type = ClickType.open,
+      this.add,
+      this.cancel,
+      this.isSelect = 0,
+      this.canEnableSelect = 0});
 
   ContactItemState createState() => ContactItemState();
 }
@@ -56,7 +59,6 @@ class ContactItemState extends State<ContactItem> {
 
     return _buttonHeight;
   }
-
 
   Map<String, dynamic> mapData;
 
@@ -90,29 +92,40 @@ class ContactItemState extends State<ContactItem> {
     var content = [
       widget.type == ClickType.select
           ? new InkWell(
-        child: Padding(
-          padding: const EdgeInsets.only(right: 8),
-          child: new Image.asset(
-            'assets/images/login/${widget.isSelect == 1
-                ? 'ic_select_have.webp'
-                : 'ic_select_no.png'}',
-            width: 25.0,
-            height: 25.0,
-            fit: BoxFit.cover,
-          ),
-        ),
-        onTap: () {
-          setState(() {
-            if (widget.isSelect == 0) {
-              widget.isSelect = 1;
-            } else{
-              widget.isSelect = 0;
-            }
-          });
-          if (widget.isSelect == 1) widget.add(widget.identifier);
-          if (widget.isSelect == 0) widget.cancel(widget.identifier);
-        },
-      )
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: (widget.canEnableSelect == ContactState.isUnselect)
+                    ? new Image.asset(
+                        'assets/images/login/${widget.isSelect == 1 ? 'ic_select_have.webp' : 'ic_select_no.png'}',
+                        width: 25.0,
+                        height: 25.0,
+                        fit: BoxFit.cover,
+                      )
+                    : Container(
+                        width: 25.0,
+                        height: 25.0,
+                        child: Checkbox(
+                          value: true,
+                          activeColor: Colors.grey,
+                        ),
+                      ),
+              ),
+              onTap: () {
+                if (widget.canEnableSelect == ContactState.isUnselect) {
+                  setState(() {
+                    if (widget.isSelect == 0) {
+                      widget.isSelect = ContactState.isSelect;
+                    } else {
+                      widget.isSelect = ContactState.isUnselect;
+                    }
+                  });
+                  if (widget.isSelect == ContactState.isSelect)
+                    widget.add(widget.identifier);
+                  if (widget.isSelect == ContactState.isUnselect)
+                    widget.cancel(widget.identifier);
+                }
+              },
+            )
           : new Container(),
       _avatarIcon,
 
@@ -129,12 +142,12 @@ class ContactItemState extends State<ContactItem> {
             border: !isLine()
                 ? null
                 : Border(
-              bottom: BorderSide(
+                    bottom: BorderSide(
 
-                /// 下划线粗细及颜色
-                  width: AppConstants.DividerWidth,
-                  color: AppColors.lineColor),
-            ),
+                        /// 下划线粗细及颜色
+                        width: AppConstants.DividerWidth,
+                        color: AppColors.lineColor),
+                  ),
           ),
 
           /// 姓名
@@ -142,7 +155,6 @@ class ContactItemState extends State<ContactItem> {
               style: TextStyle(fontWeight: FontWeight.w400), maxLines: 1),
         ),
       ),
-
     ];
 
     /// 列表项主体部分
@@ -150,15 +162,19 @@ class ContactItemState extends State<ContactItem> {
       color: Colors.white,
       onPressed: () {
         if (widget.type == ClickType.select) {
-          setState(() {
-            if (widget.isSelect == 0) {
-              widget.isSelect = 1;
-            } else{
-              widget.isSelect = 0;
-            }
-          });
-          if (widget.isSelect == 1) widget.add(widget.identifier);
-          if (widget.isSelect == 0) widget.cancel(widget.identifier);
+          if (widget.canEnableSelect == ContactState.isUnselect) {
+            setState(() {
+              if (widget.isSelect == 0) {
+                widget.isSelect = ContactState.isSelect;
+              } else {
+                widget.isSelect = ContactState.isUnselect;
+              }
+            });
+            if (widget.isSelect == ContactState.isSelect)
+              widget.add(widget.identifier);
+            if (widget.isSelect == ContactState.isUnselect)
+              widget.cancel(widget.identifier);
+          }
           return;
         }
         if (widget.title == '新的朋友') {
@@ -176,8 +192,11 @@ class ContactItemState extends State<ContactItem> {
               avatar: widget.avatar,
               title: widget.title));*/
           NavigatorUtil.push(
-              context, ChatPage(message: SessionMsg(
-              title: '${widget.title}', userId: '${widget.identifier}')));
+              context,
+              ChatPage(
+                  message: SessionMsg(
+                      title: '${widget.title}',
+                      userId: '${widget.identifier}')));
         }
       },
       child: new Row(children: content),

@@ -20,6 +20,7 @@ import 'package:flutter_qyyim/ui/label_row.dart';
 import 'package:flutter_qyyim/view_model/chatinfo_view_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+/// 会话详情页面
 class ChatInfoPage extends StatefulWidget {
   SessionMsg message;
   ChatInfoPage(this.message);
@@ -41,19 +42,17 @@ class _ChatInfoPageState extends State<ChatInfoPage> {
       appBar: ComMomBar(
         title: "聊天信息",
       ),
-      body: ListView(
-        children: <Widget>[
-          // 头像布局
-          ProviderWidget<ChatInfoVIewModel>(
-            model: new ChatInfoVIewModel(),
-            onModelReady: (modle){
-              modle.headUserIcons(context,widget.message);
-            },
-            builder: (context, model, child){
-              if (model.widgets.length == 0) {
-                return LoadingContainer();
-              } else {
-                return Container(
+      body: ProviderWidget<ChatInfoVIewModel>(
+        model: new ChatInfoVIewModel(),
+        onModelReady: (modle){
+          modle.headUserIcons(context,widget.message);
+        },
+        builder: (context, model, child){
+          return LoadingContainer(
+            isLoading: model.widgets.length == 0,
+            child: ListView(
+              children: <Widget>[
+                Container(
                   padding: EdgeInsets.all(16),
                   width: DeviceUtils.winWidth(context),
                   color: Colors.white,
@@ -65,88 +64,86 @@ class _ChatInfoPageState extends State<ChatInfoPage> {
                       mainAxisSpacing: 8),
 
                   /*child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3, //每行三列
-                        childAspectRatio: 1.0 //显示区域宽高相等
-                    ),
-                    itemCount: _icons.length,
-                    itemBuilder: (context, index) {
-                      //如果显示到最后一个并且Icon总数小于200时继续获取数据
-                      if (index == _icons.length - 1 && _icons.length < 200) {
-                        _retrieveIcons();
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3, //每行三列
+                          childAspectRatio: 1.0 //显示区域宽高相等
+                      ),
+                      itemCount: _icons.length,
+                      itemBuilder: (context, index) {
+                        //如果显示到最后一个并且Icon总数小于200时继续获取数据
+                        if (index == _icons.length - 1 && _icons.length < 200) {
+                          _retrieveIcons();
+                        }
+                        return Icon(_icons[index]);
                       }
-                      return Icon(_icons[index]);
-                    }
-                )*/
-                );
-              }
-            },
-
-          ),
-
-          LabelRow(
-            label: "查找聊天记录",
-            margin: EdgeInsets.only(top: 16),
-          ),
-          SizedBox(
-            height: 16,
-          ),
-          LabelRow(
-            label: "消息免打扰",
-            isRight: false,
-            isLine: true,
-            rightW: SizedBox(
-              height: 25,
-              child: CupertinoSwitch(
-                value: swich_msg_disturb,
-                onChanged: (newValue) {
-                  setState(() {
-                    swich_msg_disturb = newValue;
-                  });
-                },
-              ),
+                  )*/
+                ),
+                LabelRow(
+                  label: "查找聊天记录",
+                  margin: EdgeInsets.only(top: 16),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                LabelRow(
+                  label: "消息免打扰",
+                  isRight: false,
+                  isLine: true,
+                  rightW: SizedBox(
+                    height: 25,
+                    child: CupertinoSwitch(
+                      value: swich_msg_disturb,
+                      onChanged: (newValue) {
+                        setState(() {
+                          swich_msg_disturb = newValue;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+                LabelRow(
+                  label: "置顶聊天",
+                  isRight: false,
+                  isLine: true,
+                  rightW: SizedBox(
+                    height: 25,
+                    child: CupertinoSwitch(
+                      value: swich_sticky_chat,
+                      onChanged: (newValue) {
+                        setState(() {
+                          swich_sticky_chat = newValue;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+                LabelRow(
+                  label: "强提醒",
+                  isRight: false,
+                  rightW: SizedBox(
+                    height: 25,
+                    child: CupertinoSwitch(
+                      value: swich_strong_remider,
+                      onChanged: (newValue) {
+                        setState(() {
+                          swich_strong_remider = newValue;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+                LabelRow(
+                  label: "设置当前的聊天背景",
+                  margin: EdgeInsets.only(top: 16),
+                ),
+                LabelRow(
+                  label: "清空聊天记录",
+                  margin: EdgeInsets.only(top: 16),
+                ),
+              ],
             ),
-          ),
-          LabelRow(
-            label: "置顶聊天",
-            isRight: false,
-            isLine: true,
-            rightW: SizedBox(
-              height: 25,
-              child: CupertinoSwitch(
-                value: swich_sticky_chat,
-                onChanged: (newValue) {
-                  setState(() {
-                    swich_sticky_chat = newValue;
-                  });
-                },
-              ),
-            ),
-          ),
-          LabelRow(
-            label: "强提醒",
-            isRight: false,
-            rightW: SizedBox(
-              height: 25,
-              child: CupertinoSwitch(
-                value: swich_strong_remider,
-                onChanged: (newValue) {
-                  setState(() {
-                    swich_strong_remider = newValue;
-                  });
-                },
-              ),
-            ),
-          ),
-          LabelRow(
-            label: "设置当前的聊天背景",
-            margin: EdgeInsets.only(top: 16),
-          ),
-          LabelRow(
-            label: "清空聊天记录",
-            margin: EdgeInsets.only(top: 16),
-          ),
-        ],
+          );
+        },
       ),
     );
   }

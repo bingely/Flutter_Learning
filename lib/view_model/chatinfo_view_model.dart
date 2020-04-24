@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
 import 'package:flutter_qyyim/common/provider/view_state_model.dart';
@@ -13,13 +12,12 @@ import 'package:flutter_qyyim/tool/navigator_util.dart';
 import 'package:flutter_qyyim/ui/image_view.dart';
 
 class ChatInfoVIewModel extends ViewStateModel {
-
   List<Widget> widgets = List();
-  headUserIcons(BuildContext context, SessionMsg sessionMsg)  async {
 
+  headUserIcons(BuildContext context, SessionMsg sessionMsg) async {
     if (sessionMsg.type == MessageType.GROUP) {
       String idDatas = sessionMsg.userId;
-      LogUtil.e("================"+idDatas);
+      LogUtil.e("================" + idDatas);
       List<String> split = idDatas.split(',');
       split.forEach((userid) async {
         List<Contact> contacts = await DbUtils.getInstance()
@@ -28,8 +26,8 @@ class ChatInfoVIewModel extends ViewStateModel {
 
         LogUtil.e("headUserIcons====${contact.avatar}");
         widgets.add(InkWell(
-          onTap: (){
-            NavigatorUtil.push(context, ContactDetailPage());
+          onTap: () {
+            NavigatorUtil.push(context, ContactDetailPage(userid));
           },
           child: Column(
             children: <Widget>[
@@ -43,12 +41,10 @@ class ChatInfoVIewModel extends ViewStateModel {
           ),
         ));
 
-        if(split.lastIndexOf(userid)== split.length -1) {
-
-
+        if (split.lastIndexOf(userid) == split.length - 1) {
           widgets.add(InkWell(
-            onTap: (){
-              NavigatorUtil.push(context, FriendChoosePage());
+            onTap: () {
+              NavigatorUtil.push(context, FriendChoosePage(sessionMsg));
             },
             child: Container(
               child: ImageView(
@@ -61,20 +57,20 @@ class ChatInfoVIewModel extends ViewStateModel {
             ),
           ));
 
-
           setIdle();
-          LogUtil.e("headUserIcons====headUserIcons====headUserIcons====headUserIcons====");
+          LogUtil.e(
+              "headUserIcons====headUserIcons====headUserIcons====headUserIcons====");
         }
       });
-    } else{
+    } else {
       List<Contact> contacts = await DbUtils.getInstance()
           .queryItems(Contact(), key: "id", value: sessionMsg.userId);
       Contact contact = contacts[0];
       LogUtil.e("headUserIcons====${contact.avatar}");
 
       widgets.add(InkWell(
-        onTap: (){
-          NavigatorUtil.push(context, ContactDetailPage());
+        onTap: () {
+          NavigatorUtil.push(context, ContactDetailPage(sessionMsg.userId));
         },
         child: Column(
           children: <Widget>[
@@ -89,8 +85,8 @@ class ChatInfoVIewModel extends ViewStateModel {
       ));
 
       widgets.add(InkWell(
-        onTap: (){
-          NavigatorUtil.push(context, FriendChoosePage());
+        onTap: () {
+          NavigatorUtil.push(context, FriendChoosePage(sessionMsg));
         },
         child: Container(
           child: ImageView(
@@ -103,14 +99,10 @@ class ChatInfoVIewModel extends ViewStateModel {
         ),
       ));
 
-
       setIdle();
 
-      LogUtil.e("headUserIcons====headUserIcons====headUserIcons====headUserIcons====");
-
+      LogUtil.e(
+          "headUserIcons====headUserIcons====headUserIcons====headUserIcons====");
     }
-
-
   }
-
 }

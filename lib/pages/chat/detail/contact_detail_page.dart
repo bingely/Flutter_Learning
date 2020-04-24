@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
 import 'package:flutter_qyyim/config/app.dart';
+import 'package:flutter_qyyim/pages/contacts/contacts.dart';
 import 'package:flutter_qyyim/ui/commom_bar.dart';
 import 'package:flutter_qyyim/ui/dialog/action_sheet.dart';
 import 'package:flutter_qyyim/ui/dialog_utils.dart';
@@ -9,11 +11,31 @@ import 'package:flutter_qyyim/ui/label_row.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ContactDetailPage extends StatefulWidget {
+  String userId;
+
+  ContactDetailPage(this.userId);
+
   @override
   _ContactDetailPageState createState() => new _ContactDetailPageState();
 }
 
 class _ContactDetailPageState extends State<ContactDetailPage> {
+  Contact contact;
+
+  @override
+  void initState() {
+    super.initState();
+
+    DbUtils.getInstance()
+        .queryItems(Contact(), key: "id", value: widget.userId)
+        .then((contacts) {
+      contact = contacts[0];
+
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +46,8 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
           new InkWell(
             child: new Image.asset('assets/images/right_more.png'),
             onTap: () {
-              //showRightActionDialog(context);
-              DialogUtils.showLoadingDialog(context);
-
+              showRightActionDialog(context);
+              //DialogUtils.showLoadingDialog(context);
             },
           )
         ],
@@ -159,53 +180,57 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
   }
 
   Widget userInfoHeadView() {
-    return Container(
-      padding: EdgeInsets.all(AppConstants.Container_MARGIN),
-      color: Colors.white,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          ImageView(
-            height: 70,
-            width: 70,
-            img: "https://randomuser.me/api/portraits/women/76.jpg",
-          ),
-          SizedBox(
-            width: 16,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Text(
-                    "bingley",
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  // 判断sex
-                  Icon(Icons.face)
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Text("昵称：bingleynick"),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Text("qim号： 111300"),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Text("地址：福建 福州"),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
+    if (contact == null) {
+      return LoadingDialog();
+    } else {
+      return Container(
+        padding: EdgeInsets.all(AppConstants.Container_MARGIN),
+        color: Colors.white,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            ImageView(
+              height: 70,
+              width: 70,
+              img: contact.avatar,
+            ),
+            SizedBox(
+              width: 16,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Text(
+                      contact.name,
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    // 判断sex
+                    Icon(Icons.face)
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text("昵称：${contact.name}"),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text("qim号： ${contact.id}"),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text("地址：福建 福州"),
+                ),
+              ],
+            )
+          ],
+        ),
+      );
+    }
   }
 }

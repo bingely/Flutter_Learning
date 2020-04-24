@@ -52,17 +52,18 @@ class ContactView extends StatelessWidget {
               isLine: _isBorder,
               isSelect: _contact.isSelect,
               type: type,
+              canEnableSelect: _contact.canEnableSelect,
               cancel: (v) {
                 data.remove(v);
                 callback(data);
 
-                _contact.isSelect = 0;
+                _contact.isSelect = ContactState.isUnselect;
               },
               add: (v) {
                 data.add(v);
                 callback(data);
 
-                _contact.isSelect = 1;
+                _contact.isSelect = ContactState.isSelect;
               },
             );
           } else {

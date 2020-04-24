@@ -18,13 +18,19 @@ import 'package:flutter_qyyim/tool/shared_util.dart';
 
 import 'i_contact_info_entity.dart';
 
+class ContactState {
+  static int isSelect = 1;
+  static int isUnselect = 0;
+}
+
 class Contact extends DbBaseBean {
   Contact(
       {@required this.id,
       @required this.avatar,
       @required this.name,
       @required this.nameIndex,
-      this.isSelect});
+      this.isSelect,
+      this.canEnableSelect = 0});
 
   final String id; // 唯一标识
   final String avatar;
@@ -33,15 +39,16 @@ class Contact extends DbBaseBean {
 
   int isSelect; // 是否是选中  默认0 未选中
 
+  int canEnableSelect ; //
+
   @override
   DbBaseBean fromJson(Map<String, dynamic> map) {
     return new Contact(
-      id: map['id'] as String,
-      avatar: map['avatar'] as String,
-      name: map['name'] as String,
-      nameIndex: map['nameIndex'] as String,
-      isSelect: map['isSelect'] as int
-    );
+        id: map['id'] as String,
+        avatar: map['avatar'] as String,
+        name: map['name'] as String,
+        nameIndex: map['nameIndex'] as String,
+        isSelect: map['isSelect'] as int);
   }
 
   @override
@@ -75,12 +82,9 @@ class ContactsPageData {
     LogUtil.e("listFriend====$encode");*/
     String loadString = await JsonUtils.loadString('contact.json');
     List contactJson = json.decode(loadString);
-    contactJson.forEach((json){
+    contactJson.forEach((json) {
       contacts.add(Contact().fromJson(json));
     });
-
-
-
 
     contacts.forEach((contact) => {DbUtils.getInstance().insertItem(contact)});
     return contacts;

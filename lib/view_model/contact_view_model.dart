@@ -2,14 +2,43 @@
 
 import 'package:flutter_qyyim/common/provider/view_state_list_model.dart';
 import 'package:flutter_qyyim/common/provider/view_state_model.dart';
+import 'package:flutter_qyyim/model/message.dart';
 import 'package:flutter_qyyim/pages/contacts/contact_item.dart';
 import 'package:flutter_qyyim/pages/contacts/contacts.dart';
 
 class ContactViewModel extends ViewStateModel {
   List<Contact> contacts = [];
 
+  ///
+  SessionMsg sessionMsg;
+  ContactViewModel({this.sessionMsg});
+
   Future getContacts(List<ContactItem> _functionButtons,List<Contact> _contacts,Map _letterPosMap) async {
     List<Contact> listContact = await ContactsPageData().listFriend();
+
+    if (sessionMsg != null) {
+      String userIdData = sessionMsg.userId;
+      if (sessionMsg.type == MessageType.GROUP) {
+        List<String> userIds = userIdData.split(',');
+
+        listContact.forEach((contact){
+          userIds.forEach((id){
+            if (id == contact.id) {
+              contact.isSelect = ContactState.isSelect;
+              contact.canEnableSelect = ContactState.isSelect;
+            }
+          });
+        });
+      } else {
+        listContact.forEach((contact){
+          if (userIdData == contact.id) {
+            contact.isSelect = ContactState.isSelect;
+            contact.canEnableSelect = ContactState.isSelect;
+          }
+        });
+      }
+    }
+
 
     contacts.clear();
     contacts..addAll(listContact);

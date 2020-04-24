@@ -24,6 +24,10 @@ import '../chat_page.dart';
 
 /// 联系人
 class FriendChoosePage extends StatefulWidget {
+  SessionMsg sessionMsg;
+
+  FriendChoosePage(this.sessionMsg);
+
   _FriendChoosePageState createState() => _FriendChoosePageState();
 }
 
@@ -48,6 +52,7 @@ class _FriendChoosePageState extends State<FriendChoosePage>
   @override
   void initState() {
     super.initState();
+
   }
 
   @override
@@ -80,7 +85,7 @@ class _FriendChoosePageState extends State<FriendChoosePage>
           ),
           Expanded(
             child: ProviderWidget<ContactViewModel>(
-              model: ContactViewModel(),
+              model: ContactViewModel(sessionMsg: widget.sessionMsg),
               onModelReady: (modlue) {
                 modlue.getContacts(_functionButtons, _contacts, _letterPosMap);
               },
@@ -191,7 +196,6 @@ class _FriendChoosePageState extends State<FriendChoosePage>
                       names += name;
                       userids += userid;
 
-
                       NavigatorUtil.pushReplacement(
                           context,
                           ChatPage(
@@ -199,7 +203,6 @@ class _FriendChoosePageState extends State<FriendChoosePage>
                                   title: '$names',
                                   userId: '$userids',
                                   type: MessageType.GROUP)));
-
                     } else {
                       names += name + ",";
                       userids += userid + ",";
