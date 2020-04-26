@@ -3,6 +3,11 @@ import 'package:flutter_qyyim/common/db/solution1/db_base_bean.dart';
 
 enum MessageType { SYSTEM, PUBLIC, CHAT, GROUP }
 
+class DisturbMode {
+  static const int CLOSE = 0;
+  static const int OPEN = 1;
+}
+
 //聊天会话数据
 class SessionMsg extends DbBaseBean {
   String id;
@@ -24,6 +29,13 @@ class SessionMsg extends DbBaseBean {
 
   String userId; // 也是会话id,每个用户都对应一个会话
 
+  // 是否是免打扰模式
+  int isDisturbMode;
+/*  // 是否是置顶聊天
+  int isTopChat;
+  // 是否是强提醒
+  is*/
+
   SessionMsg(
       {this.id,
       this.avatars,
@@ -31,7 +43,8 @@ class SessionMsg extends DbBaseBean {
       this.subTitle,
       this.time,
       this.type,
-      this.userId});
+      this.userId,
+      this.isDisturbMode});
 
   @override
   DbBaseBean fromJson(Map<String, dynamic> map) {
@@ -43,6 +56,7 @@ class SessionMsg extends DbBaseBean {
       time: map['time'] as int,
       type: map['type'] as int,
       userId: map['userId'] as String,
+      isDisturbMode: map['isDisturbMode'] as int,
     );
   }
 
@@ -61,6 +75,7 @@ class SessionMsg extends DbBaseBean {
       'time': this.time,
       'type': this.type,
       'userId': this.userId,
+      'isDisturbMode': this.isDisturbMode,
     };
   }
 }

@@ -7,6 +7,9 @@ import 'package:flutter_qyyim/config/resource_mananger.dart';
 import 'package:flutter_qyyim/model/message.dart';
 import 'package:flutter_qyyim/pages/chat/detail/contact_detail_page.dart';
 import 'package:flutter_qyyim/pages/chat/detail/friend_choose_page.dart';
+import 'package:flutter_qyyim/pages/chat/event/home_msg_event.dart';
+import 'package:flutter_qyyim/testdemo/cross_data/event_bus.dart';
+import 'package:flutter_qyyim/ui/dialog/exit_dialog.dart';
 import 'package:flutter_qyyim/ui/dialog/pay_type_dialog.dart';
 import 'package:flutter_qyyim/pages/contacts/contacts.dart';
 import 'package:flutter_qyyim/pages/me/list_tile_view.dart';
@@ -25,6 +28,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 /// 会话详情页面
 class ChatInfoPage extends StatefulWidget {
   SessionMsg message;
+
   ChatInfoPage(this.message);
 
   @override
@@ -36,6 +40,11 @@ class _ChatInfoPageState extends State<ChatInfoPage> {
   bool swich_strong_remider = false;
   bool swich_sticky_chat = false;
 
+  @override
+  void initState() {
+    super.initState();
+    swich_msg_disturb = (widget.message.isDisturbMode == 0) ? false : true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +55,10 @@ class _ChatInfoPageState extends State<ChatInfoPage> {
       ),
       body: ProviderWidget<ChatInfoVIewModel>(
         model: new ChatInfoVIewModel(),
-        onModelReady: (modle){
-          modle.headUserIcons(context,widget.message);
+        onModelReady: (modle) {
+          modle.headUserIcons(context, widget.message);
         },
-        builder: (context, model, child){
+        builder: (context, model, child) {
           return LoadingContainer(
             isLoading: model.widgets.length == 0,
             child: ListView(
@@ -96,7 +105,11 @@ class _ChatInfoPageState extends State<ChatInfoPage> {
                     child: CupertinoSwitch(
                       value: swich_msg_disturb,
                       onChanged: (newValue) {
-                        setState(() {
+                        // 更新下消息
+                        widget.message.isDisturbMode = newValue ? 1 : 0;
+                        DbUtils.getInstance().insertItem(widget.message);
+                        eventBus.fire(HomeMsgEvent());
+                        setState(()  {
                           swich_msg_disturb = newValue;
                         });
                       },
@@ -141,7 +154,8 @@ class _ChatInfoPageState extends State<ChatInfoPage> {
                 LabelRow(
                   label: "清空聊天记录",
                   margin: EdgeInsets.only(top: 16),
-                  onPressed: (){
+                  onPressed: () {
+                    DialogUtils.showDialogView(context, ExitDialog());
 
                   },
                 ),
@@ -152,5 +166,4 @@ class _ChatInfoPageState extends State<ChatInfoPage> {
       ),
     );
   }
-
 }

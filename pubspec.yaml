@@ -71,7 +71,7 @@ dependencies:
   file_picker: ^1.6.2
   #flutter_filereader: ^2.0.0
   open_file: ^3.0.1
-  x5_webview: 0.2.0
+  # x5_webview: 0.2.0
   # 处理键盘事件
   keyboard_actions: ^3.2.1
   # 列表悬浮头 https://github.com/fluttercommunity/flutter_sticky_headers

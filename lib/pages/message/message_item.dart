@@ -20,7 +20,7 @@ class MessageItem extends StatelessWidget {
   Widget build(BuildContext context) {
     //最外层容器
     return InkWell(
-      onTap: (){
+      onTap: () {
         // 跳到对应的聊天页面
         Navigator.pushNamed(context, RouteName.chat, arguments: message);
       },
@@ -61,11 +61,22 @@ class MessageItem extends StatelessWidget {
                       //水平方向靠左对齐
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(
-                          message.title,
-                          style: TextStyle(
-                              fontSize: 16.0, color: Color(0xFF353535)),
-                          maxLines: 1,
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              message.title,
+                              style: TextStyle(
+                                  fontSize: 16.0, color: Color(0xFF353535)),
+                              maxLines: 1,
+                            ),
+                            (message.isDisturbMode == 0)
+                                ? Container()
+                                : Icon(
+                                    Icons.surround_sound,
+                                    size: 10,
+                                    color: Colors.red,
+                                  )
+                          ],
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 4.0),
@@ -86,10 +97,11 @@ class MessageItem extends StatelessWidget {
                     Container(
                       //时间顶部对齐
                       alignment: AlignmentDirectional.topStart,
-                      margin: const EdgeInsets.only(top: 12.0,right: 16),
+                      margin: const EdgeInsets.only(top: 12.0, right: 16),
                       child: Text(
                         //格式化时间
-                        TimelineUtil.formatByDateTime(DateUtil.getDateTimeByMs(message.time)),
+                        TimelineUtil.formatByDateTime(
+                            DateUtil.getDateTimeByMs(message.time)),
                         style:
                             TextStyle(fontSize: 14.0, color: Color(0xFFa9a9a9)),
                       ),

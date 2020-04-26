@@ -11,7 +11,7 @@ class DbOpenHelper{
     // 联系人表
     String contractSql = 'CREATE TABLE Contact (id TEXT PRIMARY KEY, avatar TEXT, name TEXT, nameIndex TEXT, isSelect INTEGER )';
     // 离线消息表
-    String sessionSql = 'CREATE TABLE SessionMsg (id TEXT PRIMARY KEY, userId TEXT, avatars TEXT, name TEXT, nameIndex TEXT, title TEXT, subTitle TEXT, time INTEGER, type INTEGER)';
+    String sessionSql = 'CREATE TABLE SessionMsg (id TEXT PRIMARY KEY, userId TEXT, avatars TEXT, name TEXT, nameIndex TEXT, title TEXT, subTitle TEXT, time INTEGER, type INTEGER, isDisturbMode INTEGER)';
 
     await db.execute(messageSql);
     await db.execute(contractSql);
