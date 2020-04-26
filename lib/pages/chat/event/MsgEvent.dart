@@ -13,7 +13,8 @@ class MsgEvent {
 
   Uint8List mapPic;
 
-
+  //发送消息类型   单聊还是群聊
+  int sendType;
 
   /// 文件相关的
   String fileSize;
@@ -25,7 +26,8 @@ class MsgEvent {
       this.latLng,
       this.mapPic,
       this.place,
-      this.fileSize});
+      this.fileSize,
+      this.sendType});
 }
 
 enum MsgType { TXT, IMG, VIDEO, VOICE, MAP, FILE }

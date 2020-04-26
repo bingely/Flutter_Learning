@@ -5,6 +5,8 @@ enum MessageType { SYSTEM, PUBLIC, CHAT, GROUP }
 
 //聊天会话数据
 class SessionMsg extends DbBaseBean {
+  String id;
+
   //头像
   String avatars;
 
@@ -23,7 +25,7 @@ class SessionMsg extends DbBaseBean {
   String userId; // 也是会话id,每个用户都对应一个会话
 
   SessionMsg(
-      {
+      {this.id,
       this.avatars,
       this.title,
       this.subTitle,
@@ -34,6 +36,7 @@ class SessionMsg extends DbBaseBean {
   @override
   DbBaseBean fromJson(Map<String, dynamic> map) {
     return new SessionMsg(
+      id: map['id'] as String,
       avatars: map['avatars'] as String,
       title: map['title'] as String,
       subTitle: map['subTitle'] as String,
@@ -51,6 +54,7 @@ class SessionMsg extends DbBaseBean {
   @override
   Map<String, dynamic> toJson() {
     return {
+      'id': this.id,
       'avatars': this.avatars,
       'title': this.title,
       'subTitle': this.subTitle,

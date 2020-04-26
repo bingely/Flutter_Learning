@@ -38,25 +38,33 @@ class ChatViewModel extends ViewStateRefreshListModel<ChatData> {
     String content = event.content;
 
     String sqljson = "";
+
+    String subTitle = "";
     var mapPic;
     if (msgType == MsgType.VIDEO) {
       sqljson =
           '{"videosrc": "$content","urls": "$content","type": "Video","path": "$content"}';
+      subTitle = "视频消息";
     } else if (msgType == MsgType.IMG) {
       sqljson = '{"imageList": "$content","type": "Image"}';
+      subTitle = "图片消息";
     } else if (msgType == MsgType.VOICE) {
       var recordTime = event.recordTime;
       sqljson =
           '{"soundUrls": "$content","urls": "$content","recordTime":"$recordTime","type": "Sound","path": "$content"}';
+      subTitle = "语音消息";
     } else if (msgType == MsgType.TXT) {
       sqljson = '{"text": "$content", "type": "Text"}';
+      subTitle = "$content";
     } else if (msgType == MsgType.MAP) {
       sqljson =
           '{"text": "${event.place.title}","address":"${event.place.address}","latitude":"${event.place.latLng.latitude}","lotitude":"${event.place.latLng.longitude}","type": "Map"}';
       mapPic = event.mapPic;
+      subTitle = "地图消息";
     } else if (msgType == MsgType.FILE) {
       sqljson =
           '{"text": "$content","filesize":"${event.fileSize}", "type": "File"}';
+      subTitle = "文件消息";
     }
 
     var currentStamp = DateUtil.getNowDateMs();
@@ -76,11 +84,12 @@ class ChatViewModel extends ViewStateRefreshListModel<ChatData> {
         .queryItems(Contact(), key: "id", value: chatId);
     var contact = contacts[0];
     var sesionMsg = SessionMsg(
+        id: chatId,
         userId: chatId,
         time: DateTime.now().millisecondsSinceEpoch,
         title: contact.name,
         avatars: contact.avatar,
-        subTitle: sqljson,
+        subTitle: subTitle,
         type: MessageType.CHAT.index);
     DbUtils.getInstance().insertItem(sesionMsg);
 

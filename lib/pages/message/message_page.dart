@@ -1,8 +1,13 @@
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
 import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/config/router_manger.dart';
+import 'package:flutter_qyyim/model/message.dart';
 import 'package:flutter_qyyim/pages/chat/event/MsgEvent.dart';
+import 'package:flutter_qyyim/pages/contacts/contacts.dart';
+import 'package:flutter_qyyim/testdemo/trip/widget/loading_container.dart';
+import 'package:flutter_qyyim/tool/log_utils.dart';
 import 'package:flutter_qyyim/ui/dialog_utils.dart';
 import 'package:flutter_qyyim/view_model/message_view_model.dart';
 import 'package:flutter_qyyim/testdemo/trip/widget/webview.dart';
@@ -33,8 +38,6 @@ class MessagePage extends StatefulWidget {
 
 class MessagePageState extends State<MessagePage>
     with AutomaticKeepAliveClientMixin {
-
-
   @override
   void initState() {
     // TODO: implement initState
@@ -44,6 +47,14 @@ class MessagePageState extends State<MessagePage>
       // 更新 msg
       chatViewModle.sendMgs(event);
     });*/
+    DbUtils.getInstance().queryItems(SessionMsg()).then((List<SessionMsg> sessionMsgs){
+      LogUtil.e("消息列表|||sessionMsg====${sessionMsgs?.length}");
+    });
+
+    DbUtils.getInstance().queryItems(Contact()).then((List<Contact> contacts){
+      LogUtil.e("联系人列表|||sessionMsg====${contacts?.length}");
+
+    });
   }
 
   @override
@@ -89,38 +100,41 @@ class MessagePageState extends State<MessagePage>
             onRefresh: model.refresh,
             onLoading: model.loadMore,
             enablePullUp: false,
-            child: ListView.builder(
-                //传入数据长度
-                itemCount: model.list.length,
-                //构造列表项
-                itemBuilder: (BuildContext context, int index) {
-                  //传入messageData返回列表项
-                  return Slidable(
-                    actionPane: SlidableScrollActionPane(),
-                    //滑出选项的面板 动画
-                    actionExtentRatio: 0.25,
-                    child: MessageItem(model.list[index]),
-                    secondaryActions: <Widget>[
-                      IconSlideAction(
-                        caption: '标志已读',
-                        color: Colors.black45,
-                        icon: Icons.more_horiz,
-                        onTap: () => {
-                          DialogUtils.showAlert(context,"fdsf",dialogType: 2)
-                        },
-                      ),
-                      IconSlideAction(
-                        caption: '删除',
-                        color: Colors.red,
-                        icon: Icons.delete,
-                        closeOnTap: false,
-                        onTap: () {
-                          DialogUtils.showLoadingDialog(context);
-                        },
-                      ),
-                    ],
-                  );
-                }),
+            child: (model.list == null || model.list.length == 0)
+                ? LoadingDialog()
+                : ListView.builder(
+                    //传入数据长度
+                    itemCount: model.list.length,
+                    //构造列表项
+                    itemBuilder: (BuildContext context, int index) {
+                      //传入messageData返回列表项
+                      return Slidable(
+                        actionPane: SlidableScrollActionPane(),
+                        //滑出选项的面板 动画
+                        actionExtentRatio: 0.25,
+                        child: MessageItem(model.list[index]),
+                        secondaryActions: <Widget>[
+                          IconSlideAction(
+                            caption: '标志已读',
+                            color: Colors.black45,
+                            icon: Icons.more_horiz,
+                            onTap: () => {
+                              DialogUtils.showAlert(context, "fdsf",
+                                  dialogType: 2)
+                            },
+                          ),
+                          IconSlideAction(
+                            caption: '删除',
+                            color: Colors.red,
+                            icon: Icons.delete,
+                            closeOnTap: false,
+                            onTap: () {
+                              DialogUtils.showLoadingDialog(context);
+                            },
+                          ),
+                        ],
+                      );
+                    }),
           );
         },
       ),

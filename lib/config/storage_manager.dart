@@ -23,7 +23,7 @@ class StorageManager {
 
     temporaryDirectory = await getTemporaryDirectory();
 
-    DbUtils.getInstance().openDb("qqyim");
+    await DbUtils.getInstance().openDb("qqyim");
 
     LogUtil.init();
 
