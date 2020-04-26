@@ -45,7 +45,7 @@ class DialogPageState extends State<DialogPage> {
                   });
             },
           ),
-          Gaps.hGap5,
+          Gaps.vGap8,
           ComMomButton(
             text: "hhh",
             onTap: () {
@@ -57,14 +57,14 @@ class DialogPageState extends State<DialogPage> {
             },
           ),
 
-          Gaps.hGap5,
+          Gaps.vGap8,
           ComMomButton(
             text: "hhh",
             onTap: () {
               DialogUtils.showDialogView(context, ExitDialog());
             },
           ),
-          Gaps.hGap5,
+          Gaps.vGap8,
           ComMomButton(
             text: "hhh",
             onTap: () {

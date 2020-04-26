@@ -61,6 +61,10 @@ class App extends StatelessWidget {
               /// 主题
               theme: ThemeData(
                 scaffoldBackgroundColor: AppColors.bgColor,
+                dividerTheme: DividerThemeData(
+                      space: 0.6,
+                      thickness: 0.6
+                  )
                 //hintColor: Colors.grey.withOpacity(0.3),
                 //splashColor: Colors.transparent,
                 //canvasColor: Colors.transparent,

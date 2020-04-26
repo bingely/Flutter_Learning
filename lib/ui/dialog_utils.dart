@@ -75,12 +75,12 @@ class DialogUtils {
   }
 
 
-  static showDialogView(BuildContext context,Widget builder){
+  static showDialogView(BuildContext context,Widget widget){
     showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          return builder;
+          return widget;
         }
     );
   }
