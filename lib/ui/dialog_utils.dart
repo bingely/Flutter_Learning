@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/config/app.dart';
+import 'package:flutter_qyyim/tool/toast_util.dart';
+import 'package:flutter_qyyim/ui/dialog/pay_type_dialog.dart';
 import 'package:flutter_qyyim/tool/device_utils.dart';
 import 'package:flutter_qyyim/ui/ui.dart';
 
 import 'dialog/action_sheet.dart';
+import 'dialog/order_pay_type_dialog.dart';
 
 /// 根据showDialog<T> boolean标志点击的是哪个区域按钮
 /// 自定义视图 TODO
@@ -39,6 +42,47 @@ class DialogUtils {
                   ),
                 ],
               ));
+  }
+
+
+  static Future<T> showElasticDialog<T>({
+    @required BuildContext context,
+    bool barrierDismissible = true,
+    WidgetBuilder builder,
+  }) {
+
+    final ThemeData theme = Theme.of(context, shadowThemeOnly: true);
+    return showGeneralDialog(
+      context: context,
+      pageBuilder: (BuildContext buildContext, Animation<double> animation, Animation<double> secondaryAnimation) {
+        final Widget pageChild = Builder(builder: builder);
+        return SafeArea(
+          child: Builder(
+              builder: (BuildContext context) {
+                return theme != null
+                    ? Theme(data: theme, child: pageChild)
+                    : pageChild;
+              }
+          ),
+        );
+      },
+      barrierDismissible: barrierDismissible,
+      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+      barrierColor: Colors.black54,
+      transitionDuration: const Duration(milliseconds: 550),
+      transitionBuilder: _buildDialogTransitions,
+    );
+  }
+
+
+  static showDialogView(BuildContext context,Widget builder){
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return builder;
+        }
+    );
   }
 
   /// 加载圈
@@ -366,4 +410,26 @@ List<Widget> _buildAlertActions(BuildContext context, bool onlyPositive,
       ),
     ];
   }
+}
+
+
+
+
+Widget _buildDialogTransitions(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+  return FadeTransition(
+    opacity: CurvedAnimation(
+      parent: animation,
+      curve: Curves.easeOut,
+    ),
+    child: SlideTransition(
+      position: Tween<Offset>(
+          begin: const Offset(0.0, 0.3),
+          end: Offset.zero
+      ).animate(CurvedAnimation(
+        parent: animation,
+        curve: animation.status != AnimationStatus.forward ? Curves.easeOutBack: ElasticOutCurve(0.85),
+      )),
+      child: child,
+    ),
+  );
 }

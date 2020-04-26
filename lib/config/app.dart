@@ -103,60 +103,6 @@ class AppColors {
   static const Color dark_bg_gray_ = Color(0xFF242526);
 }
 
-class AppStyles {
-  static const TitleStyle = TextStyle(
-    fontSize: AppConstants.TitleTextSize,
-    color: const Color(AppColors.TitleColor),
-  );
-
-  static const DesStyle = TextStyle(
-    fontSize: AppConstants.DesTextSize,
-    color: Color(AppColors.DesTextColor),
-  );
-
-  static const UnreadMsgCountDotStyle = TextStyle(
-    fontSize: 12.0,
-    color: Color(AppColors.NotifyDotText),
-  );
-
-  static const DeviceInfoItemTextStyle = TextStyle(
-    fontSize: AppConstants.DesTextSize,
-    color: Color(AppColors.DeviceInfoItemText),
-  );
-
-  static const GroupTitleItemTextStyle = TextStyle(
-    fontSize: 14.0,
-    color: Color(AppColors.ContactGroupTitleText),
-  );
-
-  static const IndexLetterBoxTextStyle =
-      TextStyle(fontSize: 32.0, color: Colors.white);
-
-  static const HeaderCardTitleTextStyle = TextStyle(
-      fontSize: 20.0,
-      color: Color(AppColors.HeaderCardTitleText),
-      fontWeight: FontWeight.bold);
-
-  static const HeaderCardDesTextStyle = TextStyle(
-      fontSize: 14.0,
-      color: Color(AppColors.HeaderCardDesText),
-      fontWeight: FontWeight.normal);
-
-  static const ButtonDesTextStyle = TextStyle(
-      fontSize: 12.0,
-      color: Color(AppColors.ButtonDesText),
-      fontWeight: FontWeight.bold);
-
-  static const NewTagTextStyle = TextStyle(
-      fontSize: AppConstants.DesTextSize,
-      color: Colors.white,
-      fontWeight: FontWeight.bold);
-
-  static const ChatBoxTextStyle = TextStyle(
-      textBaseline: TextBaseline.alphabetic,
-      fontSize: AppConstants.ContentTextSize,
-      color: const Color(AppColors.TitleColor));
-}
 
 
 
@@ -211,3 +157,82 @@ class AppConstants {
   /// 本地mock数据json
   static const String mockData = 'assets/data/';
 }
+
+
+class Dimens {
+  static const double font_sp10 = 10.0;
+  static const double font_sp12 = 12.0;
+  static const double font_sp14 = 14.0;
+  static const double font_sp15 = 15.0;
+  static const double font_sp16 = 16.0;
+  static const double font_sp18 = 18.0;
+
+  static const double gap_dp4 = 4;
+  static const double gap_dp5 = 5;
+  static const double gap_dp8 = 8;
+  static const double gap_dp10 = 10;
+  static const double gap_dp12 = 12;
+  static const double gap_dp15 = 15;
+  static const double gap_dp16 = 16;
+  static const double gap_dp24 = 24;
+  static const double gap_dp32 = 32;
+  static const double gap_dp50 = 50;
+}
+
+
+
+class AppStyles {
+  static const TitleStyle = TextStyle(
+    fontSize: AppConstants.TitleTextSize,
+    color: const Color(AppColors.TitleColor),
+  );
+
+  static const DesStyle = TextStyle(
+    fontSize: AppConstants.DesTextSize,
+    color: Color(AppColors.DesTextColor),
+  );
+
+  static const UnreadMsgCountDotStyle = TextStyle(
+    fontSize: 12.0,
+    color: Color(AppColors.NotifyDotText),
+  );
+
+  static const DeviceInfoItemTextStyle = TextStyle(
+    fontSize: AppConstants.DesTextSize,
+    color: Color(AppColors.DeviceInfoItemText),
+  );
+
+  static const GroupTitleItemTextStyle = TextStyle(
+    fontSize: 14.0,
+    color: Color(AppColors.ContactGroupTitleText),
+  );
+
+  static const IndexLetterBoxTextStyle =
+  TextStyle(fontSize: 32.0, color: Colors.white);
+
+  static const HeaderCardTitleTextStyle = TextStyle(
+      fontSize: 20.0,
+      color: Color(AppColors.HeaderCardTitleText),
+      fontWeight: FontWeight.bold);
+
+  static const HeaderCardDesTextStyle = TextStyle(
+      fontSize: 14.0,
+      color: Color(AppColors.HeaderCardDesText),
+      fontWeight: FontWeight.normal);
+
+  static const ButtonDesTextStyle = TextStyle(
+      fontSize: 12.0,
+      color: Color(AppColors.ButtonDesText),
+      fontWeight: FontWeight.bold);
+
+  static const NewTagTextStyle = TextStyle(
+      fontSize: AppConstants.DesTextSize,
+      color: Colors.white,
+      fontWeight: FontWeight.bold);
+
+  static const ChatBoxTextStyle = TextStyle(
+      textBaseline: TextBaseline.alphabetic,
+      fontSize: AppConstants.ContentTextSize,
+      color: const Color(AppColors.TitleColor));
+}
+

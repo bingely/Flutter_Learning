@@ -7,6 +7,7 @@ import 'package:flutter_qyyim/config/resource_mananger.dart';
 import 'package:flutter_qyyim/model/message.dart';
 import 'package:flutter_qyyim/pages/chat/detail/contact_detail_page.dart';
 import 'package:flutter_qyyim/pages/chat/detail/friend_choose_page.dart';
+import 'package:flutter_qyyim/ui/dialog/pay_type_dialog.dart';
 import 'package:flutter_qyyim/pages/contacts/contacts.dart';
 import 'package:flutter_qyyim/pages/me/list_tile_view.dart';
 import 'package:flutter_qyyim/testdemo/trip/widget/loading_container.dart';
@@ -15,6 +16,7 @@ import 'package:flutter_qyyim/tool/log_utils.dart';
 import 'package:flutter_qyyim/tool/navigator_util.dart';
 import 'package:flutter_qyyim/ui/commom_bar.dart';
 import 'package:flutter_qyyim/ui/commom_button.dart';
+import 'package:flutter_qyyim/ui/dialog_utils.dart';
 import 'package:flutter_qyyim/ui/image_view.dart';
 import 'package:flutter_qyyim/ui/label_row.dart';
 import 'package:flutter_qyyim/view_model/chatinfo_view_model.dart';
@@ -139,6 +141,9 @@ class _ChatInfoPageState extends State<ChatInfoPage> {
                 LabelRow(
                   label: "清空聊天记录",
                   margin: EdgeInsets.only(top: 16),
+                  onPressed: (){
+
+                  },
                 ),
               ],
             ),

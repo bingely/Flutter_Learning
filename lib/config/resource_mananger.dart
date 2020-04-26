@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_qyyim/common/net/rxhttp/utils/tesxt_util.dart';
 
 class ImageHelper {
   static const String baseUrl = 'http://www.meetingplus.cn';
@@ -19,6 +20,17 @@ class ImageHelper {
   static String wrapAssets(String url) {
     return "assets/images/" + url;
   }
+
+
+  static ImageProvider getAssetImage(String name, {String format: 'png'}) {
+    return AssetImage(getImgPath(name, format: format));
+  }
+
+  static String getImgPath(String name, {String format: 'png'}) {
+    return 'assets/images/$name.$format';
+  }
+
+
 
   static Widget placeHolder({double width, double height}) {
     return SizedBox(

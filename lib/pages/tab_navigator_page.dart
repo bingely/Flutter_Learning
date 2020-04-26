@@ -5,6 +5,7 @@ import 'package:flutter_qyyim/pages/contacts/contacts_page.dart';
 import 'package:flutter_qyyim/pages/me/me_page.dart';
 import 'package:flutter_qyyim/pages/message/message_page.dart';
 import 'package:badges/badges.dart';
+import 'package:flutter_qyyim/tool/double_tap_back_exit_app.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 List<Widget> widegets = <Widget>[
@@ -28,8 +29,6 @@ class TabNavigatorPageState extends State<TabNavigatorPage> {
   // 当前选中的页面索引
   int _currentIndex = 0;
 
-  DateTime _lastPressed;
-
 
   final PageController _controller = PageController(
     initialPage: 0,
@@ -38,42 +37,34 @@ class TabNavigatorPageState extends State<TabNavigatorPage> {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
-    return Scaffold(
-      //  中间显示的
-      body: WillPopScope(
-        onWillPop: () async{
-          if (_lastPressed == null || DateTime.now().difference(_lastPressed)> Duration(seconds: 1)) {
-            //两次点击间隔超过1秒则重新计时
-            _lastPressed = DateTime.now();
-            return false;
-          }
-          return true;
-        },
-        child: PageView(
+    return DoubleTapBackExitApp(
+      child: Scaffold(
+        //  中间显示的
+        body: PageView(
           controller: _controller,
           children: widegets,
-          physics: NeverScrollableScrollPhysics(),
+          physics: NeverScrollableScrollPhysics(), // 禁止滑动
         ),
-      ),
-      // 底部导航按钮
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 0,
-        unselectedFontSize: 12,
-        selectedFontSize: 12.0,
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _currentIndex,
-        onTap: ((index) {
-          _controller.jumpToPage(index);
-          setState(() {
-            _currentIndex = index;
-            print(index);
-          });
-        }),
-        items: [
-          _bottomItem('消息', Icons.chat, 0),
-          _bottomItem('联系人', Icons.contacts, 1),
-          _bottomItem('我', Icons.account_circle, 2),
-        ],
+        // 底部导航按钮
+        bottomNavigationBar: BottomNavigationBar(
+          elevation: 0,
+          unselectedFontSize: 12,
+          selectedFontSize: 12.0,
+          type: BottomNavigationBarType.fixed,
+          currentIndex: _currentIndex,
+          onTap: ((index) {
+            _controller.jumpToPage(index);
+            setState(() {
+              _currentIndex = index;
+              print(index);
+            });
+          }),
+          items: [
+            _bottomItem('消息', Icons.chat, 0),
+            _bottomItem('联系人', Icons.contacts, 1),
+            _bottomItem('我', Icons.account_circle, 2),
+          ],
+        ),
       ),
     );
   }

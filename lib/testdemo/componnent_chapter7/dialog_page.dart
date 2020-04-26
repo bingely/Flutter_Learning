@@ -1,4 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/common/res/gaps.dart';
+import 'package:flutter_qyyim/tool/toast_util.dart';
+import 'package:flutter_qyyim/ui/dialog/exit_dialog.dart';
+import 'package:flutter_qyyim/ui/dialog/order_pay_type_dialog.dart';
+import 'package:flutter_qyyim/ui/dialog/pay_type_dialog.dart';
+import 'package:flutter_qyyim/ui/commom_bar.dart';
+import 'package:flutter_qyyim/ui/commom_button.dart';
+import 'package:flutter_qyyim/ui/dialog/update_dialog.dart';
+import 'package:flutter_qyyim/ui/dialog_utils.dart';
 
 class DialogPage extends StatefulWidget {
   @override
@@ -6,6 +15,9 @@ class DialogPage extends StatefulWidget {
 }
 
 class DialogPageState extends State<DialogPage> {
+
+  var _selectValue = [0];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,22 +27,49 @@ class DialogPageState extends State<DialogPage> {
       body: Column(
         children: <Widget>[
           // AlertDialog
-          AlertDialog(
-            title: Text("提示"),
-            content: Text("您确定要删除当前文件吗?"),
-            actions: <Widget>[
-              FlatButton(
-                child: Text("取消"),
-                onPressed: () => Navigator.of(context).pop(), //关闭对话框
-              ),
-              FlatButton(
-                child: Text("删除"),
-                onPressed: () {
-                  // ... 执行删除操作
-                  Navigator.of(context).pop(true); //关闭对话框
+          ComMomButton(
+            text: "hhh",
+            onTap: () {
+              DialogUtils.showElasticDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) {
+                    return PayTypeDialog(
+                      value: _selectValue,
+                      onPressed: (value) {
+                        setState(() {
+                          _selectValue = value;
+                        });
+                      },
+                    );
+                  });
+            },
+          ),
+          Gaps.hGap5,
+          ComMomButton(
+            text: "hhh",
+            onTap: () {
+              DialogUtils.showDialogView(context, OrderPayTypeDialog(
+                onPressed: (index, type) {
+                  ToastUtils.show('收款类型：$type', context);
                 },
-              ),
-            ],
+              ));
+            },
+          ),
+
+          Gaps.hGap5,
+          ComMomButton(
+            text: "hhh",
+            onTap: () {
+              DialogUtils.showDialogView(context, ExitDialog());
+            },
+          ),
+          Gaps.hGap5,
+          ComMomButton(
+            text: "hhh",
+            onTap: () {
+              DialogUtils.showDialogView(context,  UpdateDialog());
+            },
           )
         ],
       ),
