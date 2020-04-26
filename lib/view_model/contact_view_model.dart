@@ -18,7 +18,7 @@ class ContactViewModel extends ViewStateModel {
 
     if (sessionMsg != null) {
       String userIdData = sessionMsg.userId;
-      if (sessionMsg.type == MessageType.GROUP) {
+      if (sessionMsg.type == MessageType.GROUP.index) {
         List<String> userIds = userIdData.split(',');
 
         listContact.forEach((contact){

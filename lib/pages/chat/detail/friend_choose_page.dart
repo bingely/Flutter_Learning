@@ -187,7 +187,7 @@ class _FriendChoosePageState extends State<FriendChoosePage>
                   // 如果有其它的选中的信息，可以添加
                   var sessionMsg = widget.sessionMsg;
                   var userIdData = sessionMsg.userId;
-                  if (sessionMsg.type == MessageType.GROUP) {
+                  if (sessionMsg.type == MessageType.GROUP.index) {
                     List<String> userIds = userIdData.split(',');
                     idDatas.addAll(userIds);
                   } else {
@@ -212,7 +212,7 @@ class _FriendChoosePageState extends State<FriendChoosePage>
                               message: SessionMsg(
                                   title: '$names',
                                   userId: '$userids',
-                                  type: MessageType.GROUP)));
+                                  type: MessageType.GROUP.index)));
                     } else {
                       names += name + ",";
                       userids += userid + ",";

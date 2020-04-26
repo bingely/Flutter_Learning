@@ -100,7 +100,7 @@ class ChatePageState extends State<ChatPage> {
 
 
     // 初始化信息
-    if (widget.message.type == MessageType.GROUP) {
+    if (widget.message.type == MessageType.GROUP.index) {
       //widget.title =
     }
   }

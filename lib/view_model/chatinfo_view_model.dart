@@ -15,7 +15,7 @@ class ChatInfoVIewModel extends ViewStateModel {
   List<Widget> widgets = List();
 
   headUserIcons(BuildContext context, SessionMsg sessionMsg) async {
-    if (sessionMsg.type == MessageType.GROUP) {
+    if (sessionMsg.type == MessageType.GROUP.index) {
       String idDatas = sessionMsg.userId;
       LogUtil.e("================" + idDatas);
       List<String> split = idDatas.split(',');

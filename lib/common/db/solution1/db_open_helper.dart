@@ -11,11 +11,13 @@ class DbOpenHelper{
     // 联系人表
     String contractSql = 'CREATE TABLE Contact (id TEXT PRIMARY KEY, avatar TEXT, name TEXT, nameIndex TEXT, isSelect INTEGER )';
     // 离线消息表
-    //String sessionSql = 'CREATE TABLE SessionMsg (id TEXT PRIMARY KEY, avatar TEXT, name TEXT, nameIndex TEXT)';
+    String sessionSql = 'CREATE TABLE SessionMsg (userId TEXT PRIMARY KEY, avatars TEXT, name TEXT, nameIndex TEXT, title TEXT, subTitle TEXT, time INTEGER, type INTEGER)';
 
     await db.execute(messageSql);
     await db.execute(contractSql);
-  }
+    await db.execute(sessionSql);
+
+   }
 
   /// 升级表  -- 当修改了数据库版本号会触发这个方法
   /// 考虑了两个场景 1 老表过来 2 其它

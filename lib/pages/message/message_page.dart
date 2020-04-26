@@ -2,6 +2,7 @@ import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/config/router_manger.dart';
+import 'package:flutter_qyyim/pages/chat/event/MsgEvent.dart';
 import 'package:flutter_qyyim/ui/dialog_utils.dart';
 import 'package:flutter_qyyim/view_model/message_view_model.dart';
 import 'package:flutter_qyyim/testdemo/trip/widget/webview.dart';
@@ -32,6 +33,19 @@ class MessagePage extends StatefulWidget {
 
 class MessagePageState extends State<MessagePage>
     with AutomaticKeepAliveClientMixin {
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    /*subscription = eventBus.on<MsgEvent>().listen((event) {
+      _textController.clear();
+      // 更新 msg
+      chatViewModle.sendMgs(event);
+    });*/
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

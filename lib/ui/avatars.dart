@@ -19,14 +19,22 @@ class Avatars extends StatelessWidget {
     // 记录子部件
     final List<Widget> children = [];
     // 遍历
-    final length = message.avatars.length;
+    String avatarss = message.avatars;
+    List<String> avatars=[];
+    if (avatarss.contains(',')) {
+       avatars = avatarss.split(',');
+    } else {
+      avatars.add(avatarss);
+    }
+
+    final length = avatars.length;
 
     for (var i = 0; i < length; i++) {
       // 最多截取8个元素图片
       if (i >= 9) {
         break;
       }
-      final icon = message.avatars[i];
+      final icon = avatars[i];
       final isNetwork = icon.startsWith(RegExp(r'^http'));
       Widget child;
       double iconWH = 0;

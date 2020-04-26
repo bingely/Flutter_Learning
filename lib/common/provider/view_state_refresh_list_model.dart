@@ -26,7 +26,7 @@ abstract class ViewStateRefreshListModel<T> extends ViewStateListModel<T> {
     try {
       currentPageNum = pageNumFirst;
       var data = await loadData(pageNum: pageNumFirst);
-      if (data.isEmpty) {
+      if (data == null || data.isEmpty) {
         refreshController.refreshCompleted();
         list.clear();
         setEmpty();
