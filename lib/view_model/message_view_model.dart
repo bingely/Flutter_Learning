@@ -16,11 +16,8 @@ class MessageViewModel extends ViewStateRefreshListModel<SessionMsg>{
   @override
   Future<List<SessionMsg>> loadData({int pageNum}) {
     // 改成从数据库中查询
-    DbUtils.getInstance().queryItems(SessionMsg()).then((List<SessionMsg> sessionMsgs){
-      LogUtil.e("sessionMsg====${sessionMsgs?.length}");
-    });
     //return getMessageData();
-    return DbUtils.getInstance().queryItems(SessionMsg());
+    return DbUtils.getInstance().queryItemsLimitOrder(SessionMsg(),orderBy: "time Desc");
   }
 
 }

@@ -6,6 +6,7 @@ import 'package:flutter_qyyim/common/provider/view_state_refresh_list_model.dart
 import 'package:flutter_qyyim/mock/chat_mock.dart';
 import 'package:flutter_qyyim/model/message.dart';
 import 'package:flutter_qyyim/pages/chat/event/MsgEvent.dart';
+import 'package:flutter_qyyim/pages/chat/event/home_msg_event.dart';
 import 'package:flutter_qyyim/pages/chat/model/chat_data.dart';
 import 'package:flutter_qyyim/pages/contacts/contacts.dart';
 import 'package:flutter_qyyim/testdemo/cross_data/event_bus.dart';
@@ -91,9 +92,9 @@ class ChatViewModel extends ViewStateRefreshListModel<ChatData> {
         avatars: contact.avatar,
         subTitle: subTitle,
         type: MessageType.CHAT.index);
-    DbUtils.getInstance().insertItem(sesionMsg);
+    await DbUtils.getInstance().insertItem(sesionMsg);
 
-    //eventBus.fire(event)
+    eventBus.fire(HomeMsgEvent());
 
     isBottom = true;
     setIdle();

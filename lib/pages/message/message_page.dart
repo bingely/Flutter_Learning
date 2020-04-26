@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
@@ -5,7 +7,9 @@ import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/config/router_manger.dart';
 import 'package:flutter_qyyim/model/message.dart';
 import 'package:flutter_qyyim/pages/chat/event/MsgEvent.dart';
+import 'package:flutter_qyyim/pages/chat/event/home_msg_event.dart';
 import 'package:flutter_qyyim/pages/contacts/contacts.dart';
+import 'package:flutter_qyyim/testdemo/cross_data/event_bus.dart';
 import 'package:flutter_qyyim/testdemo/trip/widget/loading_container.dart';
 import 'package:flutter_qyyim/tool/log_utils.dart';
 import 'package:flutter_qyyim/ui/dialog_utils.dart';
@@ -38,23 +42,24 @@ class MessagePage extends StatefulWidget {
 
 class MessagePageState extends State<MessagePage>
     with AutomaticKeepAliveClientMixin {
+
+  StreamSubscription subscription;
+
+  MessageViewModel messageViewmodle;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    /*subscription = eventBus.on<MsgEvent>().listen((event) {
-      _textController.clear();
+    subscription = eventBus.on<HomeMsgEvent>().listen((event) {
       // 更新 msg
-      chatViewModle.sendMgs(event);
-    });*/
-    DbUtils.getInstance().queryItems(SessionMsg()).then((List<SessionMsg> sessionMsgs){
-      LogUtil.e("消息列表|||sessionMsg====${sessionMsgs?.length}");
+      messageViewmodle.initData();
     });
+  }
 
-    DbUtils.getInstance().queryItems(Contact()).then((List<Contact> contacts){
-      LogUtil.e("联系人列表|||sessionMsg====${contacts?.length}");
-
-    });
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
   }
 
   @override
@@ -93,6 +98,7 @@ class MessagePageState extends State<MessagePage>
         model: MessageViewModel(),
         onModelReady: (model) => model.initData(),
         builder: (context, model, widget) {
+          messageViewmodle = model;
           return SmartRefresher(
             header: WaterDropHeader(),
             footer: ClassicFooter(),

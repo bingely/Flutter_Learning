@@ -118,6 +118,27 @@ class DbUtils {
   }
 
   // 查询数据 -- 分页  orderBy: "id Asc  Desc
+  Future<List<T>> queryItemsLimitOrder<T extends DbBaseBean>(T t,
+      {int limit = 0,int offset = 0,orderBy = "",String key = "", String value = ""}) async {
+    if (null == database || !database.isOpen) return null;
+
+    List<Map<String, dynamic>> maps = List();
+
+    // 列表数据
+
+    maps = await database.query(
+      t.getTableName(),
+      orderBy: orderBy,
+    );
+
+    // map转换为List集合
+    return List.generate(maps.length, (i) {
+      //LogUtil.d("queryItems：${maps[i]}");
+      return t.fromJson(maps[i]);
+    });
+  }
+
+
   Future<List<T>> queryItemsLimit<T extends DbBaseBean>(T t,
       {int limit = 0,int offset = 0,orderBy = "",String key = "", String value = ""}) async {
     if (null == database || !database.isOpen) return null;
