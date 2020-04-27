@@ -31,9 +31,9 @@ class SessionMsg extends DbBaseBean {
 
   // 是否是免打扰模式
   int isDisturbMode;
-/*  // 是否是置顶聊天
+  // 是否是置顶聊天
   int isTopChat;
-  // 是否是强提醒
+  /*// 是否是强提醒
   is*/
 
   SessionMsg(
@@ -44,7 +44,8 @@ class SessionMsg extends DbBaseBean {
       this.time,
       this.type,
       this.userId,
-      this.isDisturbMode});
+      this.isDisturbMode,
+      this.isTopChat});
 
   @override
   DbBaseBean fromJson(Map<String, dynamic> map) {
@@ -57,6 +58,7 @@ class SessionMsg extends DbBaseBean {
       type: map['type'] as int,
       userId: map['userId'] as String,
       isDisturbMode: map['isDisturbMode'] as int,
+      isTopChat: map['isTopChat'] as int
     );
   }
 
@@ -76,6 +78,7 @@ class SessionMsg extends DbBaseBean {
       'type': this.type,
       'userId': this.userId,
       'isDisturbMode': this.isDisturbMode,
+      'isTopChat': this.isTopChat
     };
   }
 }

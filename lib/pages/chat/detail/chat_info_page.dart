@@ -44,6 +44,7 @@ class _ChatInfoPageState extends State<ChatInfoPage> {
   void initState() {
     super.initState();
     swich_msg_disturb = (widget.message.isDisturbMode == 0) ? false : true;
+    swich_sticky_chat = (widget.message.isTopChat == 0) ? false : true;
   }
 
   @override
@@ -125,6 +126,9 @@ class _ChatInfoPageState extends State<ChatInfoPage> {
                     child: CupertinoSwitch(
                       value: swich_sticky_chat,
                       onChanged: (newValue) {
+                        widget.message.isTopChat = newValue ? 1 : 0;
+                        DbUtils.getInstance().insertItem(widget.message);
+                        eventBus.fire(HomeMsgEvent());
                         setState(() {
                           swich_sticky_chat = newValue;
                         });
