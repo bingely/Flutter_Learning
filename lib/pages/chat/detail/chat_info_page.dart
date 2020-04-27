@@ -5,6 +5,7 @@ import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/config/resource_mananger.dart';
 import 'package:flutter_qyyim/model/message.dart';
+import 'package:flutter_qyyim/pages/chat/chatsearch/chat_search_page.dart';
 import 'package:flutter_qyyim/pages/chat/detail/contact_detail_page.dart';
 import 'package:flutter_qyyim/pages/chat/detail/friend_choose_page.dart';
 import 'package:flutter_qyyim/pages/chat/event/home_msg_event.dart';
@@ -93,6 +94,9 @@ class _ChatInfoPageState extends State<ChatInfoPage> {
                 LabelRow(
                   label: "查找聊天记录",
                   margin: EdgeInsets.only(top: 16),
+                  onPressed: (){
+                    NavigatorUtil.push(context, ChatSearchPage());
+                  },
                 ),
                 SizedBox(
                   height: 16,
@@ -159,7 +163,7 @@ class _ChatInfoPageState extends State<ChatInfoPage> {
                   label: "清空聊天记录",
                   margin: EdgeInsets.only(top: 16),
                   onPressed: () {
-                    DialogUtils.showDialogView(context, ExitDialog());
+                    DialogUtils.showAlert(context, "确定清空聊天记录");
 
                   },
                 ),

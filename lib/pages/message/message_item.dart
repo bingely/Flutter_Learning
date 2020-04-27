@@ -61,33 +61,34 @@ class MessageItem extends StatelessWidget {
                       //水平方向靠左对齐
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Text(
-                              message.title,
-                              style: TextStyle(
-                                  fontSize: 16.0, color: Color(0xFF353535)),
-                              maxLines: 1,
-                            ),
-                            (message.isDisturbMode == 0)
-                                ? Container()
-                                : Icon(
-                                    Icons.surround_sound,
-                                    size: 10,
-                                    color: Colors.red,
-                                  )
-                          ],
+                        Text(
+                          message.title,
+                          style: TextStyle(
+                              fontSize: 16.0, color: Color(0xFF353535)),
+                          maxLines: 1,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 4.0),
                         ),
-                        Text(
-                          message.subTitle,
-                          style: TextStyle(
-                              fontSize: 14.0, color: Color(0xFFa9a9a9)),
-                          maxLines: 1,
-                          //显示不完的文本用省略号来表示
-                          overflow: TextOverflow.ellipsis,
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              message.subTitle,
+                              style: TextStyle(
+                                  fontSize: 14.0, color: Color(0xFFa9a9a9)),
+                              maxLines: 1,
+                              //显示不完的文本用省略号来表示
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            SizedBox.shrink(),
+                            (message.isDisturbMode == 0)
+                                ? Container()
+                                : Icon(
+                              Icons.surround_sound,
+                              size: 10,
+                              color: Colors.red,
+                            )
+                          ],
                         ),
                       ],
                     ),

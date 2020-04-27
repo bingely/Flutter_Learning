@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
 import 'package:flutter_qyyim/config/app.dart';
+import 'package:flutter_qyyim/config/router_manger.dart';
+import 'package:flutter_qyyim/model/message.dart';
 import 'package:flutter_qyyim/pages/contacts/contacts.dart';
 import 'package:flutter_qyyim/ui/commom_bar.dart';
 import 'package:flutter_qyyim/ui/dialog/action_sheet.dart';
@@ -11,9 +13,9 @@ import 'package:flutter_qyyim/ui/label_row.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ContactDetailPage extends StatefulWidget {
-  String userId;
+  SessionMsg sessionMsg;
 
-  ContactDetailPage(this.userId);
+  ContactDetailPage({this.sessionMsg});
 
   @override
   _ContactDetailPageState createState() => new _ContactDetailPageState();
@@ -27,7 +29,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
     super.initState();
 
     DbUtils.getInstance()
-        .queryItems(Contact(), key: "id", value: widget.userId)
+        .queryItems(Contact(), key: "id", value: widget.sessionMsg.userId)
         .then((contacts) {
       contact = contacts[0];
 
@@ -93,7 +95,9 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                   ],
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, RouteName.chat, arguments: widget.sessionMsg);
+              },
             ),
             SizedBox(
               height: 1,

@@ -78,7 +78,10 @@ dependencies:
   sticky_headers: ^0.1.8+1
   # 城市选择列表 https://github.com/flutterchina/azlistview
   azlistview: ^0.1.2
-
+  # datetime picker
+  flutter_datetime_picker: ^1.3.8
+  # 展示svg图片 https://github.com/dnfield/flutter_svg
+  flutter_svg: ^0.17.2
 
   # ****************************数据相关******************************************
   shared_preferences: any
@@ -114,7 +117,8 @@ dependencies:
   json_annotation: ^2.0.0
   # Html Encoder/Decoder
   html_unescape: ^1.0.1+3
-
+  # 常用工具类库
+  flustars: ^0.2.6+1
 
 dev_dependencies:
   flutter_test:

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_qyyim/pages/chat/camarademo/camaramain.dart';
 import 'package:flutter_qyyim/pages/chat/camarademo/gallery.dart';
 import 'package:flutter_qyyim/pages/chat/chat_page.dart';
+import 'package:flutter_qyyim/pages/chat/chatsearch/chat_search_page.dart';
 import 'package:flutter_qyyim/pages/chat/detail/chat_info_page.dart';
 import 'package:flutter_qyyim/pages/chat/detail/contact_detail_page.dart';
 import 'package:flutter_qyyim/pages/chat/detail/friend_choose_page.dart';
@@ -35,6 +36,7 @@ import 'package:flutter_qyyim/testdemo/wann/pages/project/project_page.dart';
 import 'package:flutter_qyyim/testdemo/wann/pages/user/login_page.dart';
 import 'package:flutter_qyyim/testdemo/wann/tab_navigator_page3.dart';
 import 'package:flutter_qyyim/ui/hom.dart';
+import 'package:flutter_qyyim/ui/ios_page.dart';
 import 'package:flutter_qyyim/ui/page_route_anim.dart';
 
 /// how to use? 还可以传递 自定义的对象（arguments）
@@ -92,7 +94,7 @@ class Router {
       case RouteName.MAP:
         return NoAnimRouteBuilder(MapLocationPage());
       case RouteName.search:
-        return NoAnimRouteBuilder(SearchWidget());
+        return CupertinoPageRoute(builder: (context) => ChatSearchPage());
       case RouteName.video_page:
         return NoAnimRouteBuilder(VideoPage());
       case RouteName.gallay:

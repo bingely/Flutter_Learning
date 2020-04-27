@@ -10,9 +10,9 @@ import 'dialog/action_sheet.dart';
 import 'dialog/order_pay_type_dialog.dart';
 
 /// 根据showDialog<T> boolean标志点击的是哪个区域按钮
-/// 自定义视图 TODO
+/// 自定义视图 已做
 class DialogUtils {
-  /// 中间的对话框
+  /// 中间的对话框（默认是ios风格）
   /// dialogType = 1 为ios CupertinoAlertDialog
   static Future<bool> showAlert(BuildContext context, String title,
       {String negativeText = '取消',
@@ -42,6 +42,19 @@ class DialogUtils {
                   ),
                 ],
               ));
+  }
+
+
+  /// 自定义中间位置的对话框
+  /// DialogUtils.showDialogView(context, ExitDialog());
+  static showDialogView(BuildContext context,Widget widget){
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return widget;
+        }
+    );
   }
 
 
@@ -75,15 +88,6 @@ class DialogUtils {
   }
 
 
-  static showDialogView(BuildContext context,Widget widget){
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return widget;
-        }
-    );
-  }
 
   /// 加载圈
   static showLoadingDialog(BuildContext context) {

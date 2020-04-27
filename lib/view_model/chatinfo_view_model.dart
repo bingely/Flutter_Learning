@@ -27,7 +27,7 @@ class ChatInfoVIewModel extends ViewStateModel {
         LogUtil.e("headUserIcons====${contact.avatar}");
         widgets.add(InkWell(
           onTap: () {
-            NavigatorUtil.push(context, ContactDetailPage(userid));
+            NavigatorUtil.push(context, ContactDetailPage(sessionMsg: sessionMsg,));
           },
           child: Column(
             children: <Widget>[
@@ -70,7 +70,7 @@ class ChatInfoVIewModel extends ViewStateModel {
 
       widgets.add(InkWell(
         onTap: () {
-          NavigatorUtil.push(context, ContactDetailPage(sessionMsg.userId));
+          NavigatorUtil.push(context, ContactDetailPage(sessionMsg: sessionMsg));
         },
         child: Column(
           children: <Widget>[

@@ -125,8 +125,7 @@ class MessagePageState extends State<MessagePage>
                             color: Colors.black45,
                             icon: Icons.more_horiz,
                             onTap: () => {
-                              DialogUtils.showAlert(context, "fdsf",
-                                  dialogType: 2)
+                              DialogUtils.showAlert(context, "标志已读")
                             },
                           ),
                           IconSlideAction(
@@ -135,7 +134,9 @@ class MessagePageState extends State<MessagePage>
                             icon: Icons.delete,
                             closeOnTap: false,
                             onTap: () {
-                              DialogUtils.showLoadingDialog(context);
+                              var sesstionMsg = model.list[index];
+                              DbUtils.getInstance().deleteItem(SessionMsg(),key: "id", value: sesstionMsg.id);
+                              messageViewmodle.initData();
                             },
                           ),
                         ],
