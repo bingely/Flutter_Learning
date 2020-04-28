@@ -155,7 +155,6 @@ class DbUtils {
       offset: offset,
       orderBy: orderBy,
     );
-
     // map转换为List集合
     return List.generate(maps.length, (i) {
       //LogUtil.d("queryItems：${maps[i]}");
@@ -163,6 +162,24 @@ class DbUtils {
     });
   }
 
+
+
+  Future<List<T>> rawQuery<T extends DbBaseBean>(T t,  {int limit = 0,int offset = 0,orderBy = "",String key = "", String value = "", int time}
+      ) async {
+    if (null == database || !database.isOpen) return null;
+
+   // String sql = 'select ${t.getTableName()} where $key = $value and time = $time';
+    String sql = 'select * from ${t.getTableName()} where $key = $value and time <= $time';
+
+    List<Map<String, dynamic>> maps = List();
+    maps = await database.rawQuery(sql);
+
+    // map转换为List集合
+    return List.generate(maps.length, (i) {
+      //LogUtil.d("queryItems：${maps[i]}");
+      return t.fromJson(maps[i]);
+    });
+  }
 
 
 

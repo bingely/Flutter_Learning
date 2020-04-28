@@ -135,6 +135,7 @@ class MessagePageState extends State<MessagePage>
                             closeOnTap: false,
                             onTap: () {
                               var sesstionMsg = model.list[index];
+                              DialogUtils.showAlert(context, "删除后, 将清空该聊天的消息记录",)
                               DbUtils.getInstance().deleteItem(SessionMsg(),key: "id", value: sesstionMsg.id);
                               messageViewmodle.initData();
                             },

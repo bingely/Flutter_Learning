@@ -5,6 +5,7 @@ import 'package:flutter_qyyim/pages/chat/camarademo/camaramain.dart';
 import 'package:flutter_qyyim/pages/chat/camarademo/gallery.dart';
 import 'package:flutter_qyyim/pages/chat/chat_page.dart';
 import 'package:flutter_qyyim/pages/chat/chatsearch/chat_search_page.dart';
+import 'package:flutter_qyyim/pages/search/app_search_page.dart';
 import 'package:flutter_qyyim/pages/chat/detail/chat_info_page.dart';
 import 'package:flutter_qyyim/pages/chat/detail/contact_detail_page.dart';
 import 'package:flutter_qyyim/pages/chat/detail/friend_choose_page.dart';
@@ -94,7 +95,7 @@ class Router {
       case RouteName.MAP:
         return NoAnimRouteBuilder(MapLocationPage());
       case RouteName.search:
-        return CupertinoPageRoute(builder: (context) => ChatSearchPage());
+        return CupertinoPageRoute(builder: (context) => AppSearchPage());
       case RouteName.video_page:
         return NoAnimRouteBuilder(VideoPage());
       case RouteName.gallay:

@@ -8,6 +8,11 @@ class DisturbMode {
   static const int OPEN = 1;
 }
 
+class TopChatMode {
+  static const int CLOSE = 0;
+  static const int OPEN = 1;
+}
+
 //聊天会话数据
 class SessionMsg extends DbBaseBean {
   String id;
@@ -44,8 +49,8 @@ class SessionMsg extends DbBaseBean {
       this.time,
       this.type,
       this.userId,
-      this.isDisturbMode,
-      this.isTopChat});
+      this.isDisturbMode = 0,
+      this.isTopChat = 0});
 
   @override
   DbBaseBean fromJson(Map<String, dynamic> map) {

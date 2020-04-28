@@ -25,6 +25,10 @@ class ChatViewModel extends ViewStateRefreshListModel<ChatData> {
     //debugPrint('查询到的结果数量**************${queryItemsLimit.length}---$currentPageNum');
     isBottom = false;
     //await Future.delayed(Duration(seconds: 1));
+
+
+   // return DbUtils.getInstance().rawQuery(ChatData(), key: 'chatId',value: chatId, time: DateUtil.getNowDateMs());
+
     return DbUtils.getInstance().queryItemsLimit(ChatData(),
         limit: pageSize,
         offset: (currentPageNum - 1) * pageSize,

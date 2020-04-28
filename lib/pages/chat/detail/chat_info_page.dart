@@ -5,7 +5,7 @@ import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/config/resource_mananger.dart';
 import 'package:flutter_qyyim/model/message.dart';
-import 'package:flutter_qyyim/pages/chat/chatsearch/chat_search_page.dart';
+import 'package:flutter_qyyim/pages/search/app_search_page.dart';
 import 'package:flutter_qyyim/pages/chat/detail/contact_detail_page.dart';
 import 'package:flutter_qyyim/pages/chat/detail/friend_choose_page.dart';
 import 'package:flutter_qyyim/pages/chat/event/home_msg_event.dart';
@@ -44,8 +44,8 @@ class _ChatInfoPageState extends State<ChatInfoPage> {
   @override
   void initState() {
     super.initState();
-    swich_msg_disturb = (widget.message.isDisturbMode == 0) ? false : true;
-    swich_sticky_chat = (widget.message.isTopChat == 0) ? false : true;
+    swich_msg_disturb = (widget.message.isDisturbMode == DisturbMode.CLOSE) ? false : true;
+    swich_sticky_chat = (widget.message.isTopChat == DisturbMode.CLOSE) ? false : true;
   }
 
   @override
@@ -95,7 +95,7 @@ class _ChatInfoPageState extends State<ChatInfoPage> {
                   label: "查找聊天记录",
                   margin: EdgeInsets.only(top: 16),
                   onPressed: (){
-                    NavigatorUtil.push(context, ChatSearchPage());
+                    NavigatorUtil.push(context, AppSearchPage());
                   },
                 ),
                 SizedBox(
@@ -111,7 +111,7 @@ class _ChatInfoPageState extends State<ChatInfoPage> {
                       value: swich_msg_disturb,
                       onChanged: (newValue) {
                         // 更新下消息
-                        widget.message.isDisturbMode = newValue ? 1 : 0;
+                        widget.message.isDisturbMode = newValue ? DisturbMode.OPEN : DisturbMode.CLOSE;
                         DbUtils.getInstance().insertItem(widget.message);
                         eventBus.fire(HomeMsgEvent());
                         setState(()  {
@@ -130,7 +130,7 @@ class _ChatInfoPageState extends State<ChatInfoPage> {
                     child: CupertinoSwitch(
                       value: swich_sticky_chat,
                       onChanged: (newValue) {
-                        widget.message.isTopChat = newValue ? 1 : 0;
+                        widget.message.isTopChat = newValue ? TopChatMode.OPEN : TopChatMode.CLOSE;
                         DbUtils.getInstance().insertItem(widget.message);
                         eventBus.fire(HomeMsgEvent());
                         setState(() {

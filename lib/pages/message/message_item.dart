@@ -81,7 +81,7 @@ class MessageItem extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                             SizedBox.shrink(),
-                            (message.isDisturbMode == 0)
+                            (message.isDisturbMode == DisturbMode.CLOSE)
                                 ? Container()
                                 : Icon(
                               Icons.surround_sound,

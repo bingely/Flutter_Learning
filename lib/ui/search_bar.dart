@@ -46,7 +46,7 @@ class _SearchBarState extends State<SearchBar> {
   final TextEditingController _textController = TextEditingController(text: '');
 
   /// 是否是编辑模式
-  bool _isEdit = true;
+  bool _isEdit = false;
 
   /// 动画时间 0 无动画
   int _duration = 0;
@@ -245,6 +245,7 @@ class _SearchBarState extends State<SearchBar> {
     );
   }
 }
+
 
 class _SearchCube extends StatelessWidget {
   const _SearchCube({Key key, this.isEdit, this.isAnimating}) : super(key: key);
