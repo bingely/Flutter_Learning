@@ -15,6 +15,7 @@ class SearchBar extends StatefulWidget {
         const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
     this.onEdit,
     this.onCancel,
+    this.valueChanged
   }) : super(key: key);
 
   /// The SearchBar's internal padding.
@@ -31,6 +32,9 @@ class SearchBar extends StatefulWidget {
   ///
   /// Inoperative if [enabled] is false.
   final GestureTapCallback onCancel;
+
+
+  ValueChanged<String> valueChanged;
 
   _SearchBarState createState() => _SearchBarState();
 }
@@ -171,9 +175,8 @@ class _SearchBarState extends State<SearchBar> {
                       hintText: "搜索",
                       focusNode: _focusNode,
                       textInputAction: TextInputAction.search,
-                      onSubmitted: (valueText) {
-                        print('Search text is 👉 $valueText');
-                      },
+                      onSubmitted: widget.valueChanged,
+                      onChanged: widget.valueChanged,
                     ),
                   )
                 ],

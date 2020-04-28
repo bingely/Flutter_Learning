@@ -181,6 +181,23 @@ class DbUtils {
     });
   }
 
+  Future<List<T>> rawQueryLike<T extends DbBaseBean>(T t,  {int limit = 0,int offset = 0,orderBy = "",String key = "", String value = "", String msg}
+      ) async {
+    if (null == database || !database.isOpen) return null;
+
+    // String sql = 'select ${t.getTableName()} where $key = $value and time = $time';
+    String sql = 'select * from ${t.getTableName()} where msg like "$msg"';
+
+    List<Map<String, dynamic>> maps = List();
+    maps = await database.rawQuery(sql);
+
+    // map转换为List集合
+    return List.generate(maps.length, (i) {
+      LogUtil.d("queryItems：${maps[i]}");
+      return t.fromJson(maps[i]);
+    });
+  }
+
 
 
   /// 关闭数据库

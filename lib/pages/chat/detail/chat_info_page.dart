@@ -5,11 +5,15 @@ import 'package:flutter_qyyim/common/provider/provider_widget.dart';
 import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/config/resource_mananger.dart';
 import 'package:flutter_qyyim/model/message.dart';
+import 'package:flutter_qyyim/pages/chat/chatsearch/chat_search_page.dart';
+import 'package:flutter_qyyim/pages/chat/handle/message_handle.dart';
+import 'package:flutter_qyyim/pages/chat/model/chat_data.dart';
 import 'package:flutter_qyyim/pages/search/app_search_page.dart';
 import 'package:flutter_qyyim/pages/chat/detail/contact_detail_page.dart';
 import 'package:flutter_qyyim/pages/chat/detail/friend_choose_page.dart';
 import 'package:flutter_qyyim/pages/chat/event/home_msg_event.dart';
 import 'package:flutter_qyyim/testdemo/cross_data/event_bus.dart';
+import 'package:flutter_qyyim/ui/dialog/action_sheet.dart';
 import 'package:flutter_qyyim/ui/dialog/exit_dialog.dart';
 import 'package:flutter_qyyim/ui/dialog/pay_type_dialog.dart';
 import 'package:flutter_qyyim/pages/contacts/contacts.dart';
@@ -44,8 +48,10 @@ class _ChatInfoPageState extends State<ChatInfoPage> {
   @override
   void initState() {
     super.initState();
-    swich_msg_disturb = (widget.message.isDisturbMode == DisturbMode.CLOSE) ? false : true;
-    swich_sticky_chat = (widget.message.isTopChat == DisturbMode.CLOSE) ? false : true;
+    swich_msg_disturb =
+        (widget.message.isDisturbMode == DisturbMode.CLOSE) ? false : true;
+    swich_sticky_chat =
+        (widget.message.isTopChat == DisturbMode.CLOSE) ? false : true;
   }
 
   @override
@@ -94,8 +100,12 @@ class _ChatInfoPageState extends State<ChatInfoPage> {
                 LabelRow(
                   label: "查找聊天记录",
                   margin: EdgeInsets.only(top: 16),
-                  onPressed: (){
-                    NavigatorUtil.push(context, AppSearchPage());
+                  onPressed: () {
+                    NavigatorUtil.push(
+                        context,
+                        AppSearchPage(
+                          message: widget.message,
+                        ));
                   },
                 ),
                 SizedBox(
@@ -111,10 +121,11 @@ class _ChatInfoPageState extends State<ChatInfoPage> {
                       value: swich_msg_disturb,
                       onChanged: (newValue) {
                         // 更新下消息
-                        widget.message.isDisturbMode = newValue ? DisturbMode.OPEN : DisturbMode.CLOSE;
+                        widget.message.isDisturbMode =
+                            newValue ? DisturbMode.OPEN : DisturbMode.CLOSE;
                         DbUtils.getInstance().insertItem(widget.message);
                         eventBus.fire(HomeMsgEvent());
-                        setState(()  {
+                        setState(() {
                           swich_msg_disturb = newValue;
                         });
                       },
@@ -130,7 +141,8 @@ class _ChatInfoPageState extends State<ChatInfoPage> {
                     child: CupertinoSwitch(
                       value: swich_sticky_chat,
                       onChanged: (newValue) {
-                        widget.message.isTopChat = newValue ? TopChatMode.OPEN : TopChatMode.CLOSE;
+                        widget.message.isTopChat =
+                            newValue ? TopChatMode.OPEN : TopChatMode.CLOSE;
                         DbUtils.getInstance().insertItem(widget.message);
                         eventBus.fire(HomeMsgEvent());
                         setState(() {
@@ -158,19 +170,59 @@ class _ChatInfoPageState extends State<ChatInfoPage> {
                 LabelRow(
                   label: "设置当前的聊天背景",
                   margin: EdgeInsets.only(top: 16),
+                  onPressed: () {
+                    showChatBgDialog(context);
+                  },
                 ),
                 LabelRow(
                   label: "清空聊天记录",
                   margin: EdgeInsets.only(top: 16),
                   onPressed: () {
-                    DialogUtils.showAlert(context, "确定清空聊天记录");
-
+                    DialogUtils.showAlert(context, "确定清空聊天记录",
+                        onSurePressed: () {
+                      Navigator.pop(context, true);
+                      DbUtils.getInstance().deleteItem(new ChatData(),
+                          key: "chatId", value: widget.message.userId);
+                    });
                   },
                 ),
               ],
             ),
           );
         },
+      ),
+    );
+  }
+
+  void showChatBgDialog(BuildContext context) {
+    DialogUtils.showModalBottomSheetDialog(
+      context,
+      actions: <Widget>[
+        ActionSheetAction(
+            onPressed: () {
+              Navigator.of(context).pop();
+              sendImageMsg("widget.id", 1, callback: (imgs) {});
+            },
+            child: Text('选择背景图')),
+        ActionSheetAction(
+          onPressed: () {
+            Navigator.of(context).pop();
+            sendImageMsg("widget.id", 1, callback: (imgs) {});
+          },
+          child: Text('从相册中选择'),
+        ),
+        ActionSheetAction(
+            onPressed: () {
+              Navigator.of(context).pop();
+              openCamera();
+            },
+            child: Text('拍一张')),
+      ],
+      cancelButton: ActionSheetAction(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        child: Text('取消'),
       ),
     );
   }

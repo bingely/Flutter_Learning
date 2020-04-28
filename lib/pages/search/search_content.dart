@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/res/colors.dart';
 import 'package:flutter_qyyim/config/resource_mananger.dart';
+import 'package:flutter_qyyim/config/t.dart';
 import 'package:flutter_qyyim/tool/date_picker_util.dart';
 import 'package:flutter_qyyim/view_model/keyboard_provider.dart';
 
@@ -30,7 +31,9 @@ enum MHSearchType {
 }
 
 class SearchContent extends StatefulWidget {
-  SearchContent({Key key}) : super(key: key);
+  Callback callback;
+
+  SearchContent({Key key,this.callback}) : super(key: key);
 
   _SearchContentState createState() => _SearchContentState();
 }
@@ -202,9 +205,10 @@ class _SearchContentState extends State<SearchContent> {
       onTap: () {
         print('Search Content On Tap 👉  $title ');
         if (index == 0) {
-          DatePickerUtil.showDataPicker(context);
-
+          //DatePickerUtil.showDataPicker(context);
         }
+        widget.callback(index.toString());
+
       },
       child: Container(
         alignment: Alignment.center,

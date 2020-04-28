@@ -19,14 +19,15 @@ class DialogUtils {
       String positiveText = '确定',
       String mainTile = "温馨提示",
       bool onlyPositive = false,
-      int dialogType = 1}) {
+      int dialogType = 1,
+      VoidCallback onSurePressed}) {
     _showAlert<bool>(
         context: context,
         child: dialogType == 1
             ? CupertinoAlertDialog(
                 title: Text(title),
-                actions: _buildAlertActions(
-                    context, onlyPositive, negativeText, positiveText),
+                actions: _buildAlertActions(context, onlyPositive, negativeText,
+                    positiveText, onSurePressed),
               )
             : AlertDialog(
                 title: Text(mainTile),
@@ -44,39 +45,34 @@ class DialogUtils {
               ));
   }
 
-
   /// 自定义中间位置的对话框
   /// DialogUtils.showDialogView(context, ExitDialog());
-  static showDialogView(BuildContext context,Widget widget){
+  static showDialogView(BuildContext context, Widget widget) {
     showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
           return widget;
-        }
-    );
+        });
   }
-
 
   static Future<T> showElasticDialog<T>({
     @required BuildContext context,
     bool barrierDismissible = true,
     WidgetBuilder builder,
   }) {
-
     final ThemeData theme = Theme.of(context, shadowThemeOnly: true);
     return showGeneralDialog(
       context: context,
-      pageBuilder: (BuildContext buildContext, Animation<double> animation, Animation<double> secondaryAnimation) {
+      pageBuilder: (BuildContext buildContext, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
         final Widget pageChild = Builder(builder: builder);
         return SafeArea(
-          child: Builder(
-              builder: (BuildContext context) {
-                return theme != null
-                    ? Theme(data: theme, child: pageChild)
-                    : pageChild;
-              }
-          ),
+          child: Builder(builder: (BuildContext context) {
+            return theme != null
+                ? Theme(data: theme, child: pageChild)
+                : pageChild;
+          }),
         );
       },
       barrierDismissible: barrierDismissible,
@@ -86,8 +82,6 @@ class DialogUtils {
       transitionBuilder: _buildDialogTransitions,
     );
   }
-
-
 
   /// 加载圈
   static showLoadingDialog(BuildContext context) {
@@ -110,7 +104,7 @@ class DialogUtils {
     Widget cancelButton,
   }) {
     // 第一种实现方案 有些bug
-   /* showModalBottomSheet(
+    /* showModalBottomSheet(
         context: context,
         builder: (context) {
           return new ListTile(
@@ -376,7 +370,7 @@ Future<T> _showAlert<T>({BuildContext context, Widget child}) => showDialog<T>(
     );
 
 List<Widget> _buildAlertActions(BuildContext context, bool onlyPositive,
-    String negativeText, String positiveText) {
+    String negativeText, String positiveText, onSurePressed) {
   if (onlyPositive) {
     return [
       CupertinoDialogAction(
@@ -408,30 +402,33 @@ List<Widget> _buildAlertActions(BuildContext context, bool onlyPositive,
           style: TextStyle(fontSize: 18.0),
         ),
         isDefaultAction: true,
-        onPressed: () {
-          Navigator.pop(context, true);
-        },
+        onPressed: onSurePressed != null
+            ? onSurePressed
+            : () {
+                Navigator.pop(context, true);
+              },
       ),
     ];
   }
 }
 
-
-
-
-Widget _buildDialogTransitions(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+Widget _buildDialogTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child) {
   return FadeTransition(
     opacity: CurvedAnimation(
       parent: animation,
       curve: Curves.easeOut,
     ),
     child: SlideTransition(
-      position: Tween<Offset>(
-          begin: const Offset(0.0, 0.3),
-          end: Offset.zero
-      ).animate(CurvedAnimation(
+      position: Tween<Offset>(begin: const Offset(0.0, 0.3), end: Offset.zero)
+          .animate(CurvedAnimation(
         parent: animation,
-        curve: animation.status != AnimationStatus.forward ? Curves.easeOutBack: ElasticOutCurve(0.85),
+        curve: animation.status != AnimationStatus.forward
+            ? Curves.easeOutBack
+            : ElasticOutCurve(0.85),
       )),
       child: child,
     ),

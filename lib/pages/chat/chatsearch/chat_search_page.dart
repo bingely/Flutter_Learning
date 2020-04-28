@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/res/colors.dart';
 import 'package:flutter_qyyim/common/res/dimens.dart';
 import 'package:flutter_qyyim/common/res/gaps.dart';
+import 'package:flutter_qyyim/model/message.dart';
+import 'package:flutter_qyyim/pages/chat/chatsearch/search_chat_item.dart';
 import 'package:flutter_qyyim/tool/date_picker_util.dart';
 import 'package:flutter_qyyim/ui/commom_bar.dart';
 import 'package:flutter_qyyim/ui/commom_button.dart';
@@ -9,6 +11,8 @@ import 'package:flutter_qyyim/ui/search_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChatSearchPage extends StatefulWidget {
+  ChatSearchPage({SessionMsg message});
+
   @override
   _ChatSearchPageState createState() => new _ChatSearchPageState();
 }
