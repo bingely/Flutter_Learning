@@ -60,16 +60,16 @@ class App extends StatelessWidget {
               navigatorKey: navGK,
               title: model.appName,
               /// 主题
-              /*theme: ThemeData(
+              theme: ThemeData(
                 scaffoldBackgroundColor: AppColors.bgColor,
                 dividerTheme: DividerThemeData(
                       space: 0.6,
                       thickness: 0.6
                   )
-              ),*/
-              theme: themeProvider.getTheme(),
+              ),
+              /*theme: themeProvider.getTheme(),
               darkTheme: themeProvider.getTheme(isDarkMode: true),
-              themeMode: themeProvider.getThemeMode(),
+              themeMode: themeProvider.getThemeMode(),*/
               /// 国际化配置
               locale: model.currentLocale,
               localizationsDelegates: const [

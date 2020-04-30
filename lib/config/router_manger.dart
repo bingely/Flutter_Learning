@@ -31,6 +31,7 @@ import 'package:flutter_qyyim/testdemo/scrcole_chapter6/customscrollvew/custom_s
 import 'package:flutter_qyyim/testdemo/scrcole_chapter6/listview/list_demo.dart';
 import 'package:flutter_qyyim/testdemo/scrcole_chapter6/listview/listview_head.dart';
 import 'package:flutter_qyyim/testdemo/scrcole_chapter6/customscrollvew/nestscroll.dart';
+import 'package:flutter_qyyim/testdemo/theme/theme_page.dart';
 import 'package:flutter_qyyim/testdemo/trip/tab_navigator_page2.dart';
 import 'package:flutter_qyyim/testdemo/wann/pages/project/article_list_item.dart';
 import 'package:flutter_qyyim/testdemo/wann/pages/project/project_page.dart';
@@ -73,7 +74,7 @@ class RouteName {
   static const String wanna = 'wanna';
   static const String trip = 'trip';
   static const String MAP = 'map';
-
+  static const String CHAT_INFO = 'chat_info';
   static const String MAP_LOCATIONED = "maplocated";
 }
 
@@ -107,6 +108,9 @@ class Router {
       case RouteName.MAP_LOCATIONED:
         var mapinfo = settings.arguments as Map<String, dynamic>;
         return CupertinoPageRoute(builder: (context) => MapLocationedPage(mapinfo:mapinfo));
+      case RouteName.CHAT_INFO:
+        var sessionMsg = settings.arguments as SessionMsg;
+        return CupertinoPageRoute(builder: (context) => ChatInfoPage(sessionMsg));
       default:
         return CupertinoPageRoute(
             builder: (_) => Scaffold(

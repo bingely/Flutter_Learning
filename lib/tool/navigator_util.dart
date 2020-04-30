@@ -23,6 +23,15 @@ class NavigatorUtil {
   /// 那如何管理某一个页面的关闭情况 : 比如A-B-C,然后C-A-B,怎么去保证A B 的唯一性 TODO
 
   //// *********name************
+  static pushNamed(
+    BuildContext context,
+    String routeName, {
+    Object arguments,
+  }) {
+    FocusScope.of(context).unfocus();
+    Navigator.pushNamed(context, routeName, arguments: arguments);
+  }
+
   static pushReplacementNamed(BuildContext context, String routeName) {
     FocusScope.of(context).unfocus();
     Navigator.pushReplacementNamed(context, routeName);
@@ -44,14 +53,13 @@ class NavigatorUtil {
       BuildContext context, String newRouteName, String preRoutName) {
     FocusScope.of(context).unfocus();
     Navigator.pushNamedAndRemoveUntil(
-        context, '/$newRouteName', ModalRoute.withName('/$preRoutName'));
+        context, '$newRouteName', ModalRoute.withName('$preRoutName'));
   }
 
   /// 通过路由名字，移除指定的页面
   static popUntil(BuildContext context, String routname) {
-    Navigator.popUntil(context, ModalRoute.withName("/$routname"));
+    Navigator.popUntil(context, ModalRoute.withName("$routname"));
   }
-
 
   /// 返回
   static void goBack(BuildContext context) {
