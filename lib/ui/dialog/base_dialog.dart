@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_qyyim/common/res/dimens.dart';
 import 'package:flutter_qyyim/common/res/gaps.dart';
 import 'package:flutter_qyyim/common/res/styles.dart';
 import 'package:flutter_qyyim/config/app.dart';

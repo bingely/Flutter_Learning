@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
 import 'package:flutter_qyyim/common/route/route.dart';
@@ -15,10 +16,17 @@ import 'package:flutter_qyyim/tool/screen_utils.dart';
 import 'package:flutter_qyyim/tool/toast_util.dart';
 import 'package:flutter_qyyim/ui/image_view.dart';
 import 'package:flutter_qyyim/ui/label_row.dart';
+import 'package:flutter_qyyim/view_model/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 import 'ImItem.dart';
 
-class MePage extends StatelessWidget {
+class MePage extends StatefulWidget {
+  @override
+  _MePageState createState() => new _MePageState();
+}
+
+class _MePageState extends State<MePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,15 +75,6 @@ class MePage extends StatelessWidget {
   }
 }
 
-SliverToBoxAdapter _divider() {
-  return SliverToBoxAdapter(
-    child: Container(
-      height: 10.0,
-      color: const Color.fromARGB(255, 247, 247, 247),
-    ),
-  );
-}
-
 class HeadView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -96,7 +95,23 @@ class HeadView extends StatelessWidget {
   }
 }
 
-class BodyView extends StatelessWidget {
+SliverToBoxAdapter _divider() {
+  return SliverToBoxAdapter(
+    child: Container(
+      height: 10.0,
+      color: const Color.fromARGB(255, 247, 247, 247),
+    ),
+  );
+}
+
+class BodyView extends StatefulWidget {
+  @override
+  _BodyViewState createState() => new _BodyViewState();
+}
+
+class _BodyViewState extends State<BodyView> {
+  var isDarkMode = false;
+
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -145,10 +160,28 @@ class BodyView extends StatelessWidget {
               ToastUtils.show("success", context);
 
               // 创建新的数据库
-              Future.delayed(Duration(seconds: 2),(){
+              Future.delayed(Duration(seconds: 2), () {
                 DbUtils.getInstance().openDb("qqyim");
               });
             },
+          ),
+          LabelRow(
+            label: "暗黑模式",
+            isRight: false,
+            isLine: true,
+            rightW: SizedBox(
+              height: 25,
+              child: CupertinoSwitch(
+                value: isDarkMode,
+                onChanged: (newValue) {
+                  setState(() {
+                    isDarkMode = newValue;
+                  });
+                  Provider.of<ThemeProvider>(context, listen: false)
+                      .setTheme(newValue ? ThemeMode.dark : ThemeMode.system);
+                },
+              ),
+            ),
           ),
         ],
       ),

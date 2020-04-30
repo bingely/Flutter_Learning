@@ -3,6 +3,7 @@ import 'package:flutter_qyyim/common/provider/global_model.dart';
 import 'package:flutter_qyyim/testdemo/wann/view_model/login_model.dart';
 import 'package:flutter_qyyim/testdemo/wann/view_model/user_model.dart';
 import 'package:flutter_qyyim/view_model/keyboard_provider.dart';
+import 'package:flutter_qyyim/view_model/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 /// ProviderConfig  provider配置
@@ -31,7 +32,8 @@ class ProviderConfig {
         Provider.value(value: 30.0),
         ChangeNotifierProvider.value(value: GlobalModel()),
         ChangeNotifierProvider.value(value: UserModel()),
-        ChangeNotifierProvider.value(value: KeyboardProvider())
+        ChangeNotifierProvider.value(value: KeyboardProvider()),
+        ChangeNotifierProvider.value(value: ThemeProvider())
        // ChangeNotifierProvider(builder: (context)=>LoginModel(),)  // 还可以这种写法
       ],
       child: child,

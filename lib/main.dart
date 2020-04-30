@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/tool/device_utils.dart';
+import 'package:flutter_qyyim/view_model/theme_provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -51,24 +52,24 @@ Future<void> main() async {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<GlobalModel>(
-      builder: (context,model,child){
+    return Consumer2<GlobalModel,ThemeProvider>(
+      builder: (context,model,themeProvider,child){
         return RefreshConfiguration(
             hideFooterWhenNotFull: true, //列表数据不满一页,不触发加载更多
             child: new MaterialApp(
               navigatorKey: navGK,
               title: model.appName,
               /// 主题
-              theme: ThemeData(
+              /*theme: ThemeData(
                 scaffoldBackgroundColor: AppColors.bgColor,
                 dividerTheme: DividerThemeData(
                       space: 0.6,
                       thickness: 0.6
                   )
-                //hintColor: Colors.grey.withOpacity(0.3),
-                //splashColor: Colors.transparent,
-                //canvasColor: Colors.transparent,
-              ),
+              ),*/
+              theme: themeProvider.getTheme(),
+              darkTheme: themeProvider.getTheme(isDarkMode: true),
+              themeMode: themeProvider.getThemeMode(),
               /// 国际化配置
               locale: model.currentLocale,
               localizationsDelegates: const [
