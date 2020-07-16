@@ -25,7 +25,7 @@ class _ThemePageState extends State<ThemePage> {
 
   @override
   Widget build(BuildContext context) {
-    String theme = flutter_stars.SpUtil.getString(AppConstants.theme);
+    /*String theme = flutter_stars.SpUtil.getString(AppConstants.theme);
     String themeMode;
     switch(theme) {
       case 'Dark':
@@ -37,7 +37,7 @@ class _ThemePageState extends State<ThemePage> {
       default:
         themeMode = _list[0];
         break;
-    }
+    }*/
     return Scaffold(
       appBar: const MyAppBar(
         title: '夜间模式',
@@ -61,7 +61,7 @@ class _ThemePageState extends State<ThemePage> {
                       child: Text(_list[index]),
                     ),
                     Opacity(
-                      opacity: themeMode == _list[index] ? 1 : 0,
+                      opacity: 1,
                       child: Icon(Icons.done, color: Colors.blue)
                     )
                   ],

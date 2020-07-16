@@ -123,7 +123,7 @@ class ChatePageState extends State<ChatPage> {
         rightDMActions: [
           new InkWell(
             child: new Image.asset('assets/images/right_more.png'),
-            onTap: () => NavigatorUtil.push(context, ChatInfoPage(widget.message)),
+            onTap: () => NavigatorUtil.pushNamed(context, RouteName.CHAT_INFO, arguments: widget.message),
           )
         ],
       ),

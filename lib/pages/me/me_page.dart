@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qyyim/common/db/solution1/db_utils.dart';
@@ -22,11 +23,20 @@ import 'package:provider/provider.dart';
 import 'ImItem.dart';
 
 class MePage extends StatefulWidget {
+
   @override
   _MePageState createState() => new _MePageState();
 }
 
 class _MePageState extends State<MePage> {
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await SpUtil.getInstance();
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -177,12 +187,17 @@ class _BodyViewState extends State<BodyView> {
                   setState(() {
                     isDarkMode = newValue;
                   });
-                  Provider.of<ThemeProvider>(context, listen: false)
-                      .setTheme(newValue ? ThemeMode.dark : ThemeMode.system);
+                  Provider.of<ThemeProvider>(context, listen: false).setTheme(newValue?ThemeMode.dark:ThemeMode.system);
                 },
               ),
             ),
           ),
+
+          Container(
+            height: 50,
+            padding: EdgeInsets.all(10),
+            child: Text('hlll'),
+          )
         ],
       ),
     );

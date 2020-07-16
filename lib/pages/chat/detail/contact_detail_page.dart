@@ -5,6 +5,7 @@ import 'package:flutter_qyyim/config/app.dart';
 import 'package:flutter_qyyim/config/router_manger.dart';
 import 'package:flutter_qyyim/model/message.dart';
 import 'package:flutter_qyyim/pages/contacts/contacts.dart';
+import 'package:flutter_qyyim/tool/navigator_util.dart';
 import 'package:flutter_qyyim/ui/commom_bar.dart';
 import 'package:flutter_qyyim/ui/dialog/action_sheet.dart';
 import 'package:flutter_qyyim/ui/dialog_utils.dart';
@@ -96,7 +97,10 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                 ),
               ),
               onTap: () {
-                Navigator.pushNamed(context, RouteName.chat, arguments: widget.sessionMsg);
+                //Navigator.pushNamed(context, RouteName.chat, arguments: widget.sessionMsg);
+                //
+                //NavigatorUtil.popUntil(context, RouteName.chat);
+                NavigatorUtil.popUntil(context, RouteName.CHAT_INFO);
               },
             ),
             SizedBox(
